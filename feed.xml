@@ -1,0 +1,1539 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Crystal Sight</title>
+    <description>See further, but how far is far?
+</description>
+    <link>http://crystal:4000/</link>
+    <atom:link href="http://crystal:4000/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sat, 06 Aug 2016 13:58:01 +0000</pubDate>
+    <lastBuildDate>Sat, 06 Aug 2016 13:58:01 +0000</lastBuildDate>
+    <generator>Jekyll v3.2.1</generator>
+    
+      <item>
+        <title>Powershell Tips Notes</title>
+        <description>&lt;p&gt;An ongoing accreted list of Powershell tips&amp;amp;tricks from multiple sources.&lt;/p&gt;
+
+&lt;h1 id=&quot;powershell-tips-for-bash-users---fiveagency&quot;&gt;PowerShell tips for bash users - five.agency&lt;/h1&gt;
+
+&lt;h2 id=&quot;xargs-and-for-loop&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;xargs&lt;/code&gt; and for loop&lt;/h2&gt;
+
+&lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;cat dirs&lt;/span&gt; | %&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;mkdir &lt;span class=&quot;nv&quot;&gt;$_&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;There is no &lt;code class=&quot;highlighter-rouge&quot;&gt;xargs&lt;/code&gt; command in PS, but you can use &lt;code class=&quot;highlighter-rouge&quot;&gt;foreach&lt;/code&gt; loop and pass the piped variable &lt;code class=&quot;highlighter-rouge&quot;&gt;$_&lt;/code&gt; to the mkdir. Shorthand for &lt;code class=&quot;highlighter-rouge&quot;&gt;foreach&lt;/code&gt; is &lt;code class=&quot;highlighter-rouge&quot;&gt;%&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;objects&quot;&gt;objects&lt;/h2&gt;
+&lt;p&gt;There is practically no way to write a script even as simple as this one without using objects.&lt;/p&gt;
+
+&lt;h1 id=&quot;powershell-101-from-a-linux-guy&quot;&gt;Powershell 101 From a Linux Guy&lt;/h1&gt;
+
+&lt;h2 id=&quot;naming-convention&quot;&gt;Naming Convention&lt;/h2&gt;
+
+&lt;p&gt;A decent naming convention to the cmdlets, which helps in guessing… &lt;strong&gt;Verb-SingularNoun&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;meta-info--help&quot;&gt;Meta Info &amp;amp; Help&lt;/h2&gt;
+
+&lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$PSVersionTable&lt;/span&gt;
+
+update-help
+
+&lt;span class=&quot;nb&quot;&gt;Get-Command&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# measure the time&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;measure-command&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; -Filter &lt;span class=&quot;s2&quot;&gt;&quot;*.exe&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;use-object-in-place&quot;&gt;Use object in place&lt;/h2&gt;
+
+&lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;.name
+
+&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;.CreationTime
+
+&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;hello world&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;.Length
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;alias&quot;&gt;Alias&lt;/h2&gt;
+
+&lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;New-Alias&lt;/span&gt; -Name grep -Description grep &lt;span class=&quot;nb&quot;&gt;Select-String&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Mon, 07 Mar 2016 00:00:00 +0000</pubDate>
+        <link>http://crystal:4000/post/powershell-tips-notes</link>
+        <guid isPermaLink="true">http://crystal:4000/post/powershell-tips-notes</guid>
+        
+        <category>powershell</category>
+        
+        <category>tips</category>
+        
+        <category>notes</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Reading: Code Breakers</title>
+        <description>&lt;p&gt;Quotes and notes from book ~Colin F. Barnes~ &lt;em&gt;Code Breakers: Alpha&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;When reading on Kindle, various highlightings and notes are accreted. These “Readings: XXX” series are my note recordings. As an English learner, some notes appeal to me for their mere language values and might not be related to the content of the book ;P. &lt;span id=&quot;side1&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;Might be better to have separate repo for these notes&lt;/span&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;alpha&quot;&gt;Alpha&lt;/h1&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;… the Dome – before City Earth.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;A pairs of brass-rimmed goggles with darkened lenses appeared in the gap. They gave the fragile girl wearing them the countenance of a nervous lemur.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;… so – the words escaped him.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;… the electric motors whined up to speed.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;“… I don’t think this Jasper is the wet-behind-ears kid you think he is. That dude’s got some serious game face. He knows what’s going down.”&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Ahead of him bright light reduced his pupils to dues specks.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;… her slow veins showed through like blue string.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Beth blushes further, turning her face away with all &lt;strong&gt;the subtle coyness of a vixen in heat&lt;/strong&gt;. &lt;strong&gt;Twirling a length of auburn hair around&lt;/strong&gt; her perfectly manicured finger, she bites her lip.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Petal smiled and shook her head. “You just like her bouncing tits.”&lt;/p&gt;
+
+  &lt;p&gt;“What? No! That’s not what I–”&lt;/p&gt;
+
+  &lt;p&gt;“Chill, Gez, I’m just &lt;strong&gt;yanking your chain&lt;/strong&gt;.”&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;“Having a heart gets ya killed, boy.”&lt;/p&gt;
+
+  &lt;p&gt;“Don’t &lt;strong&gt;boy me&lt;/strong&gt;, old man…”&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The lights came on, blinding Gerry so that all he could see were the fine blood vessels backlit in his eyelids&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;… the laser beams – illuminated by the rakish angle of the sun and the dusty particulate in the air.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Gabe’s eyebrows knitted together with incredulity.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;“… Trust is a two-way street, and I only travel one way.”&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;“… a number of buildings appeared on the horizon: skyscrapers and many others in all kinds of sizes and shapes stood in the fog like grey fungi.”&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Sitting made &lt;strong&gt;a bright flare explode&lt;/strong&gt; in his vision.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;He stood and waited for &lt;strong&gt;his balance to re-calibrate&lt;/strong&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;… rippling with muscles beneath his dark form-fitting clothes, …&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;“… I’ll &lt;strong&gt;patch in&lt;/strong&gt;.”&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;He admonished himself for being so neglectful.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The heat of the shot boiled the blood so that a red mist fell upon the slumped body.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;AO – augmented overlay.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Jachz blinked once and became still; so still that Gerry had a strange idea he might have perhaps crashed and was in need of a reboot.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;“I can’t answer that, as I know not what I miss. One cannot wish for something one does not know or understand.”&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+        <pubDate>Wed, 02 Mar 2016 00:00:00 +0000</pubDate>
+        <link>http://crystal:4000/post/reading-code-breakers</link>
+        <guid isPermaLink="true">http://crystal:4000/post/reading-code-breakers</guid>
+        
+        <category>reading</category>
+        
+        <category>notes</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>A Reflection on Content Management</title>
+        <description>&lt;p&gt;Just some thoughts on “How do I manage files/content on computers?”.&lt;/p&gt;
+
+&lt;p&gt;&lt;span class=&quot;marginnote&quot;&gt;I’ve been planing this post for quite some time, ever being a procrastinative type, sigh….&lt;/span&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;file&quot;&gt;File&lt;/h1&gt;
+
+&lt;p&gt;Ironically, this is the most &lt;em&gt;intuitive&lt;/em&gt; way. &lt;code class=&quot;highlighter-rouge&quot;&gt;File&lt;/code&gt; is a concept well-known, but very inflexible. Reasonably, it’s in fact the most &lt;em&gt;unintuitive&lt;/em&gt; way as it forces us to think in very low level that conceptually has nothing to do with what we really want: the &lt;strong&gt;content&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;In a world more and more mobile-oriented, the role of files has receded. And yet it remains the most efficient method for managing simple content (like a post ;P).&lt;/p&gt;
+
+&lt;h1 id=&quot;application&quot;&gt;Application&lt;/h1&gt;
+
+&lt;p&gt;To center around an application is not new in mobile computation, but it only gets popular as a mindset with the rise of mobile devices. In the era of desktop, users use applications to accomplish tasks but yet they think in files instead of applications: a word document, a powerpoint file and etc. With mobile devices’ small screen estate, inconvenient inputs and on-the-go usage, navigating a file system becomes so cumbersome that most users would avoid.&lt;/p&gt;
+
+&lt;p&gt;Applications strive to present content directly and intuitively. However, how to represent content has no universal consent. This creates a fragmented world with big players creating large closed circles by offering more integration within its own ecosystem but inconvenient, if even possible, interpolation with other applications. In retrospect, the very weakness of &lt;code class=&quot;highlighter-rouge&quot;&gt;File&lt;/code&gt; concept is also its very strength: low-level but universal. Nevertheless, I still consider application-based content management is a breeze compared with files.&lt;/p&gt;
+
+&lt;h1 id=&quot;content&quot;&gt;Content&lt;/h1&gt;
+
+&lt;p&gt;I’d like to say this is the future, but I lack any confidence to say so as content representation is so diversified that any universal and yet high-level enough representation seems impossible.&lt;/p&gt;
+
+&lt;p&gt;Computers are indeed becoming smarter though, so if we can have an intelligent personal assistance, then we might be able to think in a content-oriented way and be free of “opening this or that app for my work” lock-in. However, then we might be locked-in with a specific type of assistance system, right ;P&lt;/p&gt;
+</description>
+        <pubDate>Mon, 29 Feb 2016 00:00:00 +0000</pubDate>
+        <link>http://crystal:4000/post/reflections-on-content-management</link>
+        <guid isPermaLink="true">http://crystal:4000/post/reflections-on-content-management</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Adapt other than Configure</title>
+        <description>&lt;p&gt;After many years of unscrutinized way of &lt;em&gt;configuring&lt;/em&gt; – try to make things “the right way”, I’ve realized that in many cases adaption is better. It offers the most smooth entry into new fields, more productivity from the very start and it’s also pedagogically the best way to learn from others. Configuring still matters but only when it really matters. Stay focused, unscrutinized configuring is essentially premature optimization.&lt;/p&gt;
+
+&lt;p&gt;This serves as the first article written in &lt;code class=&quot;highlighter-rouge&quot;&gt;Markdown&lt;/code&gt; directly. Previously most of my blog articles are written in &lt;code class=&quot;highlighter-rouge&quot;&gt;org&lt;/code&gt;. I’ve been a long-time &lt;code class=&quot;highlighter-rouge&quot;&gt;org-mode&lt;/code&gt; user and have done quite a bit on how to author blogs with &lt;code class=&quot;highlighter-rouge&quot;&gt;org&lt;/code&gt;. However recently, after several attempts to fix my old configurations, I finally realized that all these struggles yield little return.&lt;/p&gt;
+
+&lt;h1 id=&quot;configure&quot;&gt;Configure&lt;/h1&gt;
+&lt;p&gt;Ever since I started playing with Linux back at my sophomore year in college, I’ve been juggling with all kinds of configurations: configure bash, configure the wifi, configure graphical cards, the audio cards, the CPU, the fan speed, and the editor – Emacs. I have been hooked up with the power of configuration: a lot of choices, your way, no lock-in, true understanding and etc. It used to be sweet.&lt;/p&gt;
+
+&lt;p&gt;However, with the time passing by, things have changed: I’m getting old; Linux desktop is just a dream; mobile computation is the future; cloud computation creates closed circles with higher and higher walls; open source is becoming a super successful &lt;strong&gt;business&lt;/strong&gt; model; &lt;em&gt;Free Software&lt;/em&gt; feels outdated and not exciting at all.&lt;/p&gt;
+
+&lt;p&gt;It came to my revelation that continuing the configuration path will only lead to isolation: if you prefer to install Linux only, you’ll miss all the new exciting hardware that just doesn’t ship with Linux driver support and you’ll miss all the discounts as Linux-only devices is a niche market that doesn’t enjoy the scale effect of popular consumer products. Even for the rare cases, you can theoretically get a new device to play nice with Linux, the setup can constantly get broken with updates or edge case usage and then you have to go through the search-try-and-error drill again and again. All these only for an inferior user experience that barely &lt;strong&gt;works&lt;/strong&gt;. What’s worse, the knowledge you gain by doing the chores receives diminishing return: new software and hardware are developing too fast for you to have time for deep understanding, you get to only know new terms and how to do specific stuff. Throw mobile and cloud into the mess, all become unwieldy.&lt;/p&gt;
+
+&lt;p&gt;Enough is enough.&lt;/p&gt;
+
+&lt;h1 id=&quot;adapt&quot;&gt;Adapt&lt;/h1&gt;
+&lt;p&gt;All the talk on &lt;strong&gt;adapting&lt;/strong&gt; is truly about &lt;strong&gt;focus&lt;/strong&gt;. Maybe genius would be different, but for me, the world has become more and more complicated and time seems to be less and less. By yielding some controls, I can focus on what I can do best, a much more economical approach.&lt;/p&gt;
+
+&lt;h2 id=&quot;follow-the-herd&quot;&gt;Follow the herd&lt;/h2&gt;
+&lt;p&gt;The following is what I’ve been doing recently (not an exhaustive list by any measure):&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Bought a new-model laptop preinstalled with &lt;code class=&quot;highlighter-rouge&quot;&gt;Windows 10&lt;/code&gt;: arguably 10 sucks and is virtually a spyware, but it’s getting better fast, really &lt;em&gt;fast&lt;/em&gt; and I’m not really using it for things too sensitive.&lt;/li&gt;
+  &lt;li&gt;Bought a non-Nexus cellphone of domestic brand (Meizu) bundled with private UI and applicatioins: it’s one of the best sale and thus really a bargain.&lt;/li&gt;
+  &lt;li&gt;Install bloatware/spyware like &lt;code class=&quot;highlighter-rouge&quot;&gt;Weixin&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;QQ&lt;/code&gt; and etc: no more preaching the merits of free protocols to my non-IT friends the next time they say: “talk to you on &lt;code class=&quot;highlighter-rouge&quot;&gt;Weixin&lt;/code&gt;”.&lt;/li&gt;
+  &lt;li&gt;Use Windows/Android app for mails: goodbye &lt;code class=&quot;highlighter-rouge&quot;&gt;mu4e&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;offlineimap&lt;/code&gt; and their friends. It’s been good time together.&lt;/li&gt;
+  &lt;li&gt;Use Chrome with &lt;code class=&quot;highlighter-rouge&quot;&gt;vimum&lt;/code&gt;, less keyboard-ish but better browsing experience: goodbye &lt;code class=&quot;highlighter-rouge&quot;&gt;firefox&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;palemoon&lt;/code&gt;, and &lt;code class=&quot;highlighter-rouge&quot;&gt;conkeror&lt;/code&gt;(really sad to see &lt;code class=&quot;highlighter-rouge&quot;&gt;conkeror&lt;/code&gt; go, I like it &lt;strong&gt;a lot&lt;/strong&gt;.)&lt;/li&gt;
+  &lt;li&gt;Learn &lt;code class=&quot;highlighter-rouge&quot;&gt;Powershell&lt;/code&gt; to automate things on Windows: “No, thanks” for &lt;code class=&quot;highlighter-rouge&quot;&gt;Cygwin&lt;/code&gt;, been there, tried that. And &lt;em&gt;object&lt;/em&gt; shell is not that bad ;P&lt;/li&gt;
+  &lt;li&gt;Use &lt;code class=&quot;highlighter-rouge&quot;&gt;hexchat&lt;/code&gt; on Windows instead of &lt;code class=&quot;highlighter-rouge&quot;&gt;ERC&lt;/code&gt;: well, &lt;code class=&quot;highlighter-rouge&quot;&gt;hexchat&lt;/code&gt; is still a nerdy thing, but we’re talking about &lt;code class=&quot;highlighter-rouge&quot;&gt;IRC&lt;/code&gt; here ;P (PS: not that I have any complaints about &lt;code class=&quot;highlighter-rouge&quot;&gt;ERC&lt;/code&gt;, it’s just that I’m using &lt;code class=&quot;highlighter-rouge&quot;&gt;Emacs&lt;/code&gt; within a Virtualbox VM exclusively and being a VM it constantly gets paused, saved/restored, making it less suitable for a long-going background app)&lt;/li&gt;
+  &lt;li&gt;Linux in a VM only. This is true both for my build machine on the server and my personal working environment. It’s just easier: the device driver support for Windows is almost zero-configured. With enough RAM, running a VM for coding is a valid option. I’ve been using this combination for half a year now. It’s super. (PS: this is where I think Linux really shines: as service runner and a developer tool.)&lt;/li&gt;
+  &lt;li&gt;Use proprietary tools like &lt;code class=&quot;highlighter-rouge&quot;&gt;WebStorm&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;VS Code&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;Sublime Text&lt;/code&gt; instead of venerable Emacs for web development: less customization, more out-of-box integration.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Many changes happen within one or two months. I basically change half of my tools and workflow. You might think these changes would be very hard: &lt;strong&gt;NO&lt;/strong&gt;, it’s actually much easier and greatly improves my overall experience. By following the herd, I actually use mainstream tools developed&amp;amp;maintained by well-paid engineers and battle-tested by thousands of users. Most of the time, they just work out of the box. All I need to do is to adapt: give up some controls, learn their ways first and then see what changes we need to make, and usually you’ll find their way is actually better. Yes, it’s just simple like that.&lt;/p&gt;
+
+&lt;h2 id=&quot;spacemacs&quot;&gt;Spacemacs&lt;/h2&gt;
+&lt;p&gt;Weird maybe, I’ll use &lt;code class=&quot;highlighter-rouge&quot;&gt;Spacemacs&lt;/code&gt; as an example. &lt;code class=&quot;highlighter-rouge&quot;&gt;Spacemacs&lt;/code&gt; is&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;A community-driven Emacs distribution - The best editor is neither Emacs nor Vim, it’s Emacs &lt;em&gt;and&lt;/em&gt; Vim!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Well, the four merits it touted on its website bear more meanings:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Four core pillars: Mnemonic, Discoverable, Consistent and “Crowd-Configured”.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;And I think &lt;code class=&quot;highlighter-rouge&quot;&gt;Crowd-Configured&lt;/code&gt; is the jewelry on the crown. After all, you can arguably say the vanilla Emacs is also “Mnemonic, Discoverable, Consistent”. Well, to be fair, I think the vanilla Emacs has too much historical baggage and far less “Mnemonic, Discoverable, Consistent” than &lt;code class=&quot;highlighter-rouge&quot;&gt;Spacemacs&lt;/code&gt;. I’ve long known this starter kit and heard a lot of good things about it, but not until my recent &lt;em&gt;adapt&lt;/em&gt; conviction I was too scared to use it. I’ve used Emacs for almost 7 years now and has accumulated my fair share of customization. Despite my inclination towards VIM’s modal editing style, I’ve backed off from change multiple times. “How can I throw away years of hard-earned muscle memory and carefully crafted personal configurations?! What’s the gain? Just to be VIM-like? Stupid!”&lt;/p&gt;
+
+&lt;p&gt;Encouraged by my other &lt;em&gt;adapt&lt;/em&gt; successes, I started to try &lt;code class=&quot;highlighter-rouge&quot;&gt;Spacemacs&lt;/code&gt; for a third time (yes, a third time…). “Just let it go.” I told myself. “Do not think how can I do what I used to do. Think how Spacemacs handles these use cases. Learn like a newbie with an empty mind.” I have my first success with &lt;code class=&quot;highlighter-rouge&quot;&gt;org-mode&lt;/code&gt;, the killer application of Emacs IMO. I was trying to review my multi-megabytles agenda files, and navigating, state-changing, archiving, tree-manipulation are just &lt;strong&gt;so&lt;/strong&gt; easy with &lt;code class=&quot;highlighter-rouge&quot;&gt;evil-org&lt;/code&gt;: no more &lt;code class=&quot;highlighter-rouge&quot;&gt;C-M-x C-S-?&lt;/code&gt; stuff which requires my fingers spread&amp;amp;shift like a spider’s dancing. I then started to configure &lt;code class=&quot;highlighter-rouge&quot;&gt;mu4e&lt;/code&gt;(deprecated later), &lt;code class=&quot;highlighter-rouge&quot;&gt;org-agenda&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;Emacs lisp&lt;/code&gt;. Lisp editing proved to be the hard one: the &lt;code class=&quot;highlighter-rouge&quot;&gt;lisp-state&lt;/code&gt; requires more modal-thinking than I’m comfortable with. However, after going through the early stage, I really start to appreciate the well-configured, discoverable functionalities: they are just there. This reminds me of my old MS Word experience: there must be a way to do this, you just need to look around and then the “Wow” moment. From this aspect, &lt;code class=&quot;highlighter-rouge&quot;&gt;Spacemacs&lt;/code&gt; is just great. Now I can reach near previous efficiency with lisp editing now and it’s just a week in &lt;code class=&quot;highlighter-rouge&quot;&gt;Spacemacs&lt;/code&gt;. The experience has been so nice, I have switched default to &lt;code class=&quot;highlighter-rouge&quot;&gt;Spacemacs&lt;/code&gt; before writing this article.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;I’ll still &lt;em&gt;configure&lt;/em&gt;, just not for everything. Only the area I focused on deserves much configuration. Other things I need? Go with mainstream, it helps.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Use the best tool for the task.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;A well-known saying, but what many &lt;em&gt;free&lt;/em&gt;-minded developers do is often:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;If you have a hammer, you tend to see every problem as a nail.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This is particularly true for &lt;em&gt;open source&lt;/em&gt; tools: hey, just read the source and happy hacking :), isn’t? Now, I would say nope, there are better things to focus on.&lt;/p&gt;
+</description>
+        <pubDate>Sat, 06 Feb 2016 00:00:00 +0000</pubDate>
+        <link>http://crystal:4000/post/adapt-vs-configure</link>
+        <guid isPermaLink="true">http://crystal:4000/post/adapt-vs-configure</guid>
+        
+        <category>methodology</category>
+        
+        <category>philosophy</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Installing SLED 12 with PXE using libvirt</title>
+        <description>&lt;p&gt;
+Recently I get a task to fix a bug related to SLED in KVM. Since there is a
+local PXE server for easy installation, I've planned to install SLED in KVM
+through PXE. Here is the struggle I've been through.
+&lt;/p&gt;
+
+&lt;p&gt;
+To get PXE installation work, I need to have a working bridge that will place VM
+in the subnet with PXE server.
+&lt;/p&gt;
+
+&lt;div id=&quot;outline-container-sec-1&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-1&quot;&gt;With &lt;code&gt;NetworkManager&lt;/code&gt;&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-1&quot;&gt;
+&lt;p&gt;
+&lt;code&gt;NetworkManager&lt;/code&gt; is buggy. Despite the fact you can use a GUI to set up a
+bridge, you'll encounter various issues that make your life hard: 
+&lt;/p&gt;
+
+&lt;ul class=&quot;org-ul&quot;&gt;
+&lt;li&gt;The status indicator in the dialog is incorrect
+
+&lt;p&gt;
+A bridge is always on regardless.
+&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;Turning-off/Removal of an existing bridge is problematic.
+
+&lt;p&gt;
+Turning off doesn't seem to work. Remove a bridge in the dialog and yet this
+bridge still exists.(verified using &lt;code&gt;nmcli con list&lt;/code&gt; or &lt;code&gt;btrctl show&lt;/code&gt;)
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-1-1&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;sec-1-1&quot;&gt;Possible solution&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-1-1&quot;&gt;
+&lt;p&gt;
+The following procedure can be used to create a &lt;i&gt;useful&lt;/i&gt; bridge interface.
+&lt;/p&gt;
+
+&lt;p&gt;
+Refer to &lt;a href=&quot;https://www.happyassassin.net/2014/07/23/bridged-networking-for-libvirt-with-networkmanager-2014-fedora-21/&quot;&gt;this article&lt;/a&gt; for detailed tips, basically:
+&lt;/p&gt;
+
+&lt;ul class=&quot;org-ul&quot;&gt;
+&lt;li&gt;Clean up existing profiles (as a safety measure).
+&lt;/li&gt;
+&lt;li&gt;Use the GUI only to create a bridge, set up slave interface and etc, but &lt;b&gt;NOT&lt;/b&gt;
+  for anything else.
+&lt;/li&gt;
+&lt;li&gt;Use &lt;code&gt;nmcli&lt;/code&gt; to bring up the bridge.
+
+&lt;p&gt;
+&lt;b&gt;NOTE:&lt;/b&gt; up until &lt;code&gt;0.9.8&lt;/code&gt;, there is no feedback after &lt;code&gt;nmcli con up &amp;lt;args&amp;gt;&lt;/code&gt; and
+even with some feedback in later versions, it's something like &quot;command sent
+(DBus-activated successfully)&quot;. &lt;code&gt;DBus&lt;/code&gt; remote call guarantees no timing, you
+need to &lt;b&gt;wait&lt;/b&gt; for a little while for things to settle down.
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;ul class=&quot;org-ul&quot;&gt;&lt;li&gt;&lt;a id=&quot;sec-1-1-1&quot; name=&quot;sec-1-1-1&quot;&gt;&lt;/a&gt;Remove a bridge connection&lt;br  /&gt;&lt;div class=&quot;outline-text-4&quot; id=&quot;text-1-1-1&quot;&gt;
+&lt;p&gt;
+As mentioned above this part is buggy:
+&lt;/p&gt;
+
+&lt;ul class=&quot;org-ul&quot;&gt;
+&lt;li&gt;Remove the bridge connection in the &lt;code&gt;NM&lt;/code&gt; GUI interface.
+
+&lt;p&gt;
+Of course this does &lt;span class=&quot;underline&quot;&gt;NOT&lt;/span&gt; really do anything, but if you don't do it the
+bridge will persists even after you have removed it with rest steps, which is
+just more confusing.
+&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;Bring the bridge interface down.
+
+&lt;p&gt;
+Use &lt;code&gt;ip link set bridge0 down&lt;/code&gt;, instead of &lt;code&gt;ifdown&lt;/code&gt;, &lt;code&gt;btrctl&lt;/code&gt; or &lt;code&gt;nmcli con&lt;/code&gt;,
+all of which will be obstructed by &lt;code&gt;NM&lt;/code&gt;. I think &lt;code&gt;ip link&lt;/code&gt; works at kernel
+level directly.
+&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;Remove the bridge.
+
+&lt;p&gt;
+&lt;code&gt;btrctl delbr bridge0&lt;/code&gt; should pull the trick.
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/li&gt;&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-2&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-2&quot;&gt;The old good &lt;code&gt;CLI&lt;/code&gt; approach.&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-2&quot;&gt;
+&lt;p&gt;
+&lt;code&gt;systemctl disable network&lt;/code&gt; to turn off the &lt;code&gt;NetworkManager&lt;/code&gt;. All standard
+procedures using &lt;code&gt;btrctl&lt;/code&gt; should work.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-3&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-3&quot;&gt;Final tweak: STP.&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-3&quot;&gt;
+&lt;p&gt;
+The bridge interface created above will work &lt;b&gt;normally&lt;/b&gt;, but might &lt;b&gt;NOT&lt;/b&gt; with
+&lt;code&gt;PXE&lt;/code&gt;. The problem here is with the &lt;code&gt;STP&lt;/code&gt;: &lt;a href=&quot;https://en.wikipedia.org/wiki/Spanning_Tree_Protocol&quot;&gt;Spanning Tree Protocol (wikipedia)&lt;/a&gt;.
+&lt;/p&gt;
+
+&lt;p&gt;
+It's a protocol to avoid &lt;a href=&quot;https://en.wikipedia.org/wiki/Switching_loop&quot;&gt;Layer 2 switching loop&lt;/a&gt;, (&lt;a href=&quot;http://www.omnisecu.com/cisco-certified-network-associate-ccna/what-is-layer-2-switching-loop.php&quot;&gt;another article with
+illustration&lt;/a&gt;) by creating a spanning tree in the network topology. In the
+algorithm, there is a &lt;code&gt;blocking&lt;/code&gt; phase to listen on the coming/going packets to
+gather information before any packets are forwarded. This delay would result in
+a timeout error in &lt;code&gt;PXE&lt;/code&gt; connection.
+&lt;/p&gt;
+
+&lt;p&gt;
+It's not recommended to disable &lt;code&gt;STP&lt;/code&gt;, but instead set &lt;code&gt;forward-delay&lt;/code&gt; to 0 as
+instructed in &lt;a href=&quot;http://wiki.libvirt.org/page/PXE_boot_(or_dhcp)_on_guest_failed&quot;&gt;libvirt's FAQ about bridge&lt;/a&gt;. The &lt;code&gt;NetworkManager&lt;/code&gt; approach creates
+bridges with 15 seconds delay as default, and the &lt;code&gt;CLI&lt;/code&gt; would create bridges
+without &lt;code&gt;STP&lt;/code&gt;.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Wed, 26 Aug 2015 00:00:00 +0000</pubDate>
+        <link>http://crystal:4000/post/installing-sled-12-with-pxe-using-libvirt</link>
+        <guid isPermaLink="true">http://crystal:4000/post/installing-sled-12-with-pxe-using-libvirt</guid>
+        
+        <category>libvirt</category>
+        
+        <category>sled</category>
+        
+        <category>bridge</category>
+        
+        <category>stp</category>
+        
+        
+        <category></category>
+        
+        <category></category>
+        
+      </item>
+    
+      <item>
+        <title>Java Programming Language Specification</title>
+        <description>&lt;p&gt;
+The last several weeks I've been skimming through &lt;i&gt;James Gosling&lt;/i&gt;, &lt;i&gt;Bill Joy&lt;/i&gt;,
+&lt;i&gt;Guy Steel&lt;/i&gt;, &lt;i&gt;Gilad Bracha&lt;/i&gt;, &lt;i&gt;The Java&lt;sup&gt;TM&lt;/sup&gt; Language Specification - 3rd edition&lt;/i&gt;.
+An old book, but I happen to have a printed version around. So I guessed that
+reading through it would be helpful for me to understand language
+specification in general.
+&lt;/p&gt;
+
+&lt;p&gt;
+The main motive behind this endeavor is the revelation of the multitude of
+languages that I have to work with these days. I've been following development
+of JavaScript as well and there is a need to understand formal JS specification
+as it constantly evolves.
+&lt;/p&gt;
+
+&lt;p&gt;
+The overall experience is rewarding though I only managed to absorb tiny portion
+from that book. Most Java specific parts are skipped. The following is the note
+I've taken while reading.
+&lt;/p&gt;
+
+&lt;hr  /&gt;
+&lt;hr  /&gt;
+&lt;p&gt;
+&lt;b&gt;Notes&lt;/b&gt;
+&lt;/p&gt;
+&lt;script src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;&gt;
+&lt;/script&gt;
+
+&lt;div id=&quot;outline-container-sec-1&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-1&quot;&gt;Goal&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-1&quot;&gt;
+&lt;p&gt;
+Learn the conventions &amp;amp; terminology for language specification. 
+&lt;b&gt;NOT Learning Java for now&lt;/b&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-2&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-2&quot;&gt;Lexical Grammar&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-2&quot;&gt;
+&lt;ul class=&quot;org-ul&quot;&gt;
+&lt;li&gt;raw stream of Unicode chars
+&lt;/li&gt;
+&lt;li&gt;translation (escaped Unicode char)
+&lt;/li&gt;
+&lt;li&gt;remove white space and comments
+&lt;/li&gt;
+&lt;li&gt;tokenized
+&lt;/li&gt;
+&lt;li&gt;syntactic grammar
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-2-1&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;sec-2-1&quot;&gt;Extra Notes&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-2-1&quot;&gt;
+&lt;ul class=&quot;org-ul&quot;&gt;
+&lt;li&gt;In translation, the longest possible translation.
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-3&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-3&quot;&gt;Syntactic Grammar&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-3&quot;&gt;
+&lt;p&gt;
+Tokens are the terminal symbols of the syntactic grammar.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-4&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-4&quot;&gt;Language Compatibility&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-4&quot;&gt;
+&lt;ul class=&quot;org-ul&quot;&gt;
+&lt;li&gt;language compatibility
+&lt;/li&gt;
+&lt;li&gt;platform compatibility
+&lt;/li&gt;
+&lt;li&gt;migration compatibility
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-5&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-5&quot;&gt;&lt;code&gt;subtype&lt;/code&gt; and &lt;code&gt;supertype&lt;/code&gt;&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-5&quot;&gt;
+&lt;p&gt;
+&lt;code&gt;Subtyping&lt;/code&gt; does not extend through generic types: \( T&lt;:U \) does not imply that
+\( C\langle T \rangle &lt;: C\langle U \rangle \).
+&lt;/p&gt;
+
+&lt;p&gt;
+Here we need to understand that &lt;code&gt;subtype&lt;/code&gt; relationship is NOT the same as
+&lt;code&gt;subset&lt;/code&gt;.
+&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-5-1&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;sec-5-1&quot;&gt;&lt;span class=&quot;todo TODO&quot;&gt;TODO&lt;/span&gt; Some deep digging for the type system theory?&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-5-1&quot;&gt;
+&lt;p&gt;
+Related to set theory and category theory (all three seem to be able to serve as
+a foundation of Math.)
+&lt;/p&gt;
+
+&lt;p&gt;
+I've done some search on this topic, later fill this part with materials found.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-6&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-6&quot;&gt;&lt;span class=&quot;todo TODO&quot;&gt;TODO&lt;/span&gt; There is a clear separation of concepts between &lt;code&gt;Array&lt;/code&gt; and &lt;code&gt;Class&lt;/code&gt;. Why?&lt;/h2&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-7&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-7&quot;&gt;Bewildered concepts&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-7&quot;&gt;
+&lt;p&gt;
+Something we don't truly understand, but nevertheless widely seen.
+&lt;/p&gt;
+
+&lt;ul class=&quot;org-ul&quot;&gt;
+&lt;li&gt;heap pollution
+&lt;/li&gt;
+&lt;li&gt;capture conversion
+&lt;/li&gt;
+&lt;li&gt;unchecked warning
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-8&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-8&quot;&gt;Names&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-8&quot;&gt;
+&lt;ul class=&quot;org-ul&quot;&gt;
+&lt;li&gt;Simple Names and Qualified Names
+&lt;/li&gt;
+&lt;li&gt;Names represent entities in a program
+&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Declarations&lt;/b&gt; with &lt;b&gt;Identifiers&lt;/b&gt; introduces entities that have &lt;b&gt;Names&lt;/b&gt; into program.
+
+&lt;p&gt;
+Names are constructed with identifiers. But not all identifiers are part of
+Names (e.g. identifier used as label)
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-8-1&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;sec-8-1&quot;&gt;Scope&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-8-1&quot;&gt;
+&lt;ul class=&quot;org-ul&quot;&gt;
+&lt;li&gt;Scope of a Declaration
+
+&lt;p&gt;
+The &lt;b&gt;scope of a declaration&lt;/b&gt; is the region of the program within which the
+&lt;b&gt;entity&lt;/b&gt; declared by the declaration can be referred to with a &lt;b&gt;simple name&lt;/b&gt;
+(provided it is visible, i.e. not shadowed).
+&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;&lt;code&gt;in scope&lt;/code&gt;
+&lt;/li&gt;
+
+&lt;li&gt;&lt;code&gt;shadowing&lt;/code&gt; vs &lt;code&gt;hiding&lt;/code&gt; vs &lt;code&gt;obscuring&lt;/code&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-8-2&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;sec-8-2&quot;&gt;Name Obscuring&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-8-2&quot;&gt;
+&lt;p&gt;
+arise from the resolution of ambiguity of simple names in some contexts.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-8-3&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;sec-8-3&quot;&gt;Identifier&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-8-3&quot;&gt;
+&lt;p&gt;
+an unlimited-length sequence of &lt;span class=&quot;underline&quot;&gt;Java&lt;/span&gt; letters and &lt;span class=&quot;underline&quot;&gt;Java&lt;/span&gt; digits.
+&lt;/p&gt;
+
+&lt;ul class=&quot;org-ul&quot;&gt;
+&lt;li&gt;identifiers in labeled statement
+&lt;/li&gt;
+&lt;li&gt;$3.8
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-9&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-9&quot;&gt;Packages&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-9&quot;&gt;
+&lt;/div&gt;&lt;div id=&quot;outline-container-sec-9-1&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;sec-9-1&quot;&gt;storage&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-9-1&quot;&gt;
+&lt;ul class=&quot;org-ul&quot;&gt;
+&lt;li&gt;file
+
+&lt;p&gt;
+some limitation for this format
+&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;database
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-9-2&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;sec-9-2&quot;&gt;compilation units&lt;/h3&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-10&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-10&quot;&gt;Definite Assignment&lt;/h2&gt;
+&lt;/div&gt;
+
+
+&lt;div id=&quot;outline-container-sec-11&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-11&quot;&gt;Key references&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-11&quot;&gt;
+&lt;ul class=&quot;org-ul&quot;&gt;
+&lt;li&gt;$2.4
+&lt;/li&gt;
+&lt;li&gt;$6 Names
+
+&lt;p&gt;
+forms, scope, access
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.amazon.com/Types-Programming-Languages-Benjamin-Pierce-ebook/dp/B00AJXZ5JE/ref=tmm_kin_title_0?_encoding=UTF8&amp;amp;sr=8-1&amp;amp;qid=1436357919&quot;&gt;Amazon.com: Types and Programming Languages eBook: Benjamin C. Pierce: Kindle Store&lt;/a&gt;
+  A book on type theory.
+&lt;/li&gt;
+
+&lt;li&gt;$14.5 &quot;dangling else&quot; problem
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&quot;outline-container-sec-12&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-12&quot;&gt;Skipped&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-12&quot;&gt;
+&lt;p&gt;
+$8 - $11, from Classes to Exceptions
+&lt;/p&gt;
+
+&lt;p&gt;
+$13 binary compatibility (dealing with updating widely deployed packages)
+&lt;/p&gt;
+
+
+&lt;hr  /&gt;
+&lt;hr  /&gt;
+&lt;p&gt;
+&lt;b&gt;Notes End&lt;/b&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Mon, 13 Jul 2015 00:00:00 +0000</pubDate>
+        <link>http://crystal:4000/post/java-programming-language-specification</link>
+        <guid isPermaLink="true">http://crystal:4000/post/java-programming-language-specification</guid>
+        
+        <category>java</category>
+        
+        <category>specification</category>
+        
+        <category>prog-lang</category>
+        
+        
+        <category></category>
+        
+        <category></category>
+        
+      </item>
+    
+      <item>
+        <title>A workflow for bug fixing</title>
+        <description>&lt;p&gt;As a developer in SUSE Desktop Department, most of my work are bug fixing. Desktop bugs are diversified in nature: you constantly need to handle bugs from an unknown package or some esoteric features. To comb with this reality, I’ve been pondering on the proper methodology.&lt;/p&gt;
+
+&lt;p&gt;&lt;span class=&quot;marginnote&quot;&gt;About the diversities, here is a rhetoric saying with the &lt;em&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Pareto_principle&quot;&gt;80-20 principle&lt;/a&gt;&lt;/em&gt;: &lt;strong&gt;80% of the time we work with only 20% of the knowledge we need&lt;/strong&gt;.&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;DISCLAIM:&lt;/strong&gt; &lt;em&gt;this post has undergone some format conversions and the current formatting quality is not very good.&lt;/em&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;You want to learn! And not timid before the unknown.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;SRN: Search, Read, Note and repeat.&lt;/p&gt;
+
+    &lt;p&gt;One of my main complaints about my last job in a local company is that they have regulated web access excessively in the office: in order to search for information I have to use common terminals that are constantly in short. IMO, this restriction contributes as half to the failure of the new project as all other factors combined. From that time on, I decide that I should refuse to work on any new project without decent web access.&lt;/p&gt;
+
+    &lt;p&gt;Document reading is a trait that I believe many interviewers have overlooked (at least no one ever asks me about this part). In today’s fast-paced world, technology evolves quickly. Reading is the best way to keep in sync with the new developments.&lt;/p&gt;
+
+    &lt;p&gt;Noting is more about recording what you’ve found. You need to mark what info you think are more important, more relevant, what questions or unclear points you still have. For this purpose, pen&amp;amp;paper is always my favorite.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;A logical workflow.&lt;/p&gt;
+
+    &lt;p&gt;The first two steps help you become comfortable with a new package or field. After you’ve been briefed with the context and you need to handle the problem itself. The reality is we still know only very little so the previous steps tend to appear again and again.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;my-workflow&quot;&gt;My workflow&lt;/h1&gt;
+
+&lt;p&gt;In short: &lt;strong&gt;problem -&amp;gt; questions -&amp;gt; solutions -&amp;gt; actions&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Divide and rephrase the &lt;strong&gt;Problem&lt;/strong&gt;.&lt;/p&gt;
+
+    &lt;p&gt;Bug reports from customers or QA are never the appropriate way you should think about the bugs. Reproduce the bugs, be creative, try out different cases. Play with the problem till you can divide/rephrase the problem in a way you’re confident it can be addressed technically.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Ask Questions.&lt;/p&gt;
+
+    &lt;p&gt;What is this? Why something work in A situation but not B? How the other program handle this situation? What if I do this?&lt;/p&gt;
+
+    &lt;p&gt;Whatever the question you ask or encounter. Do the SRN.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Make the bold assumptions and leave questions unanswered.&lt;/p&gt;
+
+    &lt;p&gt;A careful mind will always have more questions than what it can manage to answer in the limited period. Keep in mind the goal is fixing bugs, and questions can be dealt with by: &lt;strong&gt;making bold assumptions&lt;/strong&gt; if all known facts fit, &lt;strong&gt;unanswered&lt;/strong&gt; if not considered relevant, &lt;strong&gt;short answer&lt;/strong&gt; if that’s sufficient.&lt;/p&gt;
+
+    &lt;p&gt;I’ve always found &lt;strong&gt;assumption&lt;/strong&gt; is a very effective way of moving things forward. A striking fact is human minds work similarly: many times what you think intuitively is not too far away from what others’ve done. As long as the exact detail is not needed, by making assumptions, we save us time and progress fast. (And there is little to lose, correct it if we assumed wrong.)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Iteration till a solution comes to your mind.&lt;/p&gt;
+
+    &lt;p&gt;There are no recipes for locating the solution. It comes to you at proper time ;P after enough work along the right direction.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;a-workflow-example&quot;&gt;A workflow example&lt;/h1&gt;
+
+&lt;p&gt;The rest of the article is a workflow document I’ve created while fixing a Desktop bug. It’s a reproduction as in work I actually only sketch on paper. I also would not include any references on the details because the outline is more important for ideas I’d like to share.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;Example&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Related the component is in &lt;code class=&quot;highlighter-rouge&quot;&gt;SLE Classic&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;extension.js&lt;/code&gt; part.&lt;/p&gt;
+
+&lt;h2 id=&quot;rephrasing&quot;&gt;Rephrasing&lt;/h2&gt;
+
+&lt;p&gt;As in my comment #3, the main issue is the misuse of GNOME Tweak tools.&lt;/p&gt;
+
+&lt;p&gt;Two real bugs remain:
+1.  Window buttons are not shown or displayed correctly across workspace.
+2.  Nautilus has issue dealing with window grouping.&lt;/p&gt;
+
+&lt;h2 id=&quot;workflow&quot;&gt;Workflow&lt;/h2&gt;
+
+&lt;h3 id=&quot;facts--questions&quot;&gt;FACTS &amp;amp; Questions&lt;/h3&gt;
+
+&lt;h4 id=&quot;done-how-windows-addremove-event-gets-detected&quot;&gt;DONE How windows add&amp;amp;remove event gets detected?&lt;/h4&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;this._workspaceSignals&lt;/code&gt; a hash map holds &lt;code class=&quot;highlighter-rouge&quot;&gt;window-added&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;window-removed&lt;/code&gt; listeners IDs.&lt;/p&gt;
+
+&lt;p&gt;The listeners are working as expected.&lt;/p&gt;
+
+&lt;h4 id=&quot;fact-the-grouping-works-correctly-in-one-single-workspace&quot;&gt;*FACT* The grouping works correctly in one single workspace.&lt;/h4&gt;
+
+&lt;h5 id=&quot;done-q-how-and-can-we-duplicate-the-logic-to-multiple-workspaces&quot;&gt;DONE &lt;strong&gt;Q&lt;/strong&gt;: How? And can we duplicate the logic to multiple workspaces?&lt;/h5&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;_populateWindowList&lt;/code&gt; has check on the grouping setting. If the grouping is turned on, &lt;code class=&quot;highlighter-rouge&quot;&gt;AppButton&lt;/code&gt; is used, o/w &lt;code class=&quot;highlighter-rouge&quot;&gt;WindowButton&lt;/code&gt; is employed.&lt;/p&gt;
+
+&lt;h6 id=&quot;done-q-why-only-windows-in-current-ws-is-displayed-no-grouping-for-simplicity&quot;&gt;DONE &lt;strong&gt;Q&lt;/strong&gt; Why only windows in current WS is displayed? (no grouping for simplicity.)&lt;/h6&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;WindowList&lt;/code&gt; holds all window/app buttons. Each button is responsible for checking whether it should be displayed with regards to current workspace.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;App and Window Button have different visibility criteria&lt;/strong&gt;. More on this later.&lt;/p&gt;
+
+&lt;h6 id=&quot;facts-appbutton-is-new-to-me&quot;&gt;&lt;strong&gt;FACTS&lt;/strong&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;AppButton&lt;/code&gt; is new to me.&lt;/h6&gt;
+
+&lt;p&gt;Two implications only happens to me later: bugs that were fixed for &lt;code class=&quot;highlighter-rouge&quot;&gt;WindowButton&lt;/code&gt; should be ported to &lt;code class=&quot;highlighter-rouge&quot;&gt;AppButton&lt;/code&gt;. &lt;code class=&quot;highlighter-rouge&quot;&gt;AppButton&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;WindowButton&lt;/code&gt; are similar in nature but do &lt;strong&gt;NOT&lt;/strong&gt; share a same class hierarchy, which I believe is an issue.&lt;/p&gt;
+
+&lt;p&gt;####### TODO Should &lt;code class=&quot;highlighter-rouge&quot;&gt;AppButton&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;WindowButton&lt;/code&gt; has a same parent?&lt;/p&gt;
+
+&lt;p&gt;To prevent duplicated code and emphasize the common role both play.&lt;/p&gt;
+
+&lt;h4 id=&quot;done-q-why-switching-backforth-workspaces-fixes-button-issues&quot;&gt;DONE &lt;strong&gt;Q&lt;/strong&gt;: Why switching back&amp;amp;forth workspaces fixes button issues?&lt;/h4&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;_populateWindowList&lt;/code&gt; recreate all active window/app buttons, but this routine only run at &lt;code class=&quot;highlighter-rouge&quot;&gt;notify::allocation&lt;/code&gt;, which is &lt;strong&gt;NOT&lt;/strong&gt; triggered with workspace change.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;AppButton&lt;/code&gt; is similar to &lt;code class=&quot;highlighter-rouge&quot;&gt;WindowButton&lt;/code&gt;, visibility check callback is hooked to &lt;code class=&quot;highlighter-rouge&quot;&gt;switch-workspace&lt;/code&gt; signal.&lt;/p&gt;
+
+    &lt;p&gt;This finding leads necessarily to the first solution.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;solution-missing-or-legacy-buttons&quot;&gt;Solution: missing or legacy buttons.&lt;/h3&gt;
+
+&lt;h4 id=&quot;target-onwindowadded-grouped-branch&quot;&gt;TARGET: &lt;code class=&quot;highlighter-rouge&quot;&gt;_onWindowAdded&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;grouped&lt;/code&gt; branch.&lt;/h4&gt;
+
+&lt;p&gt;Add &lt;code class=&quot;highlighter-rouge&quot;&gt;AppButton&lt;/code&gt; visibility update callback into &lt;code class=&quot;highlighter-rouge&quot;&gt;windows-change&lt;/code&gt; signal from &lt;code class=&quot;highlighter-rouge&quot;&gt;ShellApp&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;fixes&quot;&gt;Fixes&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;No button in new workspace if we open a new window for an already running application.&lt;/li&gt;
+  &lt;li&gt;Remaining legacy button in a workspace after all windows of one application is closed. NOTE, the application is still running, i.e. it has opened window in some other workspace.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;solution-title-problem&quot;&gt;Solution: Title problem&lt;/h3&gt;
+
+&lt;h4 id=&quot;facts&quot;&gt;&lt;strong&gt;FACTS&lt;/strong&gt;&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Currently button title only gets updated with “windows-change”&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;[ ] “windows-change” is signaled even only by switching workspace&lt;/p&gt;
+
+    &lt;p&gt;This explains why switching fixes some issues. But why this event gets triggered?&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;target-windowschanged&quot;&gt;TARGET: &lt;code class=&quot;highlighter-rouge&quot;&gt;_windowsChanged&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;There is a bug in original code. It doesn’t consider the case when an application has two single window in separate workspace as it does nothing if &lt;code class=&quot;highlighter-rouge&quot;&gt;this._windowTitle&lt;/code&gt; exists. Forcing update to fix this.&lt;/p&gt;
+
+&lt;h4 id=&quot;fix&quot;&gt;Fix&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Incorrectly displayed title, see original bug report for detail.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;done-q-an-app-gets-its-window-list-on-current-workspace-specifically-for-nautilus&quot;&gt;DONE Q: an app gets its window list on current workspace? Specifically for &lt;code class=&quot;highlighter-rouge&quot;&gt;Nautilus&lt;/code&gt;.&lt;/h3&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;_getWindowList&lt;/code&gt; uses API &lt;code class=&quot;highlighter-rouge&quot;&gt;Shell_app_get_windows&lt;/code&gt;, which returns &lt;strong&gt;all&lt;/strong&gt; windows belonging to a specific application.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;win.located_on_workspace(ws)&lt;/code&gt; is used to check whether &lt;code class=&quot;highlighter-rouge&quot;&gt;win&lt;/code&gt; is in &lt;code class=&quot;highlighter-rouge&quot;&gt;ws&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;solution-desktop-is-shown-as-a-window-in-the-panel-with-grouping-on&quot;&gt;Solution: Desktop is shown as a window in the panel with grouping on.&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;_getWindowList&lt;/code&gt; should only check window types. Only return window of type &lt;code class=&quot;highlighter-rouge&quot;&gt;Meta.WindowType.NORMAL&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;done-q-why-an-nautilus-button-is-still-displayed-even-without-desktop&quot;&gt;DONE Q: Why an &lt;code class=&quot;highlighter-rouge&quot;&gt;Nautilus&lt;/code&gt; button is still displayed even without &lt;code class=&quot;highlighter-rouge&quot;&gt;Desktop&lt;/code&gt;.&lt;/h4&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;_updateVisibility&lt;/code&gt; uses API &lt;code class=&quot;highlighter-rouge&quot;&gt;Shell_app_is_on_workspace&lt;/code&gt; (&lt;code class=&quot;highlighter-rouge&quot;&gt;shell-app.c&lt;/code&gt;), which according to &lt;a href=&quot;https://mail.gnome.org/archives/commits-list/2011-January/msg04214.html&quot;&gt;this patch&lt;/a&gt;, will return &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt; for Desktop window (a workspace less window as we see).&lt;/p&gt;
+
+&lt;h4 id=&quot;sol&quot;&gt;Sol&lt;/h4&gt;
+
+&lt;p&gt;Use &lt;code class=&quot;highlighter-rouge&quot;&gt;(this._getWindowList() &amp;gt; 0)&lt;/code&gt; to test for visibility.&lt;/p&gt;
+
+&lt;p&gt;This is safe as &lt;code class=&quot;highlighter-rouge&quot;&gt;shell_app_is_on_workspace&lt;/code&gt; uses the same logic. The only difference is application in STARTING status and workspaceless window, both should be ignored anyway.&lt;/p&gt;
+
+&lt;h3 id=&quot;fact-if-grouping-is-enabled-context-menu-is-shaky-and-unusable-also-a-lot-of-stability-issue&quot;&gt;&lt;strong&gt;FACT:&lt;/strong&gt; If &lt;code class=&quot;highlighter-rouge&quot;&gt;grouping&lt;/code&gt; is enabled, context menu is shaky and unusable, also a lot of stability issue.&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;[X] “button-press-event” issue&lt;/li&gt;
+  &lt;li&gt;[X] &lt;code class=&quot;highlighter-rouge&quot;&gt;this._contextMenuManager&lt;/code&gt; should remove &lt;code class=&quot;highlighter-rouge&quot;&gt;this._appContextMenu&lt;/code&gt; if there is a single application window.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;final-report&quot;&gt;Final Report&lt;/h2&gt;
+
+&lt;p&gt;A patch has been submitted.&lt;/p&gt;
+
+&lt;p&gt;Both issues for demonstration 1 and nautilus have been fixed for &lt;strong&gt;SLE Classic&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;In short the original code contains multiple grouping bugs.&lt;/p&gt;
+
+&lt;p&gt;Details: In total 4 separate bugs are identified and addressed.
+1.  Failure to update buttons visibility when windows are added/removed for an application.
+2.  Window title is not updated correctly.
+3.  When deciding what windows should be displayed as buttons, failed to exclude abnormal windows like Nautilus Desktop.
+4.  (Found in Development) Forget to manage &lt;sub&gt;appContextMenu&lt;/sub&gt;, which, with grouping on, leads to instability and focus grabbing issue for button context menu&lt;/p&gt;
+
+&lt;p&gt;Further, I’ve overlooked AppButton in previous fix. So some patches for WindowButton is also ported to AppButton.&lt;/p&gt;
+
+&lt;p&gt;∎ &lt;strong&gt;Example End&lt;/strong&gt;&lt;/p&gt;
+</description>
+        <pubDate>Fri, 10 Jul 2015 16:18:00 +0000</pubDate>
+        <link>http://crystal:4000/post/a-workflow-for-bug-fixing</link>
+        <guid isPermaLink="true">http://crystal:4000/post/a-workflow-for-bug-fixing</guid>
+        
+        <category>bug-fix</category>
+        
+        <category>workflow</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>From Text to simple UML diagram - Tools</title>
+        <description>&lt;div id=&quot;outline-container-sec-1&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-1&quot;&gt;Background&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-1&quot;&gt;
+&lt;p&gt;
+I want to make some diagrams about my small project &lt;code&gt;etss&lt;/code&gt;. Simple class
+diagrams and sequence diagrams would be enough.
+&lt;/p&gt;
+
+&lt;p&gt;
+I started by drawing by hand, which soon strikes me that most of my fiddling
+with the representations is repetitive&amp;amp;tedious. So I started to search for tools
+that translate high-level textual representation into decent looking graphic
+diagrams.
+&lt;/p&gt;
+
+&lt;p&gt;
+I try to find some JavaScript libraries first as recently my main focus is on
+Web tech. However, as the search goes on, I've found there are not many
+JavaScript projects on UML actually. Tools like &lt;code&gt;jointjs&lt;/code&gt;, &lt;code&gt;draw2d&lt;/code&gt; are too much
+for my purpose. In the end, I settle down on &lt;code&gt;PlantUML&lt;/code&gt;, a Java solution.
+&lt;/p&gt;
+
+&lt;p&gt;
+The following is what IMHO that's worth noting.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-2&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-2&quot;&gt;&lt;a href=&quot;http://plantuml.sourceforge.net/&quot;&gt;PlantUML&lt;/a&gt;&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-2&quot;&gt;
+&lt;p&gt;
+So far the most complete tool for generating UML from text.
+&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-2-1&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;sec-2-1&quot;&gt;Pros&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-2-1&quot;&gt;
+&lt;ul class=&quot;org-ul&quot;&gt;
+&lt;li&gt;The DSL is very intuitive, actually &lt;code&gt;bramp/js-sequence-diagrams&lt;/code&gt;'s DSL is
+roughly based on it.
+&lt;/li&gt;
+&lt;li&gt;Very complete, the documentation and examples are amble.
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&quot;outline-container-sec-2-2&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;sec-2-2&quot;&gt;Cons&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-2-2&quot;&gt;
+&lt;ul class=&quot;org-ul&quot;&gt;
+&lt;li&gt;Written in Java (Do I still remember how to code Java?)
+&lt;/li&gt;
+&lt;li&gt;Web integration requires a 3rd party server to render UML image&amp;#x2026;.
+&lt;/li&gt;
+&lt;li&gt;Styles are not very modern, but acceptable any way.
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-3&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-3&quot;&gt;Sequence Diagrams&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-3&quot;&gt;
+&lt;/div&gt;&lt;div id=&quot;outline-container-sec-3-1&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;sec-3-1&quot;&gt;&lt;a href=&quot;https://github.com/bramp/js-sequence-diagrams&quot;&gt;bramp/js-sequence-diagrams&lt;/a&gt;&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-3-1&quot;&gt;
+&lt;/div&gt;&lt;ul class=&quot;org-ul&quot;&gt;&lt;li&gt;&lt;a id=&quot;sec-3-1-1&quot; name=&quot;sec-3-1-1&quot;&gt;&lt;/a&gt;Pros&lt;br  /&gt;&lt;div class=&quot;outline-text-4&quot; id=&quot;text-3-1-1&quot;&gt;
+&lt;ul class=&quot;org-ul&quot;&gt;
+&lt;li&gt;Simplest so far
+&lt;/li&gt;
+&lt;li&gt;The employed technology is easily understood.
+&lt;/li&gt;
+&lt;li&gt;The hand-drawn theme is great.
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a id=&quot;sec-3-1-2&quot; name=&quot;sec-3-1-2&quot;&gt;&lt;/a&gt;Cons&lt;br  /&gt;&lt;div class=&quot;outline-text-4&quot; id=&quot;text-3-1-2&quot;&gt;
+&lt;ul class=&quot;org-ul&quot;&gt;
+&lt;li&gt;Not quite &lt;code&gt;UML&lt;/code&gt; like, the simple theme feels too simple.
+&lt;/li&gt;
+&lt;li&gt;Does't support quoted string, an issue opened by the author for now, #107.
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/li&gt;&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-3-2&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;sec-3-2&quot;&gt;&lt;a href=&quot;http://jumly.tmtk.net/&quot;&gt;tmtk75/jumly&lt;/a&gt;&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-3-2&quot;&gt;
+&lt;/div&gt;&lt;ul class=&quot;org-ul&quot;&gt;&lt;li&gt;&lt;a id=&quot;sec-3-2-1&quot; name=&quot;sec-3-2-1&quot;&gt;&lt;/a&gt;Pros&lt;br  /&gt;&lt;div class=&quot;outline-text-4&quot; id=&quot;text-3-2-1&quot;&gt;
+&lt;ul class=&quot;org-ul&quot;&gt;
+&lt;li&gt;Very modern, professional-UML looking. Built-in themes looks great.
+&lt;/li&gt;
+&lt;li&gt;Not using SVG, but DOM objects directly, so styling can be done with CSS.
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+
+&lt;li&gt;&lt;a id=&quot;sec-3-2-2&quot; name=&quot;sec-3-2-2&quot;&gt;&lt;/a&gt;Cons&lt;br  /&gt;&lt;div class=&quot;outline-text-4&quot; id=&quot;text-3-2-2&quot;&gt;
+&lt;ul class=&quot;org-ul&quot;&gt;
+&lt;li&gt;&lt;code&gt;coffeescript&lt;/code&gt; and &lt;code&gt;stylus&lt;/code&gt; are used, which to me feels too hackishy.
+&lt;/li&gt;
+&lt;li&gt;The DSL feels too hackishy, not as intuitive as &lt;code&gt;plantUML&lt;/code&gt;.
+
+&lt;p&gt;
+? Maybe I can help improve on this.
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/li&gt;&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-4&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-4&quot;&gt;Class/State Diagrams&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-4&quot;&gt;
+&lt;/div&gt;&lt;div id=&quot;outline-container-sec-4-1&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;sec-4-1&quot;&gt;&lt;a href=&quot;http://www.nomnoml.com/&quot;&gt;nomnoml&lt;/a&gt;&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-4-1&quot;&gt;
+&lt;p&gt;
+Web-based UML library, looks very promising. Though it doesn't support sequence
+UML.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-5&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-5&quot;&gt;Flow Chart&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-5&quot;&gt;
+&lt;/div&gt;&lt;div id=&quot;outline-container-sec-5-1&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;sec-5-1&quot;&gt;&lt;a href=&quot;http://adrai.github.io/flowchart.js/&quot;&gt;flowchart.js&lt;/a&gt;&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-5-1&quot;&gt;
+&lt;p&gt;
+Useful to draw logic diagram about inner workings of complicated piece of code.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-6&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-6&quot;&gt;Other interesting diagram tools&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-6&quot;&gt;
+&lt;ul class=&quot;org-ul&quot;&gt;
+&lt;li&gt;&lt;a href=&quot;http://modeling-languages.com/uml-tools/#textual&quot;&gt;A list of textual UML tools&lt;/a&gt;
+
+&lt;p&gt;
+Someone else keeps a list of textual tools.
+&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;&lt;a href=&quot;http://www.bottlecaps.de/rr/ui&quot;&gt;Railroad Diagram Generator&lt;/a&gt;
+
+&lt;p&gt;
+A tool for creating syntax diagrams. Together with &lt;code&gt;Jison&lt;/code&gt;, very handy when
+you design some DSLs.
+&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;&lt;a href=&quot;http://timeline.knightlab.com/&quot;&gt;Timeline JS&lt;/a&gt;
+
+&lt;p&gt;
+In case you need to make a timeline about something in the web.
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-7&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-7&quot;&gt;Others&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-7&quot;&gt;
+&lt;/div&gt;&lt;div id=&quot;outline-container-sec-7-1&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;sec-7-1&quot;&gt;&lt;a href=&quot;http://zaach.github.io/jison/&quot;&gt;Jison&lt;/a&gt;: JavaScript parser generator!&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-7-1&quot;&gt;
+&lt;p&gt;
+Good for designing DSL with JavaScript, I think, similar to &lt;code&gt;Bison&lt;/code&gt;.
+&lt;/p&gt;
+
+&lt;p&gt;
+Many tools above utilize this library.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&quot;outline-container-sec-7-2&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;sec-7-2&quot;&gt;&lt;a href=&quot;http://willthompson.co.uk/bustle/&quot;&gt;Bustle&lt;/a&gt;&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-7-2&quot;&gt;
+&lt;p&gt;
+A &lt;code&gt;DBus&lt;/code&gt; monitor with sequence diagram, looks very cool. If you ever use the
+default &lt;code&gt;dbus-monitor&lt;/code&gt;, you would appreciate the graphical representation ;P
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-7-3&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;sec-7-3&quot;&gt;&lt;a href=&quot;http://www.draw.io/&quot;&gt;draw.io&lt;/a&gt;&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-7-3&quot;&gt;
+&lt;p&gt;
+A nice in-browser IDE for drawing diagrams manually.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Thu, 11 Jun 2015 00:00:00 +0000</pubDate>
+        <link>http://crystal:4000/post/from-text-to-simple-uml-diagram-tools</link>
+        <guid isPermaLink="true">http://crystal:4000/post/from-text-to-simple-uml-diagram-tools</guid>
+        
+        <category>uml</category>
+        
+        <category>diagram</category>
+        
+        
+        <category></category>
+        
+        <category></category>
+        
+      </item>
+    
+      <item>
+        <title>Copy &amp; Change: be careful</title>
+        <description>&lt;p&gt;
+This is a story about what we've learned from debugging the following bug:
+&lt;a href=&quot;https://bugzilla.gnome.org/show_bug.cgi?id=747091&quot;&gt;Bug 747091 – File-Roller fails to handle archive with sparse files&lt;/a&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;b&gt;Credit:&lt;/b&gt; Thanks for my colleague &lt;code&gt;Tao Yang&lt;/code&gt; for bringing this to my awareness.
+&lt;/p&gt;
+
+&lt;div id=&quot;outline-container-sec-1&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-1&quot;&gt;Main Points&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-1&quot;&gt;
+&lt;ul class=&quot;org-ul&quot;&gt;
+&lt;li&gt;Learn something about &lt;a href=&quot;http://www.libarchive.org/&quot;&gt;libarchive&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;Learn something about &lt;a href=&quot;http://en.wikipedia.org/wiki/Sparse_file&quot;&gt;Sparse file - Wikipedia&lt;/a&gt;
+  &lt;a href=&quot;https://wiki.archlinux.org/index.php/Sparse_file&quot;&gt;Sparse file - ArchWiki&lt;/a&gt; is also helpful ;)
+&lt;/li&gt;
+&lt;li&gt;Warnings over &quot;unused&quot; variables: enlightenment on its usefulness and the
+difficulty in finding them.
+&lt;/li&gt;
+&lt;li&gt;In Practice: Copy &amp;amp; Change, you can't be more careful.
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-2&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-2&quot;&gt;Preface&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-2&quot;&gt;
+&lt;/div&gt;&lt;div id=&quot;outline-container-sec-2-1&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;sec-2-1&quot;&gt;Libarchive&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-2-1&quot;&gt;
+&lt;p&gt;
+I didn't find a well-formatted API document anywhere, but the
+&lt;a href=&quot;https://github.com/libarchive/libarchive/blob/master/libarchive/archive.h&quot;&gt;libarchive/archive.h&lt;/a&gt; serves the purpose. What's relevant here is, &lt;code&gt;offset&lt;/code&gt; is
+the main point:
+&lt;/p&gt;
+&lt;div class=&quot;org-src-container&quot;&gt;
+
+&lt;pre class=&quot;src src-C&quot;&gt;&lt;span style=&quot;color: #b22222;&quot;&gt;/*&lt;/span&gt;
+&lt;span style=&quot;color: #b22222;&quot;&gt;* A zero-copy version of archive_read_data that also exposes the file offset&lt;/span&gt;
+&lt;span style=&quot;color: #b22222;&quot;&gt;* of each returned block. Note that the client has no way to specify&lt;/span&gt;
+&lt;span style=&quot;color: #b22222;&quot;&gt;* the desired size of the block. The API does guarantee that offsets will&lt;/span&gt;
+&lt;span style=&quot;color: #b22222;&quot;&gt;* be strictly increasing and that returned blocks will not overlap.&lt;/span&gt;
+&lt;span style=&quot;color: #b22222;&quot;&gt;*/&lt;/span&gt;
+__LA_DECL &lt;span style=&quot;color: #228b22;&quot;&gt;int&lt;/span&gt; &lt;span style=&quot;color: #0000ff;&quot;&gt;archive_read_data_block&lt;/span&gt;(&lt;span style=&quot;color: #a020f0;&quot;&gt;struct&lt;/span&gt; &lt;span style=&quot;color: #228b22;&quot;&gt;archive&lt;/span&gt; *&lt;span style=&quot;color: #a0522d;&quot;&gt;a&lt;/span&gt;,
+&lt;span style=&quot;color: #a020f0;&quot;&gt;const&lt;/span&gt; &lt;span style=&quot;color: #228b22;&quot;&gt;void&lt;/span&gt; **&lt;span style=&quot;color: #a0522d;&quot;&gt;buff&lt;/span&gt;, &lt;span style=&quot;color: #228b22;&quot;&gt;size_t&lt;/span&gt; *&lt;span style=&quot;color: #a0522d;&quot;&gt;size&lt;/span&gt;, &lt;span style=&quot;color: #228b22;&quot;&gt;__LA_INT64_T&lt;/span&gt; *&lt;span style=&quot;color: #a0522d;&quot;&gt;offset&lt;/span&gt;);
+&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;
+And the revelation from the following comment:
+&lt;/p&gt;
+&lt;pre class=&quot;example&quot;&gt;
+// A &quot;Non-sparse&quot; file is also a sparse file with only one block
+&lt;/pre&gt;
+
+&lt;p&gt;
+Further, a &lt;code&gt;read&amp;amp;write&lt;/code&gt; example from &lt;a href=&quot;https://github.com/libarchive/libarchive/wiki/Examples#A_Basic_Write_Example&quot;&gt;Examples · libarchive/libarchive Wiki&lt;/a&gt;,
+again the &lt;code&gt;offset&lt;/code&gt; is of interest:
+&lt;/p&gt;
+&lt;div class=&quot;org-src-container&quot;&gt;
+
+&lt;pre class=&quot;src src-C&quot;&gt;&lt;span style=&quot;color: #a020f0;&quot;&gt;static&lt;/span&gt; &lt;span style=&quot;color: #228b22;&quot;&gt;int&lt;/span&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;copy_data&lt;/span&gt;(&lt;span style=&quot;color: #a020f0;&quot;&gt;struct&lt;/span&gt; &lt;span style=&quot;color: #228b22;&quot;&gt;archive&lt;/span&gt; *&lt;span style=&quot;color: #a0522d;&quot;&gt;ar&lt;/span&gt;, &lt;span style=&quot;color: #a020f0;&quot;&gt;struct&lt;/span&gt; &lt;span style=&quot;color: #228b22;&quot;&gt;archive&lt;/span&gt; *&lt;span style=&quot;color: #a0522d;&quot;&gt;aw&lt;/span&gt;)
+{
+  &lt;span style=&quot;color: #228b22;&quot;&gt;int&lt;/span&gt; &lt;span style=&quot;color: #a0522d;&quot;&gt;r&lt;/span&gt;;
+  &lt;span style=&quot;color: #a020f0;&quot;&gt;const&lt;/span&gt; &lt;span style=&quot;color: #228b22;&quot;&gt;void&lt;/span&gt; *&lt;span style=&quot;color: #a0522d;&quot;&gt;buff&lt;/span&gt;;
+  &lt;span style=&quot;color: #228b22;&quot;&gt;size_t&lt;/span&gt; &lt;span style=&quot;color: #a0522d;&quot;&gt;size&lt;/span&gt;;
+  &lt;span style=&quot;color: #228b22;&quot;&gt;off_t&lt;/span&gt; &lt;span style=&quot;color: #a0522d;&quot;&gt;offset&lt;/span&gt;;
+
+  &lt;span style=&quot;color: #a020f0;&quot;&gt;for&lt;/span&gt; (;;) {
+    r = archive_read_data_block(ar, &amp;amp;buff, &amp;amp;size, &amp;amp;offset);
+    &lt;span style=&quot;color: #a020f0;&quot;&gt;if&lt;/span&gt; (r == ARCHIVE_EOF)
+      &lt;span style=&quot;color: #a020f0;&quot;&gt;return&lt;/span&gt; (ARCHIVE_OK);
+    &lt;span style=&quot;color: #a020f0;&quot;&gt;if&lt;/span&gt; (r &amp;lt; ARCHIVE_OK)
+      &lt;span style=&quot;color: #a020f0;&quot;&gt;return&lt;/span&gt; (r);
+    r = archive_write_data_block(aw, buff, size, offset);
+    &lt;span style=&quot;color: #a020f0;&quot;&gt;if&lt;/span&gt; (r &amp;lt; ARCHIVE_OK) {
+      fprintf(stderr, &lt;span style=&quot;color: #8b2252;&quot;&gt;&quot;%s\n&quot;&lt;/span&gt;, archive_error_string(aw));
+      &lt;span style=&quot;color: #a020f0;&quot;&gt;return&lt;/span&gt; (r);
+    }
+  }
+}
+&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;
+&lt;b&gt;Main Point:&lt;/b&gt; Value in &lt;code&gt;offset&lt;/code&gt; is how &lt;code&gt;archive_read_data_block&lt;/code&gt; tells
+the client whether&amp;amp;how the file is &quot;sparsed&quot;.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-2-2&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;sec-2-2&quot;&gt;The cause of the bug&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-2-2&quot;&gt;
+&lt;div class=&quot;org-src-container&quot;&gt;
+
+&lt;pre class=&quot;src src-c&quot;&gt;&lt;span style=&quot;color: #b22222;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #b22222;&quot;&gt;fr-archive-libarchive.c::extract_archive_thread&lt;/span&gt;
+&lt;span style=&quot;color: #a020f0;&quot;&gt;while&lt;/span&gt; ((r = archive_read_data_block (a, &amp;amp;buffer, &amp;amp;buffer_size, &amp;amp;offset)) == ARCHIVE_OK) {
+        &lt;span style=&quot;color: #a020f0;&quot;&gt;if&lt;/span&gt; (g_output_stream_write (ostream, buffer, buffer_size, cancellable, &amp;amp;load_data-&amp;gt;error) == -1)
+                &lt;span style=&quot;color: #a020f0;&quot;&gt;break&lt;/span&gt;;
+        fr_archive_progress_inc_completed_bytes (load_data-&amp;gt;archive, buffer_size);
+}
+&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;
+As shown above, the &lt;code&gt;offset&lt;/code&gt; is set but not used. The use of
+&lt;code&gt;g_output_stream_write&lt;/code&gt; might come from a desire to use &lt;code&gt;GLib&lt;/code&gt; functions as much
+as possible, to be consistent as it's a &lt;code&gt;GNOME&lt;/code&gt; project. But by doing so, it
+omits crucial info conveyed by &lt;code&gt;offset&lt;/code&gt; and thus fails in the case of archive
+with sparse files. Also note, &lt;code&gt;offset&lt;/code&gt; is not used in any other place.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-3&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-3&quot;&gt;Thoughts&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-3&quot;&gt;
+&lt;/div&gt;&lt;div id=&quot;outline-container-sec-3-1&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;sec-3-1&quot;&gt;Unused variables&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-3-1&quot;&gt;
+&lt;p&gt;
+I never truly thought warnings like these are of particular usefulness before
+today. After all, these warnings are meant to urge programmers to clean up the
+code, aren't they?
+&lt;/p&gt;
+
+&lt;p&gt;
+But let's imagine if there had been such warning, and developers heeded it for
+&lt;code&gt;File-roller&lt;/code&gt;, then this bug might not have existed at all. Hours of debugging
+saved!
+&lt;/p&gt;
+
+&lt;p&gt;
+So such warnings are not just about house cleaning or a style. They suggest
+potential problems we might have overlooked. Pay attention to them and fix in
+time!
+&lt;/p&gt;
+
+&lt;p&gt;
+However, there can't be such warning to help the poor developer out in this
+case. &lt;code&gt;&amp;amp;offset&lt;/code&gt; is the malicious C pointer operator. With a pointer, the
+function can access the value or change it, and the compiler can't be fully sure
+about which is the case. Image this code written in another language, say
+&lt;code&gt;Ruby&lt;/code&gt;:
+&lt;/p&gt;
+
+&lt;div class=&quot;org-src-container&quot;&gt;
+
+&lt;pre class=&quot;src src-ruby&quot;&gt;&lt;span style=&quot;color: #b22222;&quot;&gt;# &lt;/span&gt;&lt;span style=&quot;color: #b22222;&quot;&gt;loop around ...&lt;/span&gt;
+r, buffer, buffer_size, offset = a.read_data_block()
+&lt;span style=&quot;color: #b22222;&quot;&gt;# &lt;/span&gt;&lt;span style=&quot;color: #b22222;&quot;&gt;the rest ...&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;
+Now there is no ambiguity about the use of &lt;code&gt;offset&lt;/code&gt; any more ;P
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-3-2&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;sec-3-2&quot;&gt;Copy &amp;amp; Change&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-3-2&quot;&gt;
+&lt;p&gt;
+A necessary evil in programming is &quot;copy &amp;amp; change&quot;. Be careful. What more can we
+say~
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Thu, 02 Apr 2015 00:00:00 +0000</pubDate>
+        <link>http://crystal:4000/post/copy-change-be-careful</link>
+        <guid isPermaLink="true">http://crystal:4000/post/copy-change-be-careful</guid>
+        
+        <category>libarchive</category>
+        
+        <category>file-roller</category>
+        
+        <category>compiler</category>
+        
+        <category>sparse</category>
+        
+        
+        <category></category>
+        
+        <category></category>
+        
+      </item>
+    
+      <item>
+        <title>From Octopress to Jekyll</title>
+        <description>&lt;p&gt;
+After 4 months' idleness, I've come back to my blog and decide to take another
+look at the blogging tools.
+&lt;/p&gt;
+
+&lt;div id=&quot;outline-container-sec-1&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-1&quot;&gt;What do I need for blogging tools?&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-1&quot;&gt;
+&lt;p&gt;
+As a developer using Emacs, I've taken the following as prerequisites:
+&lt;/p&gt;
+&lt;ol class=&quot;org-ol&quot;&gt;
+&lt;li&gt;Blog source in &lt;code&gt;org-mode&lt;/code&gt; format.
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Github Page&lt;/code&gt; or similar static blog hosting sites (e.g. &lt;code&gt;Heroku&lt;/code&gt;).
+&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;
+And what actually makes a blog site?
+&lt;/p&gt;
+&lt;pre class=&quot;example&quot;&gt;
+Articles linked in a website-way: uniform theme, front page, navigator, catogories and etc.
+&lt;/pre&gt;
+&lt;p&gt;
+So naturally a static site generator would be sufficient. For the record, one
+year ago I used my own self-hosted &lt;code&gt;wordpress&lt;/code&gt;, which is easier to use but as a
+developer I found I know too little and it was an overkill solution for a blog.
+&lt;/p&gt;
+
+&lt;p&gt;
+About choosing the right static site generator, I've found &lt;a href=&quot;https://www.staticgen.com/&quot;&gt;StaticGen&lt;/a&gt;, which is a
+ranking site to static site generators as &lt;a href=&quot;http://distrowatch.com/&quot;&gt;DistroWatch.com&lt;/a&gt; to &lt;code&gt;Linux/BSD&lt;/code&gt;
+distributions. I was using &lt;i&gt;Octopress&lt;/i&gt;. Two potential candidates are &lt;i&gt;Jekyll&lt;/i&gt;, which
+is what's used by &lt;code&gt;Github Page&lt;/code&gt; and &lt;i&gt;Hexo&lt;/i&gt;, ranked as the third, a &lt;code&gt;nodejs&lt;/code&gt; based
+generator that seems to be compatible with &lt;code&gt;Octopress&lt;/code&gt;. I'm interested in &lt;code&gt;Hexo&lt;/code&gt;
+as recently I've started a project using &lt;code&gt;nodejs-webkit&lt;/code&gt;, another story.
+&lt;/p&gt;
+
+&lt;p&gt;
+Other successful stories on &lt;code&gt;org-mode&lt;/code&gt;-related blogs have suggested: &lt;a href=&quot;http://www.blogofile.com/&quot;&gt;Blogofile&lt;/a&gt;,
+&lt;i&gt;Pelican&lt;/i&gt; and &lt;i&gt;Nikola&lt;/i&gt;.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-2&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-2&quot;&gt;Octopress/Rails is NOT KISS.&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-2&quot;&gt;
+&lt;p&gt;
+This site was using &lt;code&gt;Octopress&lt;/code&gt; and some of my posts here are about configuring
+&lt;code&gt;Octopress&lt;/code&gt;. &lt;code&gt;Octopress&lt;/code&gt; is not hard to use. As a complete beginner, it took me
+about two days to setup up the blog (with &lt;a href=&quot;https://github.com/yoshinari-nomura/org-octopress&quot;&gt;Org-octopress&lt;/a&gt;), and by the third I was
+able to play with the source to add some small new features. The issue with
+&lt;code&gt;Octopress&lt;/code&gt; is that it feels like &lt;code&gt;Rails&lt;/code&gt;: convenient, powerful and
+highly-customizable, but as a newbie the learning curve is steep. I don't feel I
+understand the structure at all and lost in features&amp;#x2026;
+&lt;/p&gt;
+
+&lt;p&gt;
+So maybe another time for &lt;code&gt;Octopress&lt;/code&gt;. To learn more, I decided to go with the
+old &lt;code&gt;KISS&lt;/code&gt;: use simple/single-purpose tools and chain them together.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-3&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-3&quot;&gt;Notes on the migration.&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-3&quot;&gt;
+&lt;p&gt;
+The choice is &lt;code&gt;Jekyll&lt;/code&gt;, which &lt;code&gt;Octopress&lt;/code&gt; claims to base on. &lt;a href=&quot;http://www.academia.edu/9761706/Building_a_Technical_Blog_Site_With_Jekyll_And_Emacs&quot;&gt;This article&lt;/a&gt; is
+very helpful in making this decision. The breakdown steps in that article help
+me understand the missing pieces from &lt;code&gt;Org&lt;/code&gt; files to &lt;code&gt;Jekyll&lt;/code&gt; site:
+&lt;/p&gt;
+
+&lt;ol class=&quot;org-ol&quot;&gt;
+&lt;li&gt;&lt;code&gt;Jekyll&lt;/code&gt; handles &lt;code&gt;Markdown&lt;/code&gt; natively, but it also can deal with HTML with
+special headers (&lt;code&gt;YAML&lt;/code&gt; &lt;code&gt;Jekyll&lt;/code&gt; header).
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Org-publish&lt;/code&gt; export org files to HTML format.
+&lt;/li&gt;
+&lt;li&gt;Insert the required header to the exported HTML files and put the result
+files in &lt;code&gt;Jekyll&lt;/code&gt; directory. It's DONE!
+&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;
+And it turns out there are many Emacs packages deal with these steps. I choose
+&lt;a href=&quot;https://github.com/ardumont/org2jekyll&quot;&gt;org2jekyll&lt;/a&gt; for its simplicity and separation of &lt;code&gt;Org&lt;/code&gt; header and &lt;code&gt;Jekyll&lt;/code&gt;
+header.
+&lt;/p&gt;
+
+&lt;p&gt;
+An afternoon is all it takes to finish the migration. Yep, I lose some features
+like comments, tag cloud and etc, but I also understand the insides much
+clearer. I plan to add back features step by step with more confidence!
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-4&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-4&quot;&gt;More to desire.&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-4&quot;&gt;
+&lt;p&gt;
+&lt;code&gt;org2jekyll&lt;/code&gt; is the bridge between &lt;code&gt;Org&lt;/code&gt; and &lt;code&gt;Jekyll&lt;/code&gt;. There are some issues I'd
+like to see fixed and features to be implemented. Now I can focus on &quot;simple&quot;
+components like &lt;code&gt;Jekyll&lt;/code&gt;, &lt;code&gt;org2jekyll&lt;/code&gt; and &lt;code&gt;org-publish&lt;/code&gt;. This kind of clarity
+and confidence didn't come out from many weeks working with &lt;code&gt;Org&lt;/code&gt; and
+&lt;code&gt;Org-octopress&lt;/code&gt;: too many levels of abstractions impede understanding. Maybe
+some day I'll be back to &lt;code&gt;Octopress&lt;/code&gt; for its strength, but surely after I've
+learned more with the KISS ^_^
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Wed, 01 Apr 2015 00:00:00 +0000</pubDate>
+        <link>http://crystal:4000/post/from-octopress-to-jekyll</link>
+        <guid isPermaLink="true">http://crystal:4000/post/from-octopress-to-jekyll</guid>
+        
+        <category>jekyll</category>
+        
+        <category>octopress</category>
+        
+        <category>org</category>
+        
+        
+        <category></category>
+        
+        <category></category>
+        
+      </item>
+    
+  </channel>
+</rss>

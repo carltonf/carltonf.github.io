@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html ⚡ lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,minimum-scale=1">
+
+  <title>Adapt other than Configure</title>
+  <meta name="description" content="After many years of unscrutinized way of configuring – try to make things “the right way”, I’ve realized that in many cases adaption is better. It offers the...">
+
+  <link rel="canonical" href="http://crystal:4000/post/adapt-vs-configure">
+  <link rel="alternate" type="application/rss+xml" title="Crystal Sight" href="http://crystal:4000/feed.xml">
+
+  <script type="application/ld+json">
+  
+{
+  "@context": "http://schema.org",
+  "@type": "NewsArticle",
+  "mainEntityOfPage": "http://crystal:4000/post/adapt-vs-configure",
+  "headline": "Adapt other than Configure",
+  "datePublished": "2016-02-06T00:00:00+00:00",
+  "dateModified": "2016-02-06T00:00:00+00:00",
+  "description": "After many years of unscrutinized way of configuring – try to make things “the right way”, I’ve realized that in many cases adaption is better. It offers the...",
+  "author": {
+    "@type": "Person",
+    "name": ""
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Crystal Sight",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://crystal:4000",
+      "width": 60,
+      "height": 60
+    }
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "http://crystal:4000",
+    "height": 60,
+    "width": 60
+  }
+}
+
+  </script>
+
+  <!-- TODO So it's amp's style to include all styles in a single page? -->
+  <style amp-custom>
+  
+  /* Import ET Book styles
+   adapted from https://github.com/edwardtufte/et-book/blob/gh-pages/et-book.css */
+@font-face {
+  font-family: "et-book";
+  src: url("/assets/et-book/et-book-roman-line-figures/et-book-roman-line-figures.eot");
+  src: url("/assets/et-book/et-book-roman-line-figures/et-book-roman-line-figures.eot?#iefix") format("embedded-opentype"), url("/assets/et-book/et-book-roman-line-figures/et-book-roman-line-figures.woff") format("woff"), url("/assets/et-book/et-book-roman-line-figures/et-book-roman-line-figures.ttf") format("truetype"), url("/assets/et-book/et-book-roman-line-figures/et-book-roman-line-figures.svg#etbookromanosf") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+@font-face {
+  font-family: "et-book";
+  src: url("/assets/et-book/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.eot");
+  src: url("/assets/et-book/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.eot?#iefix") format("embedded-opentype"), url("/assets/et-book/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.woff") format("woff"), url("/assets/et-book/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.ttf") format("truetype"), url("/assets/et-book/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.svg#etbookromanosf") format("svg");
+  font-weight: normal;
+  font-style: italic; }
+@font-face {
+  font-family: "et-book";
+  src: url("/assets/et-book/et-book-bold-line-figures/et-book-bold-line-figures.eot");
+  src: url("/assets/et-book/et-book-bold-line-figures/et-book-bold-line-figures.eot?#iefix") format("embedded-opentype"), url("/assets/et-book/et-book-bold-line-figures/et-book-bold-line-figures.woff") format("woff"), url("/assets/et-book/et-book-bold-line-figures/et-book-bold-line-figures.ttf") format("truetype"), url("/assets/et-book/et-book-bold-line-figures/et-book-bold-line-figures.svg#etbookromanosf") format("svg");
+  font-weight: bold;
+  font-style: normal; }
+@font-face {
+  font-family: "et-book-roman-old-style";
+  src: url("/assets/et-book/et-book-roman-old-style-figures/et-book-roman-old-style-figures.eot");
+  src: url("/assets/et-book/et-book-roman-old-style-figures/et-book-roman-old-style-figures.eot?#iefix") format("embedded-opentype"), url("/assets/et-book/et-book-roman-old-style-figures/et-book-roman-old-style-figures.woff") format("woff"), url("/assets/et-book/et-book-roman-old-style-figures/et-book-roman-old-style-figures.ttf") format("truetype"), url("/assets/et-book/et-book-roman-old-style-figures/et-book-roman-old-style-figures.svg#etbookromanosf") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+/* Tufte CSS styles */
+html {
+  font-size: 15px; }
+
+body {
+  width: 87.5%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 12.5%;
+  font-family: et-book, Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
+  background-color: #fffff8;
+  color: #111;
+  max-width: 1400px;
+  counter-reset: sidenote-counter; }
+
+h1 {
+  font-weight: 400;
+  margin-top: 4rem;
+  margin-bottom: 1.5rem;
+  font-size: 3.2rem;
+  line-height: 1; }
+
+h2 {
+  font-style: italic;
+  font-weight: 400;
+  margin-top: 2.1rem;
+  margin-bottom: 0;
+  font-size: 2.2rem;
+  line-height: 1; }
+
+h3 {
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.7rem;
+  margin-top: 2rem;
+  margin-bottom: 0;
+  line-height: 1; }
+
+p.subtitle {
+  font-style: italic;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  display: block;
+  line-height: 1; }
+
+.numeral {
+  font-family: et-book-roman-old-style; }
+
+.danger {
+  color: red; }
+
+article {
+  position: relative;
+  padding: 5rem 0rem; }
+
+section {
+  padding-top: 1rem;
+  padding-bottom: 1rem; }
+
+p, ol, ul, .pagination a, .pagination em, table {
+  font-size: 1.4rem; }
+
+p {
+  line-height: 2rem;
+  margin-top: 1.4rem;
+  margin-bottom: 1.4rem;
+  padding-right: 0;
+  vertical-align: baseline; }
+
+/* Chapter Epigraphs */
+div.epigraph {
+  margin: 5em 0; }
+
+div.epigraph > blockquote {
+  margin-top: 3em;
+  margin-bottom: 3em; }
+
+div.epigraph > blockquote, div.epigraph > blockquote > p {
+  font-style: italic; }
+
+div.epigraph > blockquote > footer {
+  font-style: normal; }
+
+div.epigraph > blockquote > footer > cite {
+  font-style: italic; }
+
+/* end chapter epigraphs styles */
+blockquote {
+  font-size: 1.4rem; }
+
+blockquote p {
+  width: 50%; }
+
+blockquote .footer {
+  width: 50%;
+  font-size: 1.1rem;
+  text-align: right; }
+
+ol, ul {
+  width: 45%;
+  -webkit-padding-start: 5%;
+  -webkit-padding-end: 5%; }
+
+li {
+  padding: 0.5rem 0; }
+
+figure {
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  max-width: 55%;
+  -webkit-margin-start: 0;
+  -webkit-margin-end: 0;
+  margin: 0 0 3em 0; }
+
+figcaption {
+  float: right;
+  clear: right;
+  margin-right: -48%;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  vertical-align: baseline;
+  position: relative;
+  max-width: 40%; }
+
+figure.fullwidth figcaption {
+  margin-right: 24%; }
+
+/* Links: replicate underline that clears descenders */
+a:link, a:visited {
+  color: inherit; }
+
+a:link {
+  text-decoration: none;
+  background: -webkit-linear-gradient(#fffff8, #fffff8), -webkit-linear-gradient(#fffff8, #fffff8), -webkit-linear-gradient(#333, #333);
+  background: linear-gradient(#fffff8, #fffff8), linear-gradient(#fffff8, #fffff8), linear-gradient(#333, #333);
+  -webkit-background-size: 0.05em 1px, 0.05em 1px, 1px 1px;
+  -moz-background-size: 0.05em 1px, 0.05em 1px, 1px 1px;
+  background-size: 0.05em 1px, 0.05em 1px, 1px 1px;
+  background-repeat: no-repeat, no-repeat, repeat-x;
+  text-shadow: 0.03em 0 #fffff8, -0.03em 0 #fffff8, 0 0.03em #fffff8, 0 -0.03em #fffff8, 0.06em 0 #fffff8, -0.06em 0 #fffff8, 0.09em 0 #fffff8, -0.09em 0 #fffff8, 0.12em 0 #fffff8, -0.12em 0 #fffff8, 0.15em 0 #fffff8, -0.15em 0 #fffff8;
+  background-position: 0% 93%, 100% 93%, 0% 93%; }
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  a:link {
+    background-position-y: 87%, 87%, 87%; } }
+a:link::selection {
+  text-shadow: 0.03em 0 #b4d5fe, -0.03em 0 #b4d5fe, 0 0.03em #b4d5fe, 0 -0.03em #b4d5fe, 0.06em 0 #b4d5fe, -0.06em 0 #b4d5fe, 0.09em 0 #b4d5fe, -0.09em 0 #b4d5fe, 0.12em 0 #b4d5fe, -0.12em 0 #b4d5fe, 0.15em 0 #b4d5fe, -0.15em 0 #b4d5fe;
+  background: #b4d5fe; }
+
+a:link::-moz-selection {
+  text-shadow: 0.03em 0 #b4d5fe, -0.03em 0 #b4d5fe, 0 0.03em #b4d5fe, 0 -0.03em #b4d5fe, 0.06em 0 #b4d5fe, -0.06em 0 #b4d5fe, 0.09em 0 #b4d5fe, -0.09em 0 #b4d5fe, 0.12em 0 #b4d5fe, -0.12em 0 #b4d5fe, 0.15em 0 #b4d5fe, -0.15em 0 #b4d5fe;
+  background: #b4d5fe; }
+
+/* Sidenotes, margin notes, figures, captions */
+img {
+  max-width: 100%; }
+
+.sidenote, .marginnote {
+  float: right;
+  clear: right;
+  margin-right: -60%;
+  width: 50%;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 1.1rem;
+  line-height: 1.3;
+  vertical-align: baseline;
+  position: relative; }
+
+.table-caption {
+  float: right;
+  clear: right;
+  margin-right: -60%;
+  width: 50%;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 1.0rem;
+  line-height: 1.6; }
+
+.sidenote-number {
+  counter-increment: sidenote-counter; }
+
+.sidenote-number:after, .sidenote:before {
+  content: counter(sidenote-counter) " ";
+  font-family: et-book-roman-old-style;
+  position: relative;
+  vertical-align: baseline; }
+
+.sidenote-number:after {
+  content: counter(sidenote-counter);
+  font-size: 1rem;
+  top: -0.5rem;
+  left: 0.1rem; }
+
+.sidenote:before {
+  content: counter(sidenote-counter) " ";
+  top: -0.5rem; }
+
+p, footer, table, div.table-wrapper-small, div.supertable-wrapper > p, div.booktabs-wrapper {
+  width: 55%; }
+
+div.fullwidth, table.fullwidth {
+  width: 100%; }
+
+div.table-wrapper {
+  overflow-x: auto;
+  font-family: "Trebuchet MS", "Gill Sans", "Gill Sans MT", sans-serif; }
+
+@media screen and (max-width: 760px) {
+  p, h1, h2, h3, footer {
+    width: 90%; }
+
+  pre.code {
+    width: 87.5%; }
+
+  ul {
+    width: 85%; }
+
+  figure {
+    max-width: 90%; }
+
+  figcaption, figure.fullwidth figcaption {
+    margin-right: 0%;
+    max-width: none; }
+
+  blockquote p, blockquote .footer {
+    width: 90%; } }
+.sans {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+  letter-spacing: .03em; }
+
+.code {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 1.125rem;
+  line-height: 1.6; }
+
+h1 .code, h2 .code, h3 .code {
+  font-size: 0.80em; }
+
+.marginnote .code, .sidenote .code {
+  font-size: 1rem; }
+
+pre.code {
+  width: 52.5%;
+  padding-left: 2.5%;
+  overflow-x: auto; }
+
+.fullwidth {
+  max-width: 90%;
+  clear: both; }
+
+span.newthought {
+  font-variant: small-caps;
+  font-size: 1.2em; }
+
+.margin-toggle {
+  display: none; }
+
+.sidenote-number {
+  display: inline; }
+
+.margin-toggle:not(.sidenote-number) {
+  display: none; }
+
+@media (max-width: 760px) {
+  .margin-toggle:not(.sidenote-number) {
+    display: none; }
+
+  .sidenote, .marginnote {
+    display: none; }
+
+  .margin-toggle:checked + .sidenote,
+  .margin-toggle:checked + .marginnote {
+    display: block;
+    float: left;
+    left: 1rem;
+    clear: both;
+    width: 95%;
+    margin: 1rem 2.5%;
+    vertical-align: baseline;
+    position: relative; }
+
+  label {
+    cursor: pointer; }
+
+  pre.code {
+    width: 90%;
+    padding: 0; }
+
+  .table-caption {
+    display: block;
+    float: right;
+    clear: both;
+    width: 98%;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    margin-left: 1%;
+    margin-right: 1%;
+    vertical-align: baseline;
+    position: relative; }
+
+  div.table-wrapper, table, table.booktabs {
+    width: 85%; }
+
+  div.table-wrapper {
+    border-right: 1px solid #efefef; }
+
+  img {
+    width: 100%; } }
+/**
+ * Syntax highlighting styles
+ */
+.highlight .c {
+  color: #998;
+  font-style: italic; }
+.highlight .err {
+  color: #a61717;
+  background-color: #e3d2d2; }
+.highlight .k {
+  font-weight: bold; }
+.highlight .o {
+  font-weight: bold; }
+.highlight .cm {
+  color: #998;
+  font-style: italic; }
+.highlight .cp {
+  color: #999;
+  font-weight: bold; }
+.highlight .c1 {
+  color: #998;
+  font-style: italic; }
+.highlight .cs {
+  color: #999;
+  font-weight: bold;
+  font-style: italic; }
+.highlight .gd {
+  color: #000;
+  background-color: #fdd; }
+.highlight .gd .x {
+  color: #000;
+  background-color: #faa; }
+.highlight .ge {
+  font-style: italic; }
+.highlight .gr {
+  color: #a00; }
+.highlight .gh {
+  color: #999; }
+.highlight .gi {
+  color: #000;
+  background-color: #dfd; }
+.highlight .gi .x {
+  color: #000;
+  background-color: #afa; }
+.highlight .go {
+  color: #888; }
+.highlight .gp {
+  color: #555; }
+.highlight .gs {
+  font-weight: bold; }
+.highlight .gu {
+  color: #aaa; }
+.highlight .gt {
+  color: #a00; }
+.highlight .kc {
+  font-weight: bold; }
+.highlight .kd {
+  font-weight: bold; }
+.highlight .kp {
+  font-weight: bold; }
+.highlight .kr {
+  font-weight: bold; }
+.highlight .kt {
+  color: #458;
+  font-weight: bold; }
+.highlight .m {
+  color: #099; }
+.highlight .s {
+  color: #d14; }
+.highlight .na {
+  color: #008080; }
+.highlight .nb {
+  color: #0086B3; }
+.highlight .nc {
+  color: #458;
+  font-weight: bold; }
+.highlight .no {
+  color: #008080; }
+.highlight .ni {
+  color: #800080; }
+.highlight .ne {
+  color: #900;
+  font-weight: bold; }
+.highlight .nf {
+  color: #900;
+  font-weight: bold; }
+.highlight .nn {
+  color: #555; }
+.highlight .nt {
+  color: #000080; }
+.highlight .nv {
+  color: #008080; }
+.highlight .ow {
+  font-weight: bold; }
+.highlight .w {
+  color: #bbb; }
+.highlight .mf {
+  color: #099; }
+.highlight .mh {
+  color: #099; }
+.highlight .mi {
+  color: #099; }
+.highlight .mo {
+  color: #099; }
+.highlight .sb {
+  color: #d14; }
+.highlight .sc {
+  color: #d14; }
+.highlight .sd {
+  color: #d14; }
+.highlight .s2 {
+  color: #d14; }
+.highlight .se {
+  color: #d14; }
+.highlight .sh {
+  color: #d14; }
+.highlight .si {
+  color: #d14; }
+.highlight .sx {
+  color: #d14; }
+.highlight .sr {
+  color: #009926; }
+.highlight .s1 {
+  color: #d14; }
+.highlight .ss {
+  color: #990073; }
+.highlight .bp {
+  color: #999; }
+.highlight .vc {
+  color: #008080; }
+.highlight .vg {
+  color: #008080; }
+.highlight .vi {
+  color: #008080; }
+.highlight .il {
+  color: #099; }
+
+main {
+  margin-top: 20px; }
+
+amp-img {
+  background-color: grey; }
+
+article {
+  padding: 2.5rem 0; }
+
+header {
+  margin-top: 20px; }
+
+.post-meta {
+  margin-top: 10px; }
+
+pre {
+  width: 52.5%;
+  padding-left: 2.5%;
+  overflow-x: auto; }
+
+@media (max-width: 760px) {
+  pre {
+    width: 90%;
+    padding: 0; } }
+/***** my custom styles *****/
+.post-list-entry hr {
+  width: 65%;
+  margin-left: 0%; }
+
+/***** tufte tweaks *****/
+/* the kramdown processor used by Github output <code> tag instead of .code
+class and thus we need to convert .code styles in tufte to code tag styles */
+code {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 1.125rem;
+  line-height: 1.6; }
+
+h1 code, h2 code, h3 code {
+  font-size: 0.80em; }
+
+.marginnote code, .sidenote code {
+  font-size: 1rem; }
+
+@media screen and (max-width: 760px) {
+  pre.code {
+    width: 87.5%; } }
+pre code {
+  width: 52.5%;
+  padding-left: 2.5%;
+  overflow-x: auto; }
+
+/* p is generally confined to 55% width, which is ok in general. unfortunately
+for listed paragraphs (<li><p> style), this yields very narrow paragraphs. */
+li p {
+  width: 100%; }
+
+  </style>
+
+
+
+  <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+
+  <script async src="http://crystal:4000/assets/ampproject/cdn.ampproject.org-v0.js"></script>
+</head>
+
+  <body>
+    <header>
+</header>
+
+
+<article>
+
+  <h2 itemprop="name">
+    <a href="" itemprop="url">Adapt other than Configure</a>
+  </h2>
+
+  <div class="post-meta">
+    <time datetime="06 February 2016">
+      06 February 2016
+    </time>
+  </div>
+
+  <section>
+    <p>After many years of unscrutinized way of <em>configuring</em> – try to make things “the right way”, I’ve realized that in many cases adaption is better. It offers the most smooth entry into new fields, more productivity from the very start and it’s also pedagogically the best way to learn from others. Configuring still matters but only when it really matters. Stay focused, unscrutinized configuring is essentially premature optimization.</p>
+
+<p>This serves as the first article written in <code class="highlighter-rouge">Markdown</code> directly. Previously most of my blog articles are written in <code class="highlighter-rouge">org</code>. I’ve been a long-time <code class="highlighter-rouge">org-mode</code> user and have done quite a bit on how to author blogs with <code class="highlighter-rouge">org</code>. However recently, after several attempts to fix my old configurations, I finally realized that all these struggles yield little return.</p>
+
+<h1 id="configure">Configure</h1>
+<p>Ever since I started playing with Linux back at my sophomore year in college, I’ve been juggling with all kinds of configurations: configure bash, configure the wifi, configure graphical cards, the audio cards, the CPU, the fan speed, and the editor – Emacs. I have been hooked up with the power of configuration: a lot of choices, your way, no lock-in, true understanding and etc. It used to be sweet.</p>
+
+<p>However, with the time passing by, things have changed: I’m getting old; Linux desktop is just a dream; mobile computation is the future; cloud computation creates closed circles with higher and higher walls; open source is becoming a super successful <strong>business</strong> model; <em>Free Software</em> feels outdated and not exciting at all.</p>
+
+<p>It came to my revelation that continuing the configuration path will only lead to isolation: if you prefer to install Linux only, you’ll miss all the new exciting hardware that just doesn’t ship with Linux driver support and you’ll miss all the discounts as Linux-only devices is a niche market that doesn’t enjoy the scale effect of popular consumer products. Even for the rare cases, you can theoretically get a new device to play nice with Linux, the setup can constantly get broken with updates or edge case usage and then you have to go through the search-try-and-error drill again and again. All these only for an inferior user experience that barely <strong>works</strong>. What’s worse, the knowledge you gain by doing the chores receives diminishing return: new software and hardware are developing too fast for you to have time for deep understanding, you get to only know new terms and how to do specific stuff. Throw mobile and cloud into the mess, all become unwieldy.</p>
+
+<p>Enough is enough.</p>
+
+<h1 id="adapt">Adapt</h1>
+<p>All the talk on <strong>adapting</strong> is truly about <strong>focus</strong>. Maybe genius would be different, but for me, the world has become more and more complicated and time seems to be less and less. By yielding some controls, I can focus on what I can do best, a much more economical approach.</p>
+
+<h2 id="follow-the-herd">Follow the herd</h2>
+<p>The following is what I’ve been doing recently (not an exhaustive list by any measure):</p>
+
+<ol>
+  <li>Bought a new-model laptop preinstalled with <code class="highlighter-rouge">Windows 10</code>: arguably 10 sucks and is virtually a spyware, but it’s getting better fast, really <em>fast</em> and I’m not really using it for things too sensitive.</li>
+  <li>Bought a non-Nexus cellphone of domestic brand (Meizu) bundled with private UI and applicatioins: it’s one of the best sale and thus really a bargain.</li>
+  <li>Install bloatware/spyware like <code class="highlighter-rouge">Weixin</code>, <code class="highlighter-rouge">QQ</code> and etc: no more preaching the merits of free protocols to my non-IT friends the next time they say: “talk to you on <code class="highlighter-rouge">Weixin</code>”.</li>
+  <li>Use Windows/Android app for mails: goodbye <code class="highlighter-rouge">mu4e</code>, <code class="highlighter-rouge">offlineimap</code> and their friends. It’s been good time together.</li>
+  <li>Use Chrome with <code class="highlighter-rouge">vimum</code>, less keyboard-ish but better browsing experience: goodbye <code class="highlighter-rouge">firefox</code>, <code class="highlighter-rouge">palemoon</code>, and <code class="highlighter-rouge">conkeror</code>(really sad to see <code class="highlighter-rouge">conkeror</code> go, I like it <strong>a lot</strong>.)</li>
+  <li>Learn <code class="highlighter-rouge">Powershell</code> to automate things on Windows: “No, thanks” for <code class="highlighter-rouge">Cygwin</code>, been there, tried that. And <em>object</em> shell is not that bad ;P</li>
+  <li>Use <code class="highlighter-rouge">hexchat</code> on Windows instead of <code class="highlighter-rouge">ERC</code>: well, <code class="highlighter-rouge">hexchat</code> is still a nerdy thing, but we’re talking about <code class="highlighter-rouge">IRC</code> here ;P (PS: not that I have any complaints about <code class="highlighter-rouge">ERC</code>, it’s just that I’m using <code class="highlighter-rouge">Emacs</code> within a Virtualbox VM exclusively and being a VM it constantly gets paused, saved/restored, making it less suitable for a long-going background app)</li>
+  <li>Linux in a VM only. This is true both for my build machine on the server and my personal working environment. It’s just easier: the device driver support for Windows is almost zero-configured. With enough RAM, running a VM for coding is a valid option. I’ve been using this combination for half a year now. It’s super. (PS: this is where I think Linux really shines: as service runner and a developer tool.)</li>
+  <li>Use proprietary tools like <code class="highlighter-rouge">WebStorm</code>, <code class="highlighter-rouge">VS Code</code>, <code class="highlighter-rouge">Sublime Text</code> instead of venerable Emacs for web development: less customization, more out-of-box integration.</li>
+</ol>
+
+<p>Many changes happen within one or two months. I basically change half of my tools and workflow. You might think these changes would be very hard: <strong>NO</strong>, it’s actually much easier and greatly improves my overall experience. By following the herd, I actually use mainstream tools developed&amp;maintained by well-paid engineers and battle-tested by thousands of users. Most of the time, they just work out of the box. All I need to do is to adapt: give up some controls, learn their ways first and then see what changes we need to make, and usually you’ll find their way is actually better. Yes, it’s just simple like that.</p>
+
+<h2 id="spacemacs">Spacemacs</h2>
+<p>Weird maybe, I’ll use <code class="highlighter-rouge">Spacemacs</code> as an example. <code class="highlighter-rouge">Spacemacs</code> is</p>
+
+<blockquote>
+  <p>A community-driven Emacs distribution - The best editor is neither Emacs nor Vim, it’s Emacs <em>and</em> Vim!</p>
+</blockquote>
+
+<p>Well, the four merits it touted on its website bear more meanings:</p>
+
+<blockquote>
+  <p>Four core pillars: Mnemonic, Discoverable, Consistent and “Crowd-Configured”.</p>
+</blockquote>
+
+<p>And I think <code class="highlighter-rouge">Crowd-Configured</code> is the jewelry on the crown. After all, you can arguably say the vanilla Emacs is also “Mnemonic, Discoverable, Consistent”. Well, to be fair, I think the vanilla Emacs has too much historical baggage and far less “Mnemonic, Discoverable, Consistent” than <code class="highlighter-rouge">Spacemacs</code>. I’ve long known this starter kit and heard a lot of good things about it, but not until my recent <em>adapt</em> conviction I was too scared to use it. I’ve used Emacs for almost 7 years now and has accumulated my fair share of customization. Despite my inclination towards VIM’s modal editing style, I’ve backed off from change multiple times. “How can I throw away years of hard-earned muscle memory and carefully crafted personal configurations?! What’s the gain? Just to be VIM-like? Stupid!”</p>
+
+<p>Encouraged by my other <em>adapt</em> successes, I started to try <code class="highlighter-rouge">Spacemacs</code> for a third time (yes, a third time…). “Just let it go.” I told myself. “Do not think how can I do what I used to do. Think how Spacemacs handles these use cases. Learn like a newbie with an empty mind.” I have my first success with <code class="highlighter-rouge">org-mode</code>, the killer application of Emacs IMO. I was trying to review my multi-megabytles agenda files, and navigating, state-changing, archiving, tree-manipulation are just <strong>so</strong> easy with <code class="highlighter-rouge">evil-org</code>: no more <code class="highlighter-rouge">C-M-x C-S-?</code> stuff which requires my fingers spread&amp;shift like a spider’s dancing. I then started to configure <code class="highlighter-rouge">mu4e</code>(deprecated later), <code class="highlighter-rouge">org-agenda</code> and <code class="highlighter-rouge">Emacs lisp</code>. Lisp editing proved to be the hard one: the <code class="highlighter-rouge">lisp-state</code> requires more modal-thinking than I’m comfortable with. However, after going through the early stage, I really start to appreciate the well-configured, discoverable functionalities: they are just there. This reminds me of my old MS Word experience: there must be a way to do this, you just need to look around and then the “Wow” moment. From this aspect, <code class="highlighter-rouge">Spacemacs</code> is just great. Now I can reach near previous efficiency with lisp editing now and it’s just a week in <code class="highlighter-rouge">Spacemacs</code>. The experience has been so nice, I have switched default to <code class="highlighter-rouge">Spacemacs</code> before writing this article.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>I’ll still <em>configure</em>, just not for everything. Only the area I focused on deserves much configuration. Other things I need? Go with mainstream, it helps.</p>
+
+<blockquote>
+  <p>Use the best tool for the task.</p>
+</blockquote>
+
+<p>A well-known saying, but what many <em>free</em>-minded developers do is often:</p>
+
+<blockquote>
+  <p>If you have a hammer, you tend to see every problem as a nail.</p>
+</blockquote>
+
+<p>This is particularly true for <em>open source</em> tools: hey, just read the source and happy hacking :), isn’t? Now, I would say nope, there are better things to focus on.</p>
+
+  </section>
+
+  <div>
+    <b> Tags </b>
+    
+    • <a href=""><span>methodology</span></a>
+    
+    • <a href=""><span>philosophy</span></a>
+    
+  </div>
+
+</article>
+
+<footer class="site-footer">
+  <hr>
+
+  <section class="navigation-links">
+    <!-- NOTE: Manually arrange pages as 'site.pages' are not sorted. -->
+    <a class="page-link" href="/">Home</a>
+    • <a class="page-link" href="/posts">Blog</a>
+    • <a class="page-link" href="/wiki">Wiki</a>
+    • <a class="page-link" href="/contact">Contact Me</a>
+    • <a class="page-link" href="/search">Search</a>
+  </section>
+  <section class="copyright">
+    All content copyright <a href="/contact">Carl Xiong</a> &copy; 2016
+    &bull; All rights reserved.
+  </section>
+</footer>
+
+
+  </body>
+</html>
