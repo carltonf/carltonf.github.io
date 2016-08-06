@@ -4,10 +4,10 @@
     <title>Crystal Sight</title>
     <description>See further, but how far is far?
 </description>
-    <link>http://crystal:4000/</link>
-    <atom:link href="http://crystal:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 06 Aug 2016 13:58:01 +0000</pubDate>
-    <lastBuildDate>Sat, 06 Aug 2016 13:58:01 +0000</lastBuildDate>
+    <link>http://carltonf.github.io/</link>
+    <atom:link href="http://carltonf.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sat, 06 Aug 2016 15:34:59 +0000</pubDate>
+    <lastBuildDate>Sat, 06 Aug 2016 15:34:59 +0000</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
     
       <item>
@@ -63,8 +63,8 @@ update-help
 &lt;/div&gt;
 </description>
         <pubDate>Mon, 07 Mar 2016 00:00:00 +0000</pubDate>
-        <link>http://crystal:4000/post/powershell-tips-notes</link>
-        <guid isPermaLink="true">http://crystal:4000/post/powershell-tips-notes</guid>
+        <link>http://carltonf.github.io/post/powershell-tips-notes</link>
+        <guid isPermaLink="true">http://carltonf.github.io/post/powershell-tips-notes</guid>
         
         <category>powershell</category>
         
@@ -187,8 +187,8 @@ update-help
 &lt;/blockquote&gt;
 </description>
         <pubDate>Wed, 02 Mar 2016 00:00:00 +0000</pubDate>
-        <link>http://crystal:4000/post/reading-code-breakers</link>
-        <guid isPermaLink="true">http://crystal:4000/post/reading-code-breakers</guid>
+        <link>http://carltonf.github.io/post/reading-code-breakers</link>
+        <guid isPermaLink="true">http://carltonf.github.io/post/reading-code-breakers</guid>
         
         <category>reading</category>
         
@@ -222,8 +222,8 @@ update-help
 &lt;p&gt;Computers are indeed becoming smarter though, so if we can have an intelligent personal assistance, then we might be able to think in a content-oriented way and be free of “opening this or that app for my work” lock-in. However, then we might be locked-in with a specific type of assistance system, right ;P&lt;/p&gt;
 </description>
         <pubDate>Mon, 29 Feb 2016 00:00:00 +0000</pubDate>
-        <link>http://crystal:4000/post/reflections-on-content-management</link>
-        <guid isPermaLink="true">http://crystal:4000/post/reflections-on-content-management</guid>
+        <link>http://carltonf.github.io/post/reflections-on-content-management</link>
+        <guid isPermaLink="true">http://carltonf.github.io/post/reflections-on-content-management</guid>
         
         
       </item>
@@ -296,8 +296,8 @@ update-help
 &lt;p&gt;This is particularly true for &lt;em&gt;open source&lt;/em&gt; tools: hey, just read the source and happy hacking :), isn’t? Now, I would say nope, there are better things to focus on.&lt;/p&gt;
 </description>
         <pubDate>Sat, 06 Feb 2016 00:00:00 +0000</pubDate>
-        <link>http://crystal:4000/post/adapt-vs-configure</link>
-        <guid isPermaLink="true">http://crystal:4000/post/adapt-vs-configure</guid>
+        <link>http://carltonf.github.io/post/adapt-vs-configure</link>
+        <guid isPermaLink="true">http://carltonf.github.io/post/adapt-vs-configure</guid>
         
         <category>methodology</category>
         
@@ -446,8 +446,8 @@ without &lt;code&gt;STP&lt;/code&gt;.
 &lt;/div&gt;
 </description>
         <pubDate>Wed, 26 Aug 2015 00:00:00 +0000</pubDate>
-        <link>http://crystal:4000/post/installing-sled-12-with-pxe-using-libvirt</link>
-        <guid isPermaLink="true">http://crystal:4000/post/installing-sled-12-with-pxe-using-libvirt</guid>
+        <link>http://carltonf.github.io/post/installing-sled-12-with-pxe-using-libvirt</link>
+        <guid isPermaLink="true">http://carltonf.github.io/post/installing-sled-12-with-pxe-using-libvirt</guid>
         
         <category>libvirt</category>
         
@@ -745,8 +745,8 @@ $13 binary compatibility (dealing with updating widely deployed packages)
 &lt;/div&gt;
 </description>
         <pubDate>Mon, 13 Jul 2015 00:00:00 +0000</pubDate>
-        <link>http://crystal:4000/post/java-programming-language-specification</link>
-        <guid isPermaLink="true">http://crystal:4000/post/java-programming-language-specification</guid>
+        <link>http://carltonf.github.io/post/java-programming-language-specification</link>
+        <guid isPermaLink="true">http://carltonf.github.io/post/java-programming-language-specification</guid>
         
         <category>java</category>
         
@@ -965,8 +965,8 @@ $13 binary compatibility (dealing with updating widely deployed packages)
 &lt;p&gt;∎ &lt;strong&gt;Example End&lt;/strong&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 10 Jul 2015 16:18:00 +0000</pubDate>
-        <link>http://crystal:4000/post/a-workflow-for-bug-fixing</link>
-        <guid isPermaLink="true">http://crystal:4000/post/a-workflow-for-bug-fixing</guid>
+        <link>http://carltonf.github.io/post/a-workflow-for-bug-fixing</link>
+        <guid isPermaLink="true">http://carltonf.github.io/post/a-workflow-for-bug-fixing</guid>
         
         <category>bug-fix</category>
         
@@ -1189,8 +1189,8 @@ A nice in-browser IDE for drawing diagrams manually.
 &lt;/div&gt;
 </description>
         <pubDate>Thu, 11 Jun 2015 00:00:00 +0000</pubDate>
-        <link>http://crystal:4000/post/from-text-to-simple-uml-diagram-tools</link>
-        <guid isPermaLink="true">http://crystal:4000/post/from-text-to-simple-uml-diagram-tools</guid>
+        <link>http://carltonf.github.io/post/from-text-to-simple-uml-diagram-tools</link>
+        <guid isPermaLink="true">http://carltonf.github.io/post/from-text-to-simple-uml-diagram-tools</guid>
         
         <category>uml</category>
         
@@ -1383,8 +1383,8 @@ say~
 &lt;/div&gt;
 </description>
         <pubDate>Thu, 02 Apr 2015 00:00:00 +0000</pubDate>
-        <link>http://crystal:4000/post/copy-change-be-careful</link>
-        <guid isPermaLink="true">http://crystal:4000/post/copy-change-be-careful</guid>
+        <link>http://carltonf.github.io/post/copy-change-be-careful</link>
+        <guid isPermaLink="true">http://carltonf.github.io/post/copy-change-be-careful</guid>
         
         <category>libarchive</category>
         
@@ -1519,8 +1519,8 @@ learned more with the KISS ^_^
 &lt;/div&gt;
 </description>
         <pubDate>Wed, 01 Apr 2015 00:00:00 +0000</pubDate>
-        <link>http://crystal:4000/post/from-octopress-to-jekyll</link>
-        <guid isPermaLink="true">http://crystal:4000/post/from-octopress-to-jekyll</guid>
+        <link>http://carltonf.github.io/post/from-octopress-to-jekyll</link>
+        <guid isPermaLink="true">http://carltonf.github.io/post/from-octopress-to-jekyll</guid>
         
         <category>jekyll</category>
         

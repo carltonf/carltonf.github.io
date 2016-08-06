@@ -1,7 +1,7 @@
 # As Thu Aug  4 CST 2016, local Jekyll is using docker image jekyll/jekyll
 
 
-.PHONY: default serve
+.PHONY: default serve repo-init
 default: serve
 
 PORT := 4000
@@ -10,6 +10,12 @@ serve:
 	@echo "** Serving content locally (at port ${PORT})..."
 	@docker run -it --rm --label=jekyll --name=${CONTAINER_NAME} -v `pwd`:/srv/jekyll -p ${PORT}:4000 jekyll/jekyll
 
-build:
-	@echo "** Building locally for publishing..."
-	@docker run -it --rm --label=jekyll -v `pwd`:/srv/jekyll -p ${PORT}:4000 jekyll/jekyll jekyll build -t
+### Publishing related
+site-init:
+	@echo "** Init published _site/ ..."
+	@git clone --single-branch git@github.com:carltonf/carltonf.github.io _site
+
+publish:
+	@echo "** Quick publishing with current HEAD message..."
+	@git rev-list --format=%B --max-count=1 HEAD | sed 's/^commit/source repo commit:/' \
+		| (cd _site/; git add . ; git commit -F-)
