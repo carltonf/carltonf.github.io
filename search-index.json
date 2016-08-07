@@ -185,13 +185,13 @@
     
 
     
-
-    
     ,{
         "value": "Blog",
-        "data": "http://carltonf.github.io/posts"
+        "data": "http://carltonf.github.io/posts/"
     }
     
+    
+
     
 
     
@@ -200,6 +200,22 @@
     ,{
         "value": "Search",
         "data": "http://carltonf.github.io/search"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Blog",
+        "data": "http://carltonf.github.io/posts/page2/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Blog",
+        "data": "http://carltonf.github.io/posts/page3/"
     }
     
     

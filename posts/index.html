@@ -9,7 +9,7 @@
   <meta name="description" content="See further, but how far is far?
 ">
 
-  <link rel="canonical" href="http://carltonf.github.io/posts">
+  <link rel="canonical" href="http://carltonf.github.io/posts/">
   <link rel="alternate" type="application/rss+xml" title="Crystal Sight" href="http://carltonf.github.io/feed.xml">
 
   <script type="application/ld+json">
@@ -17,7 +17,7 @@
 {
   "@context": "http://schema.org",
   "@type": "NewsArticle",
-  "mainEntityOfPage": "http://carltonf.github.io/posts",
+  "mainEntityOfPage": "http://carltonf.github.io/posts/",
   "headline": "Blog",
   "datePublished": "2016-08-05T00:00:00+00:00",
   "dateModified": "2016-08-05T00:00:00+00:00",
@@ -781,303 +781,24 @@ blog site are included.
 
     </div>
     
-    <div class="post-list-entry">
+  </div>
 
-      <hr>
-      <h2>
-        <a class="post-link" href="/post/java-programming-language-specification">Java Programming Language Specification</a>
-      </h2>
-
-      <!-- NOTE: Use the convention of Jekyll that the first parargraph is auto-converted as excerpt -->
-      <p> <p>
-The last several weeks I've been skimming through <i>James Gosling</i>, <i>Bill Joy</i>,
-<i>Guy Steel</i>, <i>Gilad Bracha</i>, <i>The Java<sup>TM</sup> Language Specification - 3rd edition</i>.
-An old book, but I happen to have a printed version around. So I guessed that
-reading through it would be helpful for me to understand language
-specification in general.
-</p>
-
- </p>
-
-      <div>
-        <span> Posted at <strong>Jul 13, 2015</strong> </span>
-        
-        • <a href=""><span>java</span></a>
-        
-        • <a href=""><span>specification</span></a>
-        
-        • <a href=""><span>prog-lang</span></a>
-        
-      </div>
-
-    </div>
+  <!-- Pagination links -->
+  <hr style="margin-top: 6em;">
+  <div class="pagination" style="float: left">
     
-    <div class="post-list-entry">
-
-      <hr>
-      <h2>
-        <a class="post-link" href="/post/a-workflow-for-bug-fixing">A workflow for bug fixing</a>
-      </h2>
-
-      <!-- NOTE: Use the convention of Jekyll that the first parargraph is auto-converted as excerpt -->
-      <p> <p>As a developer in SUSE Desktop Department, most of my work are bug fixing. Desktop bugs are diversified in nature: you constantly need to handle bugs from an unknown package or some esoteric features. To comb with this reality, I’ve been pondering on the proper methodology.</p>
-
- </p>
-
-      <div>
-        <span> Posted at <strong>Jul 10, 2015</strong> </span>
-        
-        • <a href=""><span>bug-fix</span></a>
-        
-        • <a href=""><span>workflow</span></a>
-        
-      </div>
-
-    </div>
+    <span class="previous">Prev</span>
     
-    <div class="post-list-entry">
-
-      <hr>
-      <h2>
-        <a class="post-link" href="/post/from-text-to-simple-uml-diagram-tools">From Text to simple UML diagram - Tools</a>
-      </h2>
-
-      <!-- NOTE: Use the convention of Jekyll that the first parargraph is auto-converted as excerpt -->
-      <p> My review and survey on textual uml tools </p>
-
-      <div>
-        <span> Posted at <strong>Jun 11, 2015</strong> </span>
-        
-        • <a href=""><span>uml</span></a>
-        
-        • <a href=""><span>diagram</span></a>
-        
-      </div>
-
-    </div>
+    • <em class="page_number "> 1 / 3</em> •
     
-    <div class="post-list-entry">
-
-      <hr>
-      <h2>
-        <a class="post-link" href="/post/copy-change-be-careful">Copy & Change: be careful</a>
-      </h2>
-
-      <!-- NOTE: Use the convention of Jekyll that the first parargraph is auto-converted as excerpt -->
-      <p> The story about a file-roller bug </p>
-
-      <div>
-        <span> Posted at <strong>Apr 2, 2015</strong> </span>
-        
-        • <a href=""><span>libarchive</span></a>
-        
-        • <a href=""><span>file-roller</span></a>
-        
-        • <a href=""><span>compiler</span></a>
-        
-        • <a href=""><span>sparse</span></a>
-        
-      </div>
-
-    </div>
-    
-    <div class="post-list-entry">
-
-      <hr>
-      <h2>
-        <a class="post-link" href="/post/from-octopress-to-jekyll">From Octopress to Jekyll</a>
-      </h2>
-
-      <!-- NOTE: Use the convention of Jekyll that the first parargraph is auto-converted as excerpt -->
-      <p> <p>
-After 4 months' idleness, I've come back to my blog and decide to take another
-look at the blogging tools.
-</p>
-
- </p>
-
-      <div>
-        <span> Posted at <strong>Apr 1, 2015</strong> </span>
-        
-        • <a href=""><span>jekyll</span></a>
-        
-        • <a href=""><span>octopress</span></a>
-        
-        • <a href=""><span>org</span></a>
-        
-      </div>
-
-    </div>
-    
-    <div class="post-list-entry">
-
-      <hr>
-      <h2>
-        <a class="post-link" href="/post/packaging-and-several-concepts">Packaging and Several Concepts</a>
-      </h2>
-
-      <!-- NOTE: Use the convention of Jekyll that the first parargraph is auto-converted as excerpt -->
-      <p> <div id="outline-container-sec-1" class="outline-2">
-<div class="outline-text-2" id="text-1">
-<p>
-The other day some of my colleagues were discussing about how to manage a
-package. From what I heard: <code>SUSE</code> decides to use kernel's bundled <code>DRDB</code> module
-instead of the version built out of <code>DRDB</code>'s source tree, which is dropped in
-<code>DRDB</code>'s new version anyway. The package for this new <code>DRDB</code> is called
-<code>DRDB-user</code> as it only contains the user-space part. The problem rises when a
-user of older version of <code>SLE</code> (SUSE Linux Enterprise) decides to update to this
-<code>DRDB-user</code>. <code>DRDB-user</code> is said to support some old versions, i.e. for these
-versions you can mix up kernel modules from old <code>DRDB</code> package with newer
-<code>DRDB-user</code>. The question is how to do the packaging? (I am totally ignorant
-about <code>DRDB</code>, so the details might not be exact but the important point here is
-packaging.)
-</p>
-
- </p>
-
-      <div>
-        <span> Posted at <strong>Nov 26, 2014</strong> </span>
-        
-        • <a href=""><span>rpm</span></a>
-        
-        • <a href=""><span>pkgbuild</span></a>
-        
-        • <a href=""><span>drdb</span></a>
-        
-      </div>
-
-    </div>
-    
-    <div class="post-list-entry">
-
-      <hr>
-      <h2>
-        <a class="post-link" href="/post/arch-for-suse-package-development">Arch for SUSE package development</a>
-      </h2>
-
-      <!-- NOTE: Use the convention of Jekyll that the first parargraph is auto-converted as excerpt -->
-      <p> <div id="outline-container-sec-1" class="outline-2">
-<div class="outline-text-2" id="text-1">
-<p>
-I work across multiple computers: home PC, my own laptop, company PC and laptop.
-And I like to use <code>Arch</code> for my daily work everywhere. The problem is that
-<code>Linux</code> does a poor job to support new hardware, more so for less known brands.
-For example the sleep/hibernation on my AMD-laptop constantly breaks. So I've
-opted for a <code>VM/Linux + Windows/Linux</code> setup. My <code>Arch</code> runs inside the
-<code>VirtualBox</code>, and basically all I need is to sync the <code>vm</code> to have a consistent
-working environment EVERYWHERE! It took me about one month to adapt to this new
-layout, but it feels superb!
-</p>
-
- </p>
-
-      <div>
-        <span> Posted at <strong>Nov 21, 2014</strong> </span>
-        
-        • <a href=""><span>arch_linux</span></a>
-        
-        • <a href=""><span>suse</span></a>
-        
-        • <a href=""><span>rpm</span></a>
-        
-      </div>
-
-    </div>
-    
-    <div class="post-list-entry">
-
-      <hr>
-      <h2>
-        <a class="post-link" href="/post/octopress-customization-easy-blog-source-link">Octopress Customization: easy blog source link</a>
-      </h2>
-
-      <!-- NOTE: Use the convention of Jekyll that the first parargraph is auto-converted as excerpt -->
-      <p> <div id="outline-container-sec-1" class="outline-2">
-<div class="outline-text-2" id="text-1">
-<p>
-Most my posts here are programming-related and one of <code>Org</code>'s killer features is
-embedding code (used in literate programming and etc.), I thought why not give
-the reader an easier way to access my post source. Chances are that they might
-be using <code>Emacs</code> and <code>Org</code>, then they can try the code directly without
-copying/pasting or the hassle to wade through my source repo ;).
-</p>
-
- </p>
-
-      <div>
-        <span> Posted at <strong>Nov 20, 2014</strong> </span>
-        
-        • <a href=""><span>octopress</span></a>
-        
-        • <a href=""><span>jekyll</span></a>
-        
-        • <a href=""><span>org</span></a>
-        
-      </div>
-
-    </div>
-    
-    <div class="post-list-entry">
-
-      <hr>
-      <h2>
-        <a class="post-link" href="/post/org-octopress-links">Org-octopress: Links</a>
-      </h2>
-
-      <!-- NOTE: Use the convention of Jekyll that the first parargraph is auto-converted as excerpt -->
-      <p> <div id="outline-container-sec-1" class="outline-2">
-<div class="outline-text-2" id="text-1">
-<p>
-In <a href="http://www.railsonmaui.com/blog/2014/03/05/octopress-setup-with-github-and-org-mode-v2/index.html">Org-Mode Octopress Setup V2</a>, which I am still reading to complete my setup of
-<code>Org</code> with <code>Octopress</code>, the author mentions the problems with links in <b>Org-mode
-Integration</b>.
-</p>
-
- </p>
-
-      <div>
-        <span> Posted at <strong>Nov 19, 2014</strong> </span>
-        
-        • <a href=""><span>org</span></a>
-        
-        • <a href=""><span>emacs</span></a>
-        
-        • <a href=""><span>octopress</span></a>
-        
-        • <a href=""><span>emacs-lisp</span></a>
-        
-      </div>
-
-    </div>
-    
-    <div class="post-list-entry">
-
-      <hr>
-      <h2>
-        <a class="post-link" href="/post/hello-and-self-introduction">Hello and Self-Introduction</a>
-      </h2>
-
-      <!-- NOTE: Use the convention of Jekyll that the first parargraph is auto-converted as excerpt -->
-      <p> <p>
-A "Hello World" blog. Later it would grow into Page "About".
-</p>
-
- </p>
-
-      <div>
-        <span> Posted at <strong>Nov 19, 2014</strong> </span>
-        
-        • <a href=""><span>hello</span></a>
-        
-        • <a href=""><span>self-introduction</span></a>
-        
-      </div>
-
-    </div>
+    <a href="/posts/page2/" class="next">Next</a>
     
   </div>
 
-  <p class="rss-subscribe">subscribe <a href="/feed.xml">via RSS</a></p>
+  <!-- TODO bad style, 35% is in line with <hr>'s 65% width, factor these styles using SCSS vars -->
+  <div class="rss-subscribe" style="float: right; margin-right: 35%">
+    subscribe <a href="/feed.xml">via RSS</a>
+  </div>
 
 </article>
 
