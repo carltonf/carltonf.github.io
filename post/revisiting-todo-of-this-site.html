@@ -5,11 +5,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,minimum-scale=1">
 
-  <title>Search</title>
-  <meta name="description" content="See further, but how far is far?
-">
+  <title>Revisiting TODO of this site</title>
+  <meta name="description" content="With a revamping done, it’s a good moment to reflect upon the old plan I had forthis site and some ideas about it in the future.">
 
-  <link rel="canonical" href="http://carltonf.github.io/search">
+  <link rel="canonical" href="http://carltonf.github.io/post/revisiting-todo-of-this-site">
   <link rel="alternate" type="application/rss+xml" title="Crystal Sight" href="http://carltonf.github.io/feed.xml">
 
   <script type="application/ld+json">
@@ -17,12 +16,11 @@
 {
   "@context": "http://schema.org",
   "@type": "NewsArticle",
-  "mainEntityOfPage": "http://carltonf.github.io/search",
-  "headline": "Search",
-  "datePublished": "2016-08-07T08:50:23+00:00",
-  "dateModified": "2016-08-07T08:50:23+00:00",
-  "description": "See further, but how far is far?
-",
+  "mainEntityOfPage": "http://carltonf.github.io/post/revisiting-todo-of-this-site",
+  "headline": "Revisiting TODO of this site",
+  "datePublished": "2016-08-06T00:00:00+00:00",
+  "dateModified": "2016-08-06T00:00:00+00:00",
+  "description": "With a revamping done, it’s a good moment to reflect upon the old plan I had forthis site and some ideas about it in the future.",
   "author": {
     "@type": "Person",
     "name": ""
@@ -598,39 +596,186 @@ li p {
 </header>
 
 
-<article class="post">
+<article>
+
+  <h2 itemprop="name">
+    <a href="" itemprop="url">Revisiting TODO of this site</a>
+  </h2>
 
   <div class="post-meta">
-    <h1 class="post-title">Search</h1>
+    <time datetime="06 August 2016">
+      06 August 2016
+    </time>
   </div>
 
   <section>
-    <i>DISCLAIM: just a google custom search for convience.</i>
+    <p>With a revamping done, it’s a good moment to reflect upon the old plan I had for
+this site and some ideas about it in the future.</p>
 
-<script>
-  (function() {
-    var cx = '015705734217502132548:lf16gs2rc-a';
-    var gcse = document.createElement('script');
-    gcse.type = 'text/javascript';
-    gcse.async = true;
-    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
-        '//cse.google.com/cse.js?cx=' + cx;
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(gcse, s);
-  })();
-</script>
+<p>It’s been quite a while since the last time I’ve published a post <span id="sn-drafts" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">for the record, I <em>did</em> write several drafts during this vacancy</span>
+and now this site is undergoing a second redesign. <span id="sn-history" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">The 1st attempt is using <a href="http://octopress.org/">Octopress</a>, the 2nd attempt is using <a href="https://github.com/ardumont/org2jekyll">Org2Jekyll</a> and Jekyll itself. There is also a 2.5 attempt when I switch from org source to markdown, but old posts are not all converted though.</span>.</p>
 
-<!--
--- NOTE tweak the style to be the same as <p> in other posts. I can not use
--- <p> here, as google script would take div.google-cse-box out
--->
-<div style="width: 55%">
-  <div class="google-cse-box col-sm-12 col-md-8 col-md-offset-2 col-sm-offset-0">
-    <gcse:search queryParameterName="searchString" enableAutoComplete="true"></gcse:search>
-  </div>
-</div>
+<h1 id="review">Review</h1>
+
+<p>The old <em>TODO</em> page was published almost exactly one year ago. <span id="last-TODO" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">The last <a href="http://carltonf.github.io/post/old-todo-page">todo note</a> is taken at 03 August 2015.</span> The timing is a pleasant coincidence.</p>
+
+<h2 id="populate-wiki">Populate Wiki</h2>
+
+<p>I would call this part partially done as dozens of entries have been added since
+then. However there are not as mangy as I’d like. However, at present I believe
+a completely independent wiki is not necessary. Much like the value of
+sidenote/marginnote, wiki should serve posts as reference source, and thus many
+features planned for wikis are scratched.</p>
+
+<h2 id="sidebar">Sidebar</h2>
+
+<p>Sidebar is removed all together. <span id="sn-sidebar" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">To my slight surprise, half of the original <em>TODO</em> is about features for sidebar. I guess it’s because I was learning web design back then and sidebar offered the most challenging problems. Unfortunately, these <em>challenges</em> served only as distractions to making a good personal site: writing high-quality posts and showcase real work.</span></p>
+
+<p>Firstly, the design style of this site is <a href="https://en.wikipedia.org/wiki/KISS_principle">KISS</a>. 
+<span id="sn-kiss" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">In retrospect, all previous revamping are actually moving towards the current <code class="highlighter-rouge">KISS</code> style. <code class="highlighter-rouge">Octopress</code> is full of conventions I didn’t understand. Writing posts in Emacs <code class="highlighter-rouge">org</code> and then do the conversion adds extra indirections and complexities.</span></p>
+
+<p>Further, I’ve realized that <strong>the most common</strong> way visitors (including myself)
+use this site is: search the web or follow some links to a post in this site,
+read the interesting bits and then leave. In the very few occasions a visitor
+might be curious enough to explore other parts of the site. So the pivotal point
+in design should be to maximize the readability of <strong>the post</strong> and sidebar is
+only a distraction. <span id="sn-sidebar" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">Actually in the old design, sidebar is an example of <em>premature optimization</em>. Sidebar essentially is an optimization for site navigation, which as any other shortcut/optimization should be justified first. It can be easily justified for some e-commerce site, but not really for a small personal site.</span></p>
+
+<h2 id="the-philosophy-collection">The Philosophy Collection</h2>
+
+<p>Not much have been done. However, I started to write some posts on more
+abstract topics like <a href="http://carltonf.github.io/post/a-workflow-for-bug-fixing">bug fixing
+methodology</a>, <a href="http://carltonf.github.io/post/adapt-vs-configure">the
+merits of adaption</a> and etc.
+I think this is a good direction and in line with my aforementioned plan for
+wikis. I see posts more as observational diary about ideas. It’s about the
+process that an idea comes into being, goes through stages of developing,
+absorbing new facts, integrating with other ideas to form a system and
+eventually fading into irrelevance and being superseded by new ideas. 
+<span class="marginnote">And it’s in this view of posts, specific, reusable
+tips/scripts should be factored out into wiki. Wiki serves posts (in extension
+<em>ideas</em>) as references.</span></p>
+
+<p>With the above said, I’ll strive to stay pragmatic though ;P.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>That’s about the review. It’s a little disappointed to see only so few has been
+planned.</p>
+
+<h1 id="the-new-plan">The <em>NEW</em> Plan</h1>
+
+<p><em>“Nothing is ever new. Only the history previously unknown.”</em> <span id="sn-nothing-new" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">I failed to find this saying’s origin, the closest source seems to be <em>“There is nothing new under the sun. It has all been done before”</em> from <a href="https://en.wikipedia.org/wiki/A_Study_in_Scarlet">A Study in Scarlet</a></span>. So the <em>NEW</em>
+plan is more about the ideas I’ve long had and would like to see implemented in
+the site. The <em>TODO</em> page is no longer there, but I’ve enjoyed the one-year
+review of my previous <em>TODO</em>.</p>
+
+<h2 id="styledesign">Style&amp;Design</h2>
+
+<p><span class="marginnote">In my metaphor, <code class="highlighter-rouge">KISS</code> is like straight parallel
+lines and <code class="highlighter-rouge">Tufte CSS</code> adds musical notes on them.</span></p>
+
+<p>I’ve liked the <a href="https://edwardtufte.github.io/tufte-css/">Tufte CSS Style</a> from
+the very beginning, before I even knew its name. It’s <code class="highlighter-rouge">KISS</code> plus delicacy. I’ve
+adapted this style with <code class="highlighter-rouge">Jekyll</code> using good work done by
+<a href="https://cdn.ampproject.org/c/siawyoung.com/immaculate/">Immaculate Jekyll Theme</a>,
+which also features the
+<a href="https://www.ampproject.org/docs/get_started/about-amp.html">AMP</a>. <span id="sn-amp" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">Personally, I know little about <code class="highlighter-rouge">AMP</code>, other than it’s proponed by <em>Google</em> and good for mobile devices. It seems to embed all stylesheet within the HTML itself, which is bewildering to me for now.</span></p>
+
+<p>I’ve also put up a homepage instead of the list of posts as I envision this site
+to be the main hub for all my online activities.</p>
+
+<h2 id="habit">Habit</h2>
+
+<p>One main goal of the plan is to cultivate a habit of frequent writing. How
+exactly I am going to achieve this still eludes me. Here is the sketch of what
+I want to accomplish:</p>
+
+<ol>
+  <li>
+    <p>Write everyday.</p>
+
+    <p>I’ve started using <code class="highlighter-rouge">OneNote</code> for planning and note taking. The accumulated
+notes can serve as a good basis. <span class="marginnote">Many more old
+notes are in <code class="highlighter-rouge">org</code> files.</span> As posting everyday would be quite
+laborious, there have to be some guidelines on what to write, how to write. A
+transitory guide is to <em>single out an idea, quickly scratch a post and
+publish, then review and refine</em>.</p>
+  </li>
+  <li>
+    <p>Formalize a writing style.</p>
+
+    <p><span class="marginnote"><em>TODO</em> Reflect on the way posts are
+written and put up a post about a good style</span></p>
+
+    <p>Everyone has a style but not everyone is aware, let alone formalizing it. A
+consistent and formal style can really speed up writing and it’s the key in
+forming the habit.</p>
+  </li>
+</ol>
+
+<h2 id="extra-collections">Extra Collections</h2>
+
+<p>Other than the habit, I’d like to see some new additions to my site.</p>
+
+<h3 id="presentations">Presentations</h3>
+
+<p>If posts are for a single visitor<span id="sn-posts-for" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">To digest the content in one’s own pace.</span>, presentations are for a group of audience. The format
+and use cases of presentations enforces the following properties: <em>compact</em>,
+<em>succinct</em>, <em>open for questions and critics</em>. It can serve as the best way to
+introduce/summarize a complex topic.</p>
+
+<p>As it said, <em>“Every job is a sales job.”</em>. Being good at presentation also
+makes one more competitive in job market.</p>
+
+<p>The plan is to recap, recollect all my old presentations first. Reedit them if
+the topics are still relevant today. Write new presentations whenever it’s good
+to do so.</p>
+
+<h3 id="showcases">Showcases</h3>
+
+<p>Hmm, this part is the <code class="highlighter-rouge">default</code> clause in my plan<span id="sn-default-clause" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">I.e. everything else. ;P</span>. More concretely, as there are some other sites
+I’ve frequently used out there, collect those worthy ones and make a page for
+them in this site. <span id="sn-main-hub-reiterate" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote"><strong>This</strong> site is my online hut(hub).</span></p>
+
+<h3 id="about-reading-notes">About Reading Notes</h3>
+
+<p>Reading notes will be removed and only more thoughtful review for books are
+worth a post.</p>
+
+<p>I’ve got some posts <span id="sn-reading-draft" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">Some more are in <code class="highlighter-rouge">_drafts/</code></span>
+that are merely quotes from books I’ve read. Posts are ill-fit for quote
+collection like that. For the purpose of reviewing, I’ve found
+<a href="http://ankisrs.net/">Anki</a> to be handy.</p>
+
+<h2 id="the-end">The End</h2>
+
+<p>That’s all for now. Big ideas and let’s make sure they would end up as <em>Big
+words</em> only. <span id="sn-big-words" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote"><a href="http://www.thefrisky.com/2012-05-16/12-words-and-phrases-from-game-of-thrones-that-need-to-be-part-of-your-vocabulary/"><em>“Words are wind~”</em></a></span></p>
 
   </section>
+
+  <div>
+    <b> Tags </b>
+    
+    • <a href=""><span>todo</span></a>
+    
+    • <a href=""><span>admin</span></a>
+    
+  </div>
 
 </article>
 

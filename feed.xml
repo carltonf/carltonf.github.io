@@ -6,9 +6,179 @@
 </description>
     <link>http://carltonf.github.io/</link>
     <atom:link href="http://carltonf.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 06 Aug 2016 15:35:03 +0000</pubDate>
-    <lastBuildDate>Sat, 06 Aug 2016 15:35:03 +0000</lastBuildDate>
+    <pubDate>Sun, 07 Aug 2016 08:50:23 +0000</pubDate>
+    <lastBuildDate>Sun, 07 Aug 2016 08:50:23 +0000</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
+    
+      <item>
+        <title>Revisiting TODO of this site</title>
+        <description>&lt;p&gt;With a revamping done, it’s a good moment to reflect upon the old plan I had for
+this site and some ideas about it in the future.&lt;/p&gt;
+
+&lt;p&gt;It’s been quite a while since the last time I’ve published a post &lt;span id=&quot;sn-drafts&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;for the record, I &lt;em&gt;did&lt;/em&gt; write several drafts during this vacancy&lt;/span&gt;
+and now this site is undergoing a second redesign. &lt;span id=&quot;sn-history&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;The 1st attempt is using &lt;a href=&quot;http://octopress.org/&quot;&gt;Octopress&lt;/a&gt;, the 2nd attempt is using &lt;a href=&quot;https://github.com/ardumont/org2jekyll&quot;&gt;Org2Jekyll&lt;/a&gt; and Jekyll itself. There is also a 2.5 attempt when I switch from org source to markdown, but old posts are not all converted though.&lt;/span&gt;.&lt;/p&gt;
+
+&lt;h1 id=&quot;review&quot;&gt;Review&lt;/h1&gt;
+
+&lt;p&gt;The old &lt;em&gt;TODO&lt;/em&gt; page was published almost exactly one year ago. &lt;span id=&quot;last-TODO&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;The last &lt;a href=&quot;http://carltonf.github.io/post/old-todo-page&quot;&gt;todo note&lt;/a&gt; is taken at 03 August 2015.&lt;/span&gt; The timing is a pleasant coincidence.&lt;/p&gt;
+
+&lt;h2 id=&quot;populate-wiki&quot;&gt;Populate Wiki&lt;/h2&gt;
+
+&lt;p&gt;I would call this part partially done as dozens of entries have been added since
+then. However there are not as mangy as I’d like. However, at present I believe
+a completely independent wiki is not necessary. Much like the value of
+sidenote/marginnote, wiki should serve posts as reference source, and thus many
+features planned for wikis are scratched.&lt;/p&gt;
+
+&lt;h2 id=&quot;sidebar&quot;&gt;Sidebar&lt;/h2&gt;
+
+&lt;p&gt;Sidebar is removed all together. &lt;span id=&quot;sn-sidebar&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;To my slight surprise, half of the original &lt;em&gt;TODO&lt;/em&gt; is about features for sidebar. I guess it’s because I was learning web design back then and sidebar offered the most challenging problems. Unfortunately, these &lt;em&gt;challenges&lt;/em&gt; served only as distractions to making a good personal site: writing high-quality posts and showcase real work.&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Firstly, the design style of this site is &lt;a href=&quot;https://en.wikipedia.org/wiki/KISS_principle&quot;&gt;KISS&lt;/a&gt;. 
+&lt;span id=&quot;sn-kiss&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;In retrospect, all previous revamping are actually moving towards the current &lt;code class=&quot;highlighter-rouge&quot;&gt;KISS&lt;/code&gt; style. &lt;code class=&quot;highlighter-rouge&quot;&gt;Octopress&lt;/code&gt; is full of conventions I didn’t understand. Writing posts in Emacs &lt;code class=&quot;highlighter-rouge&quot;&gt;org&lt;/code&gt; and then do the conversion adds extra indirections and complexities.&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Further, I’ve realized that &lt;strong&gt;the most common&lt;/strong&gt; way visitors (including myself)
+use this site is: search the web or follow some links to a post in this site,
+read the interesting bits and then leave. In the very few occasions a visitor
+might be curious enough to explore other parts of the site. So the pivotal point
+in design should be to maximize the readability of &lt;strong&gt;the post&lt;/strong&gt; and sidebar is
+only a distraction. &lt;span id=&quot;sn-sidebar&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;Actually in the old design, sidebar is an example of &lt;em&gt;premature optimization&lt;/em&gt;. Sidebar essentially is an optimization for site navigation, which as any other shortcut/optimization should be justified first. It can be easily justified for some e-commerce site, but not really for a small personal site.&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;the-philosophy-collection&quot;&gt;The Philosophy Collection&lt;/h2&gt;
+
+&lt;p&gt;Not much have been done. However, I started to write some posts on more
+abstract topics like &lt;a href=&quot;http://carltonf.github.io/post/a-workflow-for-bug-fixing&quot;&gt;bug fixing
+methodology&lt;/a&gt;, &lt;a href=&quot;http://carltonf.github.io/post/adapt-vs-configure&quot;&gt;the
+merits of adaption&lt;/a&gt; and etc.
+I think this is a good direction and in line with my aforementioned plan for
+wikis. I see posts more as observational diary about ideas. It’s about the
+process that an idea comes into being, goes through stages of developing,
+absorbing new facts, integrating with other ideas to form a system and
+eventually fading into irrelevance and being superseded by new ideas. 
+&lt;span class=&quot;marginnote&quot;&gt;And it’s in this view of posts, specific, reusable
+tips/scripts should be factored out into wiki. Wiki serves posts (in extension
+&lt;em&gt;ideas&lt;/em&gt;) as references.&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;With the above said, I’ll strive to stay pragmatic though ;P.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;That’s about the review. It’s a little disappointed to see only so few has been
+planned.&lt;/p&gt;
+
+&lt;h1 id=&quot;the-new-plan&quot;&gt;The &lt;em&gt;NEW&lt;/em&gt; Plan&lt;/h1&gt;
+
+&lt;p&gt;&lt;em&gt;“Nothing is ever new. Only the history previously unknown.”&lt;/em&gt; &lt;span id=&quot;sn-nothing-new&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;I failed to find this saying’s origin, the closest source seems to be &lt;em&gt;“There is nothing new under the sun. It has all been done before”&lt;/em&gt; from &lt;a href=&quot;https://en.wikipedia.org/wiki/A_Study_in_Scarlet&quot;&gt;A Study in Scarlet&lt;/a&gt;&lt;/span&gt;. So the &lt;em&gt;NEW&lt;/em&gt;
+plan is more about the ideas I’ve long had and would like to see implemented in
+the site. The &lt;em&gt;TODO&lt;/em&gt; page is no longer there, but I’ve enjoyed the one-year
+review of my previous &lt;em&gt;TODO&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;styledesign&quot;&gt;Style&amp;amp;Design&lt;/h2&gt;
+
+&lt;p&gt;&lt;span class=&quot;marginnote&quot;&gt;In my metaphor, &lt;code class=&quot;highlighter-rouge&quot;&gt;KISS&lt;/code&gt; is like straight parallel
+lines and &lt;code class=&quot;highlighter-rouge&quot;&gt;Tufte CSS&lt;/code&gt; adds musical notes on them.&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;I’ve liked the &lt;a href=&quot;https://edwardtufte.github.io/tufte-css/&quot;&gt;Tufte CSS Style&lt;/a&gt; from
+the very beginning, before I even knew its name. It’s &lt;code class=&quot;highlighter-rouge&quot;&gt;KISS&lt;/code&gt; plus delicacy. I’ve
+adapted this style with &lt;code class=&quot;highlighter-rouge&quot;&gt;Jekyll&lt;/code&gt; using good work done by
+&lt;a href=&quot;https://cdn.ampproject.org/c/siawyoung.com/immaculate/&quot;&gt;Immaculate Jekyll Theme&lt;/a&gt;,
+which also features the
+&lt;a href=&quot;https://www.ampproject.org/docs/get_started/about-amp.html&quot;&gt;AMP&lt;/a&gt;. &lt;span id=&quot;sn-amp&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;Personally, I know little about &lt;code class=&quot;highlighter-rouge&quot;&gt;AMP&lt;/code&gt;, other than it’s proponed by &lt;em&gt;Google&lt;/em&gt; and good for mobile devices. It seems to embed all stylesheet within the HTML itself, which is bewildering to me for now.&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;I’ve also put up a homepage instead of the list of posts as I envision this site
+to be the main hub for all my online activities.&lt;/p&gt;
+
+&lt;h2 id=&quot;habit&quot;&gt;Habit&lt;/h2&gt;
+
+&lt;p&gt;One main goal of the plan is to cultivate a habit of frequent writing. How
+exactly I am going to achieve this still eludes me. Here is the sketch of what
+I want to accomplish:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Write everyday.&lt;/p&gt;
+
+    &lt;p&gt;I’ve started using &lt;code class=&quot;highlighter-rouge&quot;&gt;OneNote&lt;/code&gt; for planning and note taking. The accumulated
+notes can serve as a good basis. &lt;span class=&quot;marginnote&quot;&gt;Many more old
+notes are in &lt;code class=&quot;highlighter-rouge&quot;&gt;org&lt;/code&gt; files.&lt;/span&gt; As posting everyday would be quite
+laborious, there have to be some guidelines on what to write, how to write. A
+transitory guide is to &lt;em&gt;single out an idea, quickly scratch a post and
+publish, then review and refine&lt;/em&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Formalize a writing style.&lt;/p&gt;
+
+    &lt;p&gt;&lt;span class=&quot;marginnote&quot;&gt;&lt;em&gt;TODO&lt;/em&gt; Reflect on the way posts are
+written and put up a post about a good style&lt;/span&gt;&lt;/p&gt;
+
+    &lt;p&gt;Everyone has a style but not everyone is aware, let alone formalizing it. A
+consistent and formal style can really speed up writing and it’s the key in
+forming the habit.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;extra-collections&quot;&gt;Extra Collections&lt;/h2&gt;
+
+&lt;p&gt;Other than the habit, I’d like to see some new additions to my site.&lt;/p&gt;
+
+&lt;h3 id=&quot;presentations&quot;&gt;Presentations&lt;/h3&gt;
+
+&lt;p&gt;If posts are for a single visitor&lt;span id=&quot;sn-posts-for&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;To digest the content in one’s own pace.&lt;/span&gt;, presentations are for a group of audience. The format
+and use cases of presentations enforces the following properties: &lt;em&gt;compact&lt;/em&gt;,
+&lt;em&gt;succinct&lt;/em&gt;, &lt;em&gt;open for questions and critics&lt;/em&gt;. It can serve as the best way to
+introduce/summarize a complex topic.&lt;/p&gt;
+
+&lt;p&gt;As it said, &lt;em&gt;“Every job is a sales job.”&lt;/em&gt;. Being good at presentation also
+makes one more competitive in job market.&lt;/p&gt;
+
+&lt;p&gt;The plan is to recap, recollect all my old presentations first. Reedit them if
+the topics are still relevant today. Write new presentations whenever it’s good
+to do so.&lt;/p&gt;
+
+&lt;h3 id=&quot;showcases&quot;&gt;Showcases&lt;/h3&gt;
+
+&lt;p&gt;Hmm, this part is the &lt;code class=&quot;highlighter-rouge&quot;&gt;default&lt;/code&gt; clause in my plan&lt;span id=&quot;sn-default-clause&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;I.e. everything else. ;P&lt;/span&gt;. More concretely, as there are some other sites
+I’ve frequently used out there, collect those worthy ones and make a page for
+them in this site. &lt;span id=&quot;sn-main-hub-reiterate&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;&lt;strong&gt;This&lt;/strong&gt; site is my online hut(hub).&lt;/span&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;about-reading-notes&quot;&gt;About Reading Notes&lt;/h3&gt;
+
+&lt;p&gt;Reading notes will be removed and only more thoughtful review for books are
+worth a post.&lt;/p&gt;
+
+&lt;p&gt;I’ve got some posts &lt;span id=&quot;sn-reading-draft&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;Some more are in &lt;code class=&quot;highlighter-rouge&quot;&gt;_drafts/&lt;/code&gt;&lt;/span&gt;
+that are merely quotes from books I’ve read. Posts are ill-fit for quote
+collection like that. For the purpose of reviewing, I’ve found
+&lt;a href=&quot;http://ankisrs.net/&quot;&gt;Anki&lt;/a&gt; to be handy.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-end&quot;&gt;The End&lt;/h2&gt;
+
+&lt;p&gt;That’s all for now. Big ideas and let’s make sure they would end up as &lt;em&gt;Big
+words&lt;/em&gt; only. &lt;span id=&quot;sn-big-words&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;&lt;a href=&quot;http://www.thefrisky.com/2012-05-16/12-words-and-phrases-from-game-of-thrones-that-need-to-be-part-of-your-vocabulary/&quot;&gt;&lt;em&gt;“Words are wind~”&lt;/em&gt;&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;
+</description>
+        <pubDate>Sat, 06 Aug 2016 00:00:00 +0000</pubDate>
+        <link>http://carltonf.github.io/post/revisiting-todo-of-this-site</link>
+        <guid isPermaLink="true">http://carltonf.github.io/post/revisiting-todo-of-this-site</guid>
+        
+        <category>todo</category>
+        
+        <category>admin</category>
+        
+        
+      </item>
     
       <item>
         <title>Powershell Tips Notes</title>
@@ -456,6 +626,100 @@ without &lt;code&gt;STP&lt;/code&gt;.
         <category>bridge</category>
         
         <category>stp</category>
+        
+        
+        <category></category>
+        
+        <category></category>
+        
+      </item>
+    
+      <item>
+        <title>TODO (old page before 201608)</title>
+        <description>&lt;i&gt;DISCLAIM: This post is the old TODO page. Archived as a psot for reference.&lt;/i&gt;
+&lt;p&gt;
+We list some long-term TODO entries here. For now only entries related to this
+blog site are included.
+&lt;/p&gt;
+
+&lt;div id=&quot;outline-container-sec-1&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-1&quot;&gt;Blog Roadmap&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-1&quot;&gt;
+&lt;/div&gt;&lt;div id=&quot;outline-container-sec-1-1&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;sec-1-1&quot;&gt;&lt;span class=&quot;todo TODO&quot;&gt;TODO&lt;/span&gt; Populate Wiki.&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-1-1&quot;&gt;
+&lt;p&gt;
+For quite a long time, we've built a &lt;code&gt;Git&lt;/code&gt; repo (locally called &lt;code&gt;ICWiki&lt;/code&gt; ;) that
+collects bits of knowledge for personal use. This task is about itemize it and
+put online under the &lt;code&gt;Wiki&lt;/code&gt; page.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-1-2&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;sec-1-2&quot;&gt;&lt;span class=&quot;todo TODO&quot;&gt;TODO&lt;/span&gt; Post-navigation sidebar&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-1-2&quot;&gt;
+&lt;p&gt;
+Other than the current site-wide navigation, an article-wide navigation would
+also be nice.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-1-3&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;sec-1-3&quot;&gt;&lt;span class=&quot;todo TODO&quot;&gt;TODO&lt;/span&gt; Wiki Style Improvements &lt;code&gt;[0/2]&lt;/code&gt;&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-1-3&quot;&gt;
+&lt;/div&gt;&lt;ul class=&quot;org-ul&quot;&gt;&lt;li&gt;&lt;a id=&quot;sec-1-3-1&quot; name=&quot;sec-1-3-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;todo TODO&quot;&gt;TODO&lt;/span&gt; Sidebar Recent listing includes &lt;code&gt;Wiki&lt;/code&gt;&lt;br  /&gt;&lt;div class=&quot;outline-text-4&quot; id=&quot;text-1-3-1&quot;&gt;
+&lt;p&gt;
+Further include posts from all collections.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+
+&lt;li&gt;&lt;a id=&quot;sec-1-3-2&quot; name=&quot;sec-1-3-2&quot;&gt;&lt;/a&gt;&lt;span class=&quot;todo TODO&quot;&gt;TODO&lt;/span&gt; Alphabetical Listing&lt;br  /&gt;&lt;div class=&quot;outline-text-4&quot; id=&quot;text-1-3-2&quot;&gt;
+&lt;p&gt;
+&lt;b&gt;Waiting for at least &amp;gt;50 entries to justify this task&lt;/b&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+List &lt;code&gt;Wiki&lt;/code&gt; entries alphabetically with each alphabet as a panel (would be a
+good use case for &lt;code&gt;Bootstrap&lt;/code&gt; collapse panels).
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/li&gt;&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-1-4&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;sec-1-4&quot;&gt;&lt;span class=&quot;todo TODO&quot;&gt;TODO&lt;/span&gt; Philosophy Collection&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-1-4&quot;&gt;
+&lt;p&gt;
+I'm not a philosopher by trade, but a philosophical man (self-titled :P). Over
+the years, I have pondered on many different problems, aggregated some
+&quot;interesting&quot; ideas. I've been through the stages: 
+&lt;/p&gt;
+
+&lt;pre class=&quot;example&quot;&gt;
+&quot;delusion of knowing all&quot; -&amp;gt; &quot;disillusion and break-down&quot; -&amp;gt; &quot;rebuilding&quot;
+&lt;/pre&gt;
+
+&lt;p&gt;
+The years since the sophomore year in the college have not been good to me.
+Though being accused of thinking too much, I start to find out it's the
+opposite: I've known too little and I was too ignorant. And thus I need to
+collect my thoughts, trace the roots, systematize the scattered ideas and learn
+more.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Mon, 03 Aug 2015 00:00:00 +0000</pubDate>
+        <link>http://carltonf.github.io/post/old-todo-page</link>
+        <guid isPermaLink="true">http://carltonf.github.io/post/old-todo-page</guid>
+        
+        <category>todo</category>
+        
+        <category>admin</category>
         
         
         <category></category>
@@ -1195,338 +1459,6 @@ A nice in-browser IDE for drawing diagrams manually.
         <category>uml</category>
         
         <category>diagram</category>
-        
-        
-        <category></category>
-        
-        <category></category>
-        
-      </item>
-    
-      <item>
-        <title>Copy &amp; Change: be careful</title>
-        <description>&lt;p&gt;
-This is a story about what we've learned from debugging the following bug:
-&lt;a href=&quot;https://bugzilla.gnome.org/show_bug.cgi?id=747091&quot;&gt;Bug 747091 – File-Roller fails to handle archive with sparse files&lt;/a&gt;
-&lt;/p&gt;
-
-&lt;p&gt;
-&lt;b&gt;Credit:&lt;/b&gt; Thanks for my colleague &lt;code&gt;Tao Yang&lt;/code&gt; for bringing this to my awareness.
-&lt;/p&gt;
-
-&lt;div id=&quot;outline-container-sec-1&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;sec-1&quot;&gt;Main Points&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-1&quot;&gt;
-&lt;ul class=&quot;org-ul&quot;&gt;
-&lt;li&gt;Learn something about &lt;a href=&quot;http://www.libarchive.org/&quot;&gt;libarchive&lt;/a&gt;
-&lt;/li&gt;
-&lt;li&gt;Learn something about &lt;a href=&quot;http://en.wikipedia.org/wiki/Sparse_file&quot;&gt;Sparse file - Wikipedia&lt;/a&gt;
-  &lt;a href=&quot;https://wiki.archlinux.org/index.php/Sparse_file&quot;&gt;Sparse file - ArchWiki&lt;/a&gt; is also helpful ;)
-&lt;/li&gt;
-&lt;li&gt;Warnings over &quot;unused&quot; variables: enlightenment on its usefulness and the
-difficulty in finding them.
-&lt;/li&gt;
-&lt;li&gt;In Practice: Copy &amp;amp; Change, you can't be more careful.
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-2&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;sec-2&quot;&gt;Preface&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-2&quot;&gt;
-&lt;/div&gt;&lt;div id=&quot;outline-container-sec-2-1&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;sec-2-1&quot;&gt;Libarchive&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-2-1&quot;&gt;
-&lt;p&gt;
-I didn't find a well-formatted API document anywhere, but the
-&lt;a href=&quot;https://github.com/libarchive/libarchive/blob/master/libarchive/archive.h&quot;&gt;libarchive/archive.h&lt;/a&gt; serves the purpose. What's relevant here is, &lt;code&gt;offset&lt;/code&gt; is
-the main point:
-&lt;/p&gt;
-&lt;div class=&quot;org-src-container&quot;&gt;
-
-&lt;pre class=&quot;src src-C&quot;&gt;&lt;span style=&quot;color: #b22222;&quot;&gt;/*&lt;/span&gt;
-&lt;span style=&quot;color: #b22222;&quot;&gt;* A zero-copy version of archive_read_data that also exposes the file offset&lt;/span&gt;
-&lt;span style=&quot;color: #b22222;&quot;&gt;* of each returned block. Note that the client has no way to specify&lt;/span&gt;
-&lt;span style=&quot;color: #b22222;&quot;&gt;* the desired size of the block. The API does guarantee that offsets will&lt;/span&gt;
-&lt;span style=&quot;color: #b22222;&quot;&gt;* be strictly increasing and that returned blocks will not overlap.&lt;/span&gt;
-&lt;span style=&quot;color: #b22222;&quot;&gt;*/&lt;/span&gt;
-__LA_DECL &lt;span style=&quot;color: #228b22;&quot;&gt;int&lt;/span&gt; &lt;span style=&quot;color: #0000ff;&quot;&gt;archive_read_data_block&lt;/span&gt;(&lt;span style=&quot;color: #a020f0;&quot;&gt;struct&lt;/span&gt; &lt;span style=&quot;color: #228b22;&quot;&gt;archive&lt;/span&gt; *&lt;span style=&quot;color: #a0522d;&quot;&gt;a&lt;/span&gt;,
-&lt;span style=&quot;color: #a020f0;&quot;&gt;const&lt;/span&gt; &lt;span style=&quot;color: #228b22;&quot;&gt;void&lt;/span&gt; **&lt;span style=&quot;color: #a0522d;&quot;&gt;buff&lt;/span&gt;, &lt;span style=&quot;color: #228b22;&quot;&gt;size_t&lt;/span&gt; *&lt;span style=&quot;color: #a0522d;&quot;&gt;size&lt;/span&gt;, &lt;span style=&quot;color: #228b22;&quot;&gt;__LA_INT64_T&lt;/span&gt; *&lt;span style=&quot;color: #a0522d;&quot;&gt;offset&lt;/span&gt;);
-&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;
-And the revelation from the following comment:
-&lt;/p&gt;
-&lt;pre class=&quot;example&quot;&gt;
-// A &quot;Non-sparse&quot; file is also a sparse file with only one block
-&lt;/pre&gt;
-
-&lt;p&gt;
-Further, a &lt;code&gt;read&amp;amp;write&lt;/code&gt; example from &lt;a href=&quot;https://github.com/libarchive/libarchive/wiki/Examples#A_Basic_Write_Example&quot;&gt;Examples · libarchive/libarchive Wiki&lt;/a&gt;,
-again the &lt;code&gt;offset&lt;/code&gt; is of interest:
-&lt;/p&gt;
-&lt;div class=&quot;org-src-container&quot;&gt;
-
-&lt;pre class=&quot;src src-C&quot;&gt;&lt;span style=&quot;color: #a020f0;&quot;&gt;static&lt;/span&gt; &lt;span style=&quot;color: #228b22;&quot;&gt;int&lt;/span&gt;
-&lt;span style=&quot;color: #0000ff;&quot;&gt;copy_data&lt;/span&gt;(&lt;span style=&quot;color: #a020f0;&quot;&gt;struct&lt;/span&gt; &lt;span style=&quot;color: #228b22;&quot;&gt;archive&lt;/span&gt; *&lt;span style=&quot;color: #a0522d;&quot;&gt;ar&lt;/span&gt;, &lt;span style=&quot;color: #a020f0;&quot;&gt;struct&lt;/span&gt; &lt;span style=&quot;color: #228b22;&quot;&gt;archive&lt;/span&gt; *&lt;span style=&quot;color: #a0522d;&quot;&gt;aw&lt;/span&gt;)
-{
-  &lt;span style=&quot;color: #228b22;&quot;&gt;int&lt;/span&gt; &lt;span style=&quot;color: #a0522d;&quot;&gt;r&lt;/span&gt;;
-  &lt;span style=&quot;color: #a020f0;&quot;&gt;const&lt;/span&gt; &lt;span style=&quot;color: #228b22;&quot;&gt;void&lt;/span&gt; *&lt;span style=&quot;color: #a0522d;&quot;&gt;buff&lt;/span&gt;;
-  &lt;span style=&quot;color: #228b22;&quot;&gt;size_t&lt;/span&gt; &lt;span style=&quot;color: #a0522d;&quot;&gt;size&lt;/span&gt;;
-  &lt;span style=&quot;color: #228b22;&quot;&gt;off_t&lt;/span&gt; &lt;span style=&quot;color: #a0522d;&quot;&gt;offset&lt;/span&gt;;
-
-  &lt;span style=&quot;color: #a020f0;&quot;&gt;for&lt;/span&gt; (;;) {
-    r = archive_read_data_block(ar, &amp;amp;buff, &amp;amp;size, &amp;amp;offset);
-    &lt;span style=&quot;color: #a020f0;&quot;&gt;if&lt;/span&gt; (r == ARCHIVE_EOF)
-      &lt;span style=&quot;color: #a020f0;&quot;&gt;return&lt;/span&gt; (ARCHIVE_OK);
-    &lt;span style=&quot;color: #a020f0;&quot;&gt;if&lt;/span&gt; (r &amp;lt; ARCHIVE_OK)
-      &lt;span style=&quot;color: #a020f0;&quot;&gt;return&lt;/span&gt; (r);
-    r = archive_write_data_block(aw, buff, size, offset);
-    &lt;span style=&quot;color: #a020f0;&quot;&gt;if&lt;/span&gt; (r &amp;lt; ARCHIVE_OK) {
-      fprintf(stderr, &lt;span style=&quot;color: #8b2252;&quot;&gt;&quot;%s\n&quot;&lt;/span&gt;, archive_error_string(aw));
-      &lt;span style=&quot;color: #a020f0;&quot;&gt;return&lt;/span&gt; (r);
-    }
-  }
-}
-&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;
-&lt;b&gt;Main Point:&lt;/b&gt; Value in &lt;code&gt;offset&lt;/code&gt; is how &lt;code&gt;archive_read_data_block&lt;/code&gt; tells
-the client whether&amp;amp;how the file is &quot;sparsed&quot;.
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-2-2&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;sec-2-2&quot;&gt;The cause of the bug&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-2-2&quot;&gt;
-&lt;div class=&quot;org-src-container&quot;&gt;
-
-&lt;pre class=&quot;src src-c&quot;&gt;&lt;span style=&quot;color: #b22222;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #b22222;&quot;&gt;fr-archive-libarchive.c::extract_archive_thread&lt;/span&gt;
-&lt;span style=&quot;color: #a020f0;&quot;&gt;while&lt;/span&gt; ((r = archive_read_data_block (a, &amp;amp;buffer, &amp;amp;buffer_size, &amp;amp;offset)) == ARCHIVE_OK) {
-        &lt;span style=&quot;color: #a020f0;&quot;&gt;if&lt;/span&gt; (g_output_stream_write (ostream, buffer, buffer_size, cancellable, &amp;amp;load_data-&amp;gt;error) == -1)
-                &lt;span style=&quot;color: #a020f0;&quot;&gt;break&lt;/span&gt;;
-        fr_archive_progress_inc_completed_bytes (load_data-&amp;gt;archive, buffer_size);
-}
-&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;
-As shown above, the &lt;code&gt;offset&lt;/code&gt; is set but not used. The use of
-&lt;code&gt;g_output_stream_write&lt;/code&gt; might come from a desire to use &lt;code&gt;GLib&lt;/code&gt; functions as much
-as possible, to be consistent as it's a &lt;code&gt;GNOME&lt;/code&gt; project. But by doing so, it
-omits crucial info conveyed by &lt;code&gt;offset&lt;/code&gt; and thus fails in the case of archive
-with sparse files. Also note, &lt;code&gt;offset&lt;/code&gt; is not used in any other place.
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-3&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;sec-3&quot;&gt;Thoughts&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-3&quot;&gt;
-&lt;/div&gt;&lt;div id=&quot;outline-container-sec-3-1&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;sec-3-1&quot;&gt;Unused variables&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-3-1&quot;&gt;
-&lt;p&gt;
-I never truly thought warnings like these are of particular usefulness before
-today. After all, these warnings are meant to urge programmers to clean up the
-code, aren't they?
-&lt;/p&gt;
-
-&lt;p&gt;
-But let's imagine if there had been such warning, and developers heeded it for
-&lt;code&gt;File-roller&lt;/code&gt;, then this bug might not have existed at all. Hours of debugging
-saved!
-&lt;/p&gt;
-
-&lt;p&gt;
-So such warnings are not just about house cleaning or a style. They suggest
-potential problems we might have overlooked. Pay attention to them and fix in
-time!
-&lt;/p&gt;
-
-&lt;p&gt;
-However, there can't be such warning to help the poor developer out in this
-case. &lt;code&gt;&amp;amp;offset&lt;/code&gt; is the malicious C pointer operator. With a pointer, the
-function can access the value or change it, and the compiler can't be fully sure
-about which is the case. Image this code written in another language, say
-&lt;code&gt;Ruby&lt;/code&gt;:
-&lt;/p&gt;
-
-&lt;div class=&quot;org-src-container&quot;&gt;
-
-&lt;pre class=&quot;src src-ruby&quot;&gt;&lt;span style=&quot;color: #b22222;&quot;&gt;# &lt;/span&gt;&lt;span style=&quot;color: #b22222;&quot;&gt;loop around ...&lt;/span&gt;
-r, buffer, buffer_size, offset = a.read_data_block()
-&lt;span style=&quot;color: #b22222;&quot;&gt;# &lt;/span&gt;&lt;span style=&quot;color: #b22222;&quot;&gt;the rest ...&lt;/span&gt;
-&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;
-Now there is no ambiguity about the use of &lt;code&gt;offset&lt;/code&gt; any more ;P
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-3-2&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;sec-3-2&quot;&gt;Copy &amp;amp; Change&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-3-2&quot;&gt;
-&lt;p&gt;
-A necessary evil in programming is &quot;copy &amp;amp; change&quot;. Be careful. What more can we
-say~
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-</description>
-        <pubDate>Thu, 02 Apr 2015 00:00:00 +0000</pubDate>
-        <link>http://carltonf.github.io/post/copy-change-be-careful</link>
-        <guid isPermaLink="true">http://carltonf.github.io/post/copy-change-be-careful</guid>
-        
-        <category>libarchive</category>
-        
-        <category>file-roller</category>
-        
-        <category>compiler</category>
-        
-        <category>sparse</category>
-        
-        
-        <category></category>
-        
-        <category></category>
-        
-      </item>
-    
-      <item>
-        <title>From Octopress to Jekyll</title>
-        <description>&lt;p&gt;
-After 4 months' idleness, I've come back to my blog and decide to take another
-look at the blogging tools.
-&lt;/p&gt;
-
-&lt;div id=&quot;outline-container-sec-1&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;sec-1&quot;&gt;What do I need for blogging tools?&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-1&quot;&gt;
-&lt;p&gt;
-As a developer using Emacs, I've taken the following as prerequisites:
-&lt;/p&gt;
-&lt;ol class=&quot;org-ol&quot;&gt;
-&lt;li&gt;Blog source in &lt;code&gt;org-mode&lt;/code&gt; format.
-&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;Github Page&lt;/code&gt; or similar static blog hosting sites (e.g. &lt;code&gt;Heroku&lt;/code&gt;).
-&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;
-And what actually makes a blog site?
-&lt;/p&gt;
-&lt;pre class=&quot;example&quot;&gt;
-Articles linked in a website-way: uniform theme, front page, navigator, catogories and etc.
-&lt;/pre&gt;
-&lt;p&gt;
-So naturally a static site generator would be sufficient. For the record, one
-year ago I used my own self-hosted &lt;code&gt;wordpress&lt;/code&gt;, which is easier to use but as a
-developer I found I know too little and it was an overkill solution for a blog.
-&lt;/p&gt;
-
-&lt;p&gt;
-About choosing the right static site generator, I've found &lt;a href=&quot;https://www.staticgen.com/&quot;&gt;StaticGen&lt;/a&gt;, which is a
-ranking site to static site generators as &lt;a href=&quot;http://distrowatch.com/&quot;&gt;DistroWatch.com&lt;/a&gt; to &lt;code&gt;Linux/BSD&lt;/code&gt;
-distributions. I was using &lt;i&gt;Octopress&lt;/i&gt;. Two potential candidates are &lt;i&gt;Jekyll&lt;/i&gt;, which
-is what's used by &lt;code&gt;Github Page&lt;/code&gt; and &lt;i&gt;Hexo&lt;/i&gt;, ranked as the third, a &lt;code&gt;nodejs&lt;/code&gt; based
-generator that seems to be compatible with &lt;code&gt;Octopress&lt;/code&gt;. I'm interested in &lt;code&gt;Hexo&lt;/code&gt;
-as recently I've started a project using &lt;code&gt;nodejs-webkit&lt;/code&gt;, another story.
-&lt;/p&gt;
-
-&lt;p&gt;
-Other successful stories on &lt;code&gt;org-mode&lt;/code&gt;-related blogs have suggested: &lt;a href=&quot;http://www.blogofile.com/&quot;&gt;Blogofile&lt;/a&gt;,
-&lt;i&gt;Pelican&lt;/i&gt; and &lt;i&gt;Nikola&lt;/i&gt;.
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-2&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;sec-2&quot;&gt;Octopress/Rails is NOT KISS.&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-2&quot;&gt;
-&lt;p&gt;
-This site was using &lt;code&gt;Octopress&lt;/code&gt; and some of my posts here are about configuring
-&lt;code&gt;Octopress&lt;/code&gt;. &lt;code&gt;Octopress&lt;/code&gt; is not hard to use. As a complete beginner, it took me
-about two days to setup up the blog (with &lt;a href=&quot;https://github.com/yoshinari-nomura/org-octopress&quot;&gt;Org-octopress&lt;/a&gt;), and by the third I was
-able to play with the source to add some small new features. The issue with
-&lt;code&gt;Octopress&lt;/code&gt; is that it feels like &lt;code&gt;Rails&lt;/code&gt;: convenient, powerful and
-highly-customizable, but as a newbie the learning curve is steep. I don't feel I
-understand the structure at all and lost in features&amp;#x2026;
-&lt;/p&gt;
-
-&lt;p&gt;
-So maybe another time for &lt;code&gt;Octopress&lt;/code&gt;. To learn more, I decided to go with the
-old &lt;code&gt;KISS&lt;/code&gt;: use simple/single-purpose tools and chain them together.
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-3&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;sec-3&quot;&gt;Notes on the migration.&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-3&quot;&gt;
-&lt;p&gt;
-The choice is &lt;code&gt;Jekyll&lt;/code&gt;, which &lt;code&gt;Octopress&lt;/code&gt; claims to base on. &lt;a href=&quot;http://www.academia.edu/9761706/Building_a_Technical_Blog_Site_With_Jekyll_And_Emacs&quot;&gt;This article&lt;/a&gt; is
-very helpful in making this decision. The breakdown steps in that article help
-me understand the missing pieces from &lt;code&gt;Org&lt;/code&gt; files to &lt;code&gt;Jekyll&lt;/code&gt; site:
-&lt;/p&gt;
-
-&lt;ol class=&quot;org-ol&quot;&gt;
-&lt;li&gt;&lt;code&gt;Jekyll&lt;/code&gt; handles &lt;code&gt;Markdown&lt;/code&gt; natively, but it also can deal with HTML with
-special headers (&lt;code&gt;YAML&lt;/code&gt; &lt;code&gt;Jekyll&lt;/code&gt; header).
-&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;Org-publish&lt;/code&gt; export org files to HTML format.
-&lt;/li&gt;
-&lt;li&gt;Insert the required header to the exported HTML files and put the result
-files in &lt;code&gt;Jekyll&lt;/code&gt; directory. It's DONE!
-&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;
-And it turns out there are many Emacs packages deal with these steps. I choose
-&lt;a href=&quot;https://github.com/ardumont/org2jekyll&quot;&gt;org2jekyll&lt;/a&gt; for its simplicity and separation of &lt;code&gt;Org&lt;/code&gt; header and &lt;code&gt;Jekyll&lt;/code&gt;
-header.
-&lt;/p&gt;
-
-&lt;p&gt;
-An afternoon is all it takes to finish the migration. Yep, I lose some features
-like comments, tag cloud and etc, but I also understand the insides much
-clearer. I plan to add back features step by step with more confidence!
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-4&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;sec-4&quot;&gt;More to desire.&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-4&quot;&gt;
-&lt;p&gt;
-&lt;code&gt;org2jekyll&lt;/code&gt; is the bridge between &lt;code&gt;Org&lt;/code&gt; and &lt;code&gt;Jekyll&lt;/code&gt;. There are some issues I'd
-like to see fixed and features to be implemented. Now I can focus on &quot;simple&quot;
-components like &lt;code&gt;Jekyll&lt;/code&gt;, &lt;code&gt;org2jekyll&lt;/code&gt; and &lt;code&gt;org-publish&lt;/code&gt;. This kind of clarity
-and confidence didn't come out from many weeks working with &lt;code&gt;Org&lt;/code&gt; and
-&lt;code&gt;Org-octopress&lt;/code&gt;: too many levels of abstractions impede understanding. Maybe
-some day I'll be back to &lt;code&gt;Octopress&lt;/code&gt; for its strength, but surely after I've
-learned more with the KISS ^_^
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-</description>
-        <pubDate>Wed, 01 Apr 2015 00:00:00 +0000</pubDate>
-        <link>http://carltonf.github.io/post/from-octopress-to-jekyll</link>
-        <guid isPermaLink="true">http://carltonf.github.io/post/from-octopress-to-jekyll</guid>
-        
-        <category>jekyll</category>
-        
-        <category>octopress</category>
-        
-        <category>org</category>
         
         
         <category></category>
