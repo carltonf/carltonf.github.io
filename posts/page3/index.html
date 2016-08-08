@@ -605,19 +605,17 @@ li p {
   </div>
 
   <section>
-    <article>
+    <div class="post-list">
+  
+    <!-- NOTE snippet requiring variable `post` defined -->
+<div class="post-list-entry">
 
-  <div class="post-list">
-    
-    <div class="post-list-entry">
+  <hr>
+  <h2>
+    <a class="post-link" href="/post/octopress-customization-easy-blog-source-link">Octopress Customization: easy blog source link</a>
+  </h2>
 
-      <hr>
-      <h2>
-        <a class="post-link" href="/post/octopress-customization-easy-blog-source-link">Octopress Customization: easy blog source link</a>
-      </h2>
-
-      <!-- NOTE: Use the convention of Jekyll that the first parargraph is auto-converted as excerpt -->
-      <p> <div id="outline-container-sec-1" class="outline-2">
+  <p> <div id="outline-container-sec-1" class="outline-2">
 <div class="outline-text-2" id="text-1">
 <p>
 Most my posts here are programming-related and one of <code>Org</code>'s killer features is
@@ -629,28 +627,29 @@ copying/pasting or the hassle to wade through my source repo ;).
 
  </p>
 
-      <div>
-        <span> Posted at <strong>Nov 20, 2014</strong> </span>
-        
-        • <a href=""><span>octopress</span></a>
-        
-        • <a href=""><span>jekyll</span></a>
-        
-        • <a href=""><span>org</span></a>
-        
-      </div>
-
-    </div>
+  <div>
+    <span> Posted at <strong>Nov 20, 2014</strong> </span>
     
-    <div class="post-list-entry">
+    • <a href="/tags/octopress"><span>octopress</span></a>
+    
+    • <a href="/tags/jekyll"><span>jekyll</span></a>
+    
+    • <a href="/tags/org"><span>org</span></a>
+    
+  </div>
 
-      <hr>
-      <h2>
-        <a class="post-link" href="/post/org-octopress-links">Org-octopress: Links</a>
-      </h2>
+</div>
 
-      <!-- NOTE: Use the convention of Jekyll that the first parargraph is auto-converted as excerpt -->
-      <p> <div id="outline-container-sec-1" class="outline-2">
+  
+    <!-- NOTE snippet requiring variable `post` defined -->
+<div class="post-list-entry">
+
+  <hr>
+  <h2>
+    <a class="post-link" href="/post/org-octopress-links">Org-octopress: Links</a>
+  </h2>
+
+  <p> <div id="outline-container-sec-1" class="outline-2">
 <div class="outline-text-2" id="text-1">
 <p>
 In <a href="http://www.railsonmaui.com/blog/2014/03/05/octopress-setup-with-github-and-org-mode-v2/index.html">Org-Mode Octopress Setup V2</a>, which I am still reading to complete my setup of
@@ -660,54 +659,57 @@ Integration</b>.
 
  </p>
 
-      <div>
-        <span> Posted at <strong>Nov 19, 2014</strong> </span>
-        
-        • <a href=""><span>org</span></a>
-        
-        • <a href=""><span>emacs</span></a>
-        
-        • <a href=""><span>octopress</span></a>
-        
-        • <a href=""><span>emacs-lisp</span></a>
-        
-      </div>
-
-    </div>
+  <div>
+    <span> Posted at <strong>Nov 19, 2014</strong> </span>
     
-    <div class="post-list-entry">
+    • <a href="/tags/org"><span>org</span></a>
+    
+    • <a href="/tags/emacs"><span>emacs</span></a>
+    
+    • <a href="/tags/octopress"><span>octopress</span></a>
+    
+    • <a href="/tags/emacs-lisp"><span>emacs-lisp</span></a>
+    
+  </div>
 
-      <hr>
-      <h2>
-        <a class="post-link" href="/post/hello-and-self-introduction">Hello and Self-Introduction</a>
-      </h2>
+</div>
 
-      <!-- NOTE: Use the convention of Jekyll that the first parargraph is auto-converted as excerpt -->
-      <p> <p>
+  
+    <!-- NOTE snippet requiring variable `post` defined -->
+<div class="post-list-entry">
+
+  <hr>
+  <h2>
+    <a class="post-link" href="/post/hello-and-self-introduction">Hello and Self-Introduction</a>
+  </h2>
+
+  <p> <p>
 A "Hello World" blog. Later it would grow into Page "About".
 </p>
 
  </p>
 
-      <div>
-        <span> Posted at <strong>Nov 19, 2014</strong> </span>
-        
-        • <a href=""><span>hello</span></a>
-        
-        • <a href=""><span>self-introduction</span></a>
-        
-      </div>
-
-    </div>
+  <div>
+    <span> Posted at <strong>Nov 19, 2014</strong> </span>
+    
+    • <a href="/tags/hello"><span>hello</span></a>
+    
+    • <a href="/tags/self-introduction"><span>self-introduction</span></a>
     
   </div>
 
-  <!-- Pagination links -->
+</div>
+
+  
+</div>
+
+<!-- Pagination links: a special type of entry -->
+<div class="post-list-nav post-list-entry">
   <hr style="margin-top: 6em;">
   <div class="pagination" style="float: left">
     
     <!-- NOTE add quick link to the latest list of posts. I'm not offerring the
-    oldest link though as it's deemed a esoteric feature -->
+         oldest link though as it's deemed a esoteric feature -->
     <span><a href="/posts" class="previous">Latest</a></span>
     • <span><a href="/posts/page2/" class="previous">Prev</a></span>
     
@@ -721,8 +723,7 @@ A "Hello World" blog. Later it would grow into Page "About".
   <div class="rss-subscribe" style="float: right; margin-right: 35%">
     subscribe <a href="/feed.xml">via RSS</a>
   </div>
-
-</article>
+</div>
 
   </section>
 

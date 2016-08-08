@@ -186,6 +186,16 @@
 
     
     ,{
+        "value": "Tags",
+        "data": "http://carltonf.github.io/tags/"
+    }
+    
+    
+
+    
+
+    
+    ,{
         "value": "Blog",
         "data": "http://carltonf.github.io/posts/"
     }
@@ -195,11 +205,289 @@
     
 
     
-
-    
     ,{
         "value": "Search",
         "data": "http://carltonf.github.io/search"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: hello",
+        "data": "http://carltonf.github.io/tags/hello/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: self-introduction",
+        "data": "http://carltonf.github.io/tags/self-introduction/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: org",
+        "data": "http://carltonf.github.io/tags/org/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: emacs",
+        "data": "http://carltonf.github.io/tags/emacs/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: octopress",
+        "data": "http://carltonf.github.io/tags/octopress/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: emacs-lisp",
+        "data": "http://carltonf.github.io/tags/emacs-lisp/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: jekyll",
+        "data": "http://carltonf.github.io/tags/jekyll/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: arch_linux",
+        "data": "http://carltonf.github.io/tags/arch_linux/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: suse",
+        "data": "http://carltonf.github.io/tags/suse/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: rpm",
+        "data": "http://carltonf.github.io/tags/rpm/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: pkgbuild",
+        "data": "http://carltonf.github.io/tags/pkgbuild/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: drdb",
+        "data": "http://carltonf.github.io/tags/drdb/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: libarchive",
+        "data": "http://carltonf.github.io/tags/libarchive/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: file-roller",
+        "data": "http://carltonf.github.io/tags/file-roller/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: compiler",
+        "data": "http://carltonf.github.io/tags/compiler/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: sparse",
+        "data": "http://carltonf.github.io/tags/sparse/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: uml",
+        "data": "http://carltonf.github.io/tags/uml/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: diagram",
+        "data": "http://carltonf.github.io/tags/diagram/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: bug-fix",
+        "data": "http://carltonf.github.io/tags/bug-fix/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: workflow",
+        "data": "http://carltonf.github.io/tags/workflow/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: java",
+        "data": "http://carltonf.github.io/tags/java/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: specification",
+        "data": "http://carltonf.github.io/tags/specification/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: prog-lang",
+        "data": "http://carltonf.github.io/tags/prog-lang/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: todo",
+        "data": "http://carltonf.github.io/tags/todo/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: admin",
+        "data": "http://carltonf.github.io/tags/admin/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: libvirt",
+        "data": "http://carltonf.github.io/tags/libvirt/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: sled",
+        "data": "http://carltonf.github.io/tags/sled/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: bridge",
+        "data": "http://carltonf.github.io/tags/bridge/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: stp",
+        "data": "http://carltonf.github.io/tags/stp/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: methodology",
+        "data": "http://carltonf.github.io/tags/methodology/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: philosophy",
+        "data": "http://carltonf.github.io/tags/philosophy/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: reading",
+        "data": "http://carltonf.github.io/tags/reading/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: notes",
+        "data": "http://carltonf.github.io/tags/notes/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: powershell",
+        "data": "http://carltonf.github.io/tags/powershell/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: tips",
+        "data": "http://carltonf.github.io/tags/tips/"
     }
     
     
