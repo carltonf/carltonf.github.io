@@ -6,9 +6,196 @@
 </description>
     <link>http://carltonf.github.io/</link>
     <atom:link href="http://carltonf.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 08 Aug 2016 11:12:39 +0000</pubDate>
-    <lastBuildDate>Mon, 08 Aug 2016 11:12:39 +0000</lastBuildDate>
+    <pubDate>Thu, 11 Aug 2016 16:35:52 +0000</pubDate>
+    <lastBuildDate>Thu, 11 Aug 2016 16:35:52 +0000</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
+    
+      <item>
+        <title>A learning guide for GNOME Shell bug fixing</title>
+        <description>&lt;p&gt;A curated list of learning materials, references for GNOME Shell (bug-fixing)
+developers – &lt;em&gt;very&lt;/em&gt; pragmatic.&lt;/p&gt;
+
+&lt;p&gt;The other day, my team leader asked me to give some guide for new colleagues in
+the team. I came up with a list of learning materials, references &lt;em&gt;with strong
+personal opinions&lt;/em&gt; &lt;span id=&quot;sn-strong-opined&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;Any sane GNOME developers might scream at the incompleteness of the list.&lt;/span&gt;. After passing the list to the new
+member, I realized this is also an opportunity to review my understanding. So
+here is the guideline list plus my review.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Some Conventions&lt;/strong&gt;: different materials have different importance. I didn’t
+bother going into fine grades of proficiency level. &lt;span id=&quot;sn-proficiency-level&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;This recalls the memory about the college entry exam, when every student was supposed to know the required proficiency level of every knowledge.&lt;/span&gt; Only two levels are used: &lt;strong&gt;Master&lt;/strong&gt; and &lt;strong&gt;General&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h1 id=&quot;materials&quot;&gt;Materials&lt;/h1&gt;
+
+&lt;h2 id=&quot;d-bushttpswwwfreedesktoporgwikisoftwaredbus&quot;&gt;&lt;a href=&quot;https://www.freedesktop.org/wiki/Software/dbus/&quot;&gt;D-Bus&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Master&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;D-Bus&lt;/code&gt; is the core RPC mechanism for Linux applications. As with any RPC
+mechanism, it’s unlikely you’ll love it. Its syntax is bewildering and verbose;
+few supportive tools are of relatively low quality – merely usable. Anyway, you
+still need to know it well for its ubiquity in gnome.&lt;/p&gt;
+
+&lt;p&gt;&lt;span class=&quot;marginnote&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;DBus&lt;/code&gt; would have been much more important if the
+kernel module &lt;a href=&quot;https://www.freedesktop.org/wiki/Software/systemd/kdbus/&quot;&gt;kdbus&lt;/a&gt;
+had been merged into kernel. The farthest progress it made was into
+&lt;code class=&quot;highlighter-rouge&quot;&gt;kernel-next&lt;/code&gt;. I’ve read some articles at at
+&lt;a href=&quot;http://www.phoronix.com/scan.php?page=search&amp;amp;q=KDBUS&quot;&gt;phoronix&lt;/a&gt; talking about
+the main obstacle was about the security. As a mere side looker, I’ll not say
+more.&lt;/span&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://dbus.freedesktop.org/doc/dbus-tutorial.html&quot;&gt;D-Bus Tutorial&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p&gt;The best introductory material.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://www.freedesktop.org/wiki/IntroductionToDBus/&quot;&gt;D-Bus Intro&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p&gt;Slightly more theoretical. Read after the first.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;freedesktoporg-specshttpswwwfreedesktoporgwikispecifications&quot;&gt;&lt;a href=&quot;https://www.freedesktop.org/wiki/Specifications/&quot;&gt;Freedesktop.org Specs&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Freedesktop.org&lt;/code&gt; specs are &lt;em&gt;NOT&lt;/em&gt; standards but &lt;em&gt;recommendations&lt;/em&gt;. Though most
+DEs have chosen to comply with &lt;strong&gt;some&lt;/strong&gt; of these specs, the compliance level varies.
+Nevertheless, since they are somewhat ubiquitous in GNOME, developers are
+recommended to know at least the followings:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Desktop base directory spec: &lt;em&gt;Master&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;Desktop Entry specification: &lt;em&gt;Master&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;The Autostart specification: &lt;em&gt;General&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;The XSETTINGS:  &lt;em&gt;General&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;The File URI specification : &lt;em&gt;General&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Most of these recommendations are relatively small and the &lt;em&gt;Master&lt;/em&gt; level
+would require less than one day to achieve.&lt;/p&gt;
+
+&lt;h2 id=&quot;gnome-shell-wikihttpswikignomeorgprojectsgnomeshell&quot;&gt;&lt;a href=&quot;https://wiki.gnome.org/Projects/GnomeShell&quot;&gt;GNOME Shell Wiki&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;The main hub for GNOME-specific knowledge. Here I’ve listed some more important
+ones: &lt;span id=&quot;sn-gnome-wiki&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;Things &lt;em&gt;might&lt;/em&gt; have improved much these days. For a long time, only some C libraries have some decent API documents. The introspection bindings to &lt;code class=&quot;highlighter-rouge&quot;&gt;Gjs&lt;/code&gt; is not complete but only a pragmatic subset. Shell UI components are completely undocumented and have no external API for programming/theming. Code and Wiki might be the only official &lt;em&gt;documents&lt;/em&gt; for whatever the help they might offer.&lt;/span&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;General Information:  &lt;em&gt;Master&lt;/em&gt;, helpful for debugging&lt;/li&gt;
+  &lt;li&gt;Technology: &lt;em&gt;General&lt;/em&gt;, you need to know the capacity of each component.&lt;/li&gt;
+  &lt;li&gt;Looking Glass：&lt;em&gt;Master&lt;/em&gt;. Not as useful as it claims to be but this is only
+built-in tool we have.&lt;/li&gt;
+  &lt;li&gt;Development guide for GNOME Shell：&lt;em&gt;General&lt;/em&gt;, this is more about feature
+development and upstream involvement.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;javascripthttpwwwecma-internationalorgdefaulthtm&quot;&gt;&lt;a href=&quot;http://www.ecma-international.org/default.htm&quot;&gt;JavaScript&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;I like &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt;, but some do not. However, since GNOME Shell UI part is
+almost written completely in JavaScript, we all need to know it well.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://www.amazon.com/JavaScript-Good-Parts-Douglas-Crockford/dp/0596517742&quot;&gt;JavaScript: The Good Parts&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p&gt;The only &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; book needed for the work (also one of the best JS books
+out there). The &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; engine used by GNOME Shell is
+&lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey&quot;&gt;SpiderMonkey&lt;/a&gt;,
+version 24 &lt;span id=&quot;sn-spidermonkey-version&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+    &lt;span class=&quot;sidenote&quot;&gt;Previous SP1, i.e. GNOME 3.10.x is shipped with version 17.&lt;/span&gt;, a relatively recent JS engine. However, GNOME has
+only utilized a small set of JS features in a C-like way.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://www.amazon.com/JavaScript-Definitive-Guide-Activate-Guides-ebook/dp/B004XQX4K0&quot;&gt;JavaScript: the Definitive Guide&lt;/a&gt;.&lt;/p&gt;
+
+    &lt;p&gt;&lt;strong&gt;Not Recommended&lt;/strong&gt; This may be the most popular book known to beginners.
+However, it’s popular for reasons irrelevant to us. The major part (about 70%)
+of the book is about client-side JavaScript, the JavaScript that runes in the
+browser. This book became popular when the language was still condemned to be &lt;em&gt;the
+shell scripting&lt;/em&gt; for web pages, long before &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; rose up as a
+superstar language. So even for the client side part, much is deprecated in
+today’s practice. Plus, the last version (6th) is from 2011, though not
+outdated for our purpose.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Online references: &lt;a href=&quot;https://developer.mozilla.org/en-US/&quot;&gt;MDN&lt;/a&gt; is great.
+Another site I’ve used often is &lt;a href=&quot;http://devdocs.io/&quot;&gt;Devdocs.io&lt;/a&gt;, which has
+many other docs.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;xorghttpswwwxorg&quot;&gt;&lt;a href=&quot;https://www.x.org/&quot;&gt;X.org&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;You really do not want to learn too much about &lt;code class=&quot;highlighter-rouge&quot;&gt;X&lt;/code&gt;, but you really need to learn
+much about it. Despite
+&lt;a href=&quot;http://www.phoronix.com/scan.php?page=article&amp;amp;item=x_wayland_situation&amp;amp;num=1&quot;&gt;the mess&lt;/a&gt;,
+&lt;code class=&quot;highlighter-rouge&quot;&gt;X&lt;/code&gt; is still the dominant &lt;span id=&quot;sn-waylang&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;If not the only viable option, &lt;a href=&quot;https://wayland.freedesktop.org/&quot;&gt;Wayland&lt;/a&gt; is still far from being an feasible alternative.&lt;/span&gt; display technology in Linux Desktop. For us, &lt;code class=&quot;highlighter-rouge&quot;&gt;X&lt;/code&gt; is too arcane
+to dive deep, too important to ignore. I would recommend the book
+&lt;a href=&quot;https://www.amazon.com/X-Power-Tools-Chris-Tyler-ebook/dp/B0028N4W9W/&quot;&gt;X Power Tools&lt;/a&gt;
+for the introduction. &lt;span id=&quot;sn-x-power&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;This book is not only about X, but also covers the whole Desktop software stack. Personally, I would recommend the whole book.&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;gnome-3-application-development-beginners-guidehttpswwwamazoncomgnome-application-development-beginners-guide-ebookdpb00av5oxum&quot;&gt;&lt;a href=&quot;https://www.amazon.com/GNOME-Application-Development-Beginners-Guide-ebook/dp/B00AV5OXUM/&quot;&gt;GNOME 3 Application Development Beginner’s Guide&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;A book I only recommend because its high relevance to our
+work. In general, do not bother with &lt;code class=&quot;highlighter-rouge&quot;&gt;vala&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;anjuta&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;Gtk+&lt;/code&gt; if you only work
+with Shell UI. And read the following chapters first, other parts are not
+recommended though.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Chapter 3&lt;/li&gt;
+  &lt;li&gt;Chapter 4&lt;/li&gt;
+  &lt;li&gt;Chapter 10&lt;/li&gt;
+  &lt;li&gt;Chapter 11: &lt;em&gt;General&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;span class=&quot;marginnote&quot;&gt;This book was the one my old team leader
+recommended to me, 3 years ago. There was a
+&lt;a href=&quot;https://github.com/beijinggug/gnome3-app-book&quot;&gt;Chinese translation project&lt;/a&gt; for
+it as well. I was listed as an translator, but never found enough interests to
+really work on it. The project itself seems to be abandoned long ago as well
+with only the first translated chapter released.&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;With the breaking changes introduced in each GNOME 3 releases, many examples
+might not work at all. It’s not recommended to try to fix those demos as they
+might depend on internal Shell implementation and thus hard to fix. The book
+uses &lt;a href=&quot;https://wiki.gnome.org/action/show/Projects/Seed&quot;&gt;seed&lt;/a&gt;, the rumored next
+JS binding for GNOME. &lt;code class=&quot;highlighter-rouge&quot;&gt;seed&lt;/code&gt; has not replaced
+&lt;a href=&quot;https://wiki.gnome.org/action/show/Projects/Gjs&quot;&gt;gjs&lt;/a&gt;, maybe
+&lt;a href=&quot;http://ftp.gnome.org/pub/GNOME/sources/seed/&quot;&gt;never will&lt;/a&gt;. Before
+&lt;a href=&quot;https://www.roojs.org/index.php/projects/gnome/introspection-docs.html&quot;&gt;the latest update&lt;/a&gt;,
+it is the only one that has some documents.&lt;/p&gt;
+
+&lt;h1 id=&quot;recommended-learning-order&quot;&gt;Recommended Learning Order&lt;/h1&gt;
+
+&lt;p&gt;&lt;span class=&quot;marginnote&quot;&gt;&lt;a href=&quot;http://baike.baidu.com/view/9647254.htm&quot;&gt;“道生一, 一生二，二生三，三生万物”.&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Things have to come in order.&lt;/p&gt;
+
+&lt;p&gt;I think the following order is appropriate for a beginner:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;GNOME Shell Main Wiki&lt;/li&gt;
+  &lt;li&gt;D-Bus Tutorial&lt;/li&gt;
+  &lt;li&gt;JavaScript core&lt;/li&gt;
+  &lt;li&gt;GNOME 3 Application Development Beginner’s Guide: the recommended parts.&lt;/li&gt;
+  &lt;li&gt;X Power Tool:  really worth reading, but can be hard at the beginning.&lt;/li&gt;
+&lt;/ol&gt;
+
+</description>
+        <pubDate>Thu, 11 Aug 2016 00:00:00 +0000</pubDate>
+        <link>http://carltonf.github.io/post/a-learning-guide-gnome-shell-bug-fixing</link>
+        <guid isPermaLink="true">http://carltonf.github.io/post/a-learning-guide-gnome-shell-bug-fixing</guid>
+        
+        <category>gnome</category>
+        
+        <category>bug-fix</category>
+        
+        
+      </item>
     
       <item>
         <title>Revisiting TODO of this site</title>
@@ -1236,234 +1423,6 @@ $13 binary compatibility (dealing with updating widely deployed packages)
         
         <category>workflow</category>
         
-        
-      </item>
-    
-      <item>
-        <title>From Text to simple UML diagram - Tools</title>
-        <description>&lt;div id=&quot;outline-container-sec-1&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;sec-1&quot;&gt;Background&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-1&quot;&gt;
-&lt;p&gt;
-I want to make some diagrams about my small project &lt;code&gt;etss&lt;/code&gt;. Simple class
-diagrams and sequence diagrams would be enough.
-&lt;/p&gt;
-
-&lt;p&gt;
-I started by drawing by hand, which soon strikes me that most of my fiddling
-with the representations is repetitive&amp;amp;tedious. So I started to search for tools
-that translate high-level textual representation into decent looking graphic
-diagrams.
-&lt;/p&gt;
-
-&lt;p&gt;
-I try to find some JavaScript libraries first as recently my main focus is on
-Web tech. However, as the search goes on, I've found there are not many
-JavaScript projects on UML actually. Tools like &lt;code&gt;jointjs&lt;/code&gt;, &lt;code&gt;draw2d&lt;/code&gt; are too much
-for my purpose. In the end, I settle down on &lt;code&gt;PlantUML&lt;/code&gt;, a Java solution.
-&lt;/p&gt;
-
-&lt;p&gt;
-The following is what IMHO that's worth noting.
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-2&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;sec-2&quot;&gt;&lt;a href=&quot;http://plantuml.sourceforge.net/&quot;&gt;PlantUML&lt;/a&gt;&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-2&quot;&gt;
-&lt;p&gt;
-So far the most complete tool for generating UML from text.
-&lt;/p&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-2-1&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;sec-2-1&quot;&gt;Pros&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-2-1&quot;&gt;
-&lt;ul class=&quot;org-ul&quot;&gt;
-&lt;li&gt;The DSL is very intuitive, actually &lt;code&gt;bramp/js-sequence-diagrams&lt;/code&gt;'s DSL is
-roughly based on it.
-&lt;/li&gt;
-&lt;li&gt;Very complete, the documentation and examples are amble.
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&quot;outline-container-sec-2-2&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;sec-2-2&quot;&gt;Cons&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-2-2&quot;&gt;
-&lt;ul class=&quot;org-ul&quot;&gt;
-&lt;li&gt;Written in Java (Do I still remember how to code Java?)
-&lt;/li&gt;
-&lt;li&gt;Web integration requires a 3rd party server to render UML image&amp;#x2026;.
-&lt;/li&gt;
-&lt;li&gt;Styles are not very modern, but acceptable any way.
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-3&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;sec-3&quot;&gt;Sequence Diagrams&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-3&quot;&gt;
-&lt;/div&gt;&lt;div id=&quot;outline-container-sec-3-1&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;sec-3-1&quot;&gt;&lt;a href=&quot;https://github.com/bramp/js-sequence-diagrams&quot;&gt;bramp/js-sequence-diagrams&lt;/a&gt;&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-3-1&quot;&gt;
-&lt;/div&gt;&lt;ul class=&quot;org-ul&quot;&gt;&lt;li&gt;&lt;a id=&quot;sec-3-1-1&quot; name=&quot;sec-3-1-1&quot;&gt;&lt;/a&gt;Pros&lt;br  /&gt;&lt;div class=&quot;outline-text-4&quot; id=&quot;text-3-1-1&quot;&gt;
-&lt;ul class=&quot;org-ul&quot;&gt;
-&lt;li&gt;Simplest so far
-&lt;/li&gt;
-&lt;li&gt;The employed technology is easily understood.
-&lt;/li&gt;
-&lt;li&gt;The hand-drawn theme is great.
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a id=&quot;sec-3-1-2&quot; name=&quot;sec-3-1-2&quot;&gt;&lt;/a&gt;Cons&lt;br  /&gt;&lt;div class=&quot;outline-text-4&quot; id=&quot;text-3-1-2&quot;&gt;
-&lt;ul class=&quot;org-ul&quot;&gt;
-&lt;li&gt;Not quite &lt;code&gt;UML&lt;/code&gt; like, the simple theme feels too simple.
-&lt;/li&gt;
-&lt;li&gt;Does't support quoted string, an issue opened by the author for now, #107.
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;/li&gt;&lt;/ul&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-3-2&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;sec-3-2&quot;&gt;&lt;a href=&quot;http://jumly.tmtk.net/&quot;&gt;tmtk75/jumly&lt;/a&gt;&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-3-2&quot;&gt;
-&lt;/div&gt;&lt;ul class=&quot;org-ul&quot;&gt;&lt;li&gt;&lt;a id=&quot;sec-3-2-1&quot; name=&quot;sec-3-2-1&quot;&gt;&lt;/a&gt;Pros&lt;br  /&gt;&lt;div class=&quot;outline-text-4&quot; id=&quot;text-3-2-1&quot;&gt;
-&lt;ul class=&quot;org-ul&quot;&gt;
-&lt;li&gt;Very modern, professional-UML looking. Built-in themes looks great.
-&lt;/li&gt;
-&lt;li&gt;Not using SVG, but DOM objects directly, so styling can be done with CSS.
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;/li&gt;
-
-&lt;li&gt;&lt;a id=&quot;sec-3-2-2&quot; name=&quot;sec-3-2-2&quot;&gt;&lt;/a&gt;Cons&lt;br  /&gt;&lt;div class=&quot;outline-text-4&quot; id=&quot;text-3-2-2&quot;&gt;
-&lt;ul class=&quot;org-ul&quot;&gt;
-&lt;li&gt;&lt;code&gt;coffeescript&lt;/code&gt; and &lt;code&gt;stylus&lt;/code&gt; are used, which to me feels too hackishy.
-&lt;/li&gt;
-&lt;li&gt;The DSL feels too hackishy, not as intuitive as &lt;code&gt;plantUML&lt;/code&gt;.
-
-&lt;p&gt;
-? Maybe I can help improve on this.
-&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;/li&gt;&lt;/ul&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-4&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;sec-4&quot;&gt;Class/State Diagrams&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-4&quot;&gt;
-&lt;/div&gt;&lt;div id=&quot;outline-container-sec-4-1&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;sec-4-1&quot;&gt;&lt;a href=&quot;http://www.nomnoml.com/&quot;&gt;nomnoml&lt;/a&gt;&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-4-1&quot;&gt;
-&lt;p&gt;
-Web-based UML library, looks very promising. Though it doesn't support sequence
-UML.
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-5&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;sec-5&quot;&gt;Flow Chart&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-5&quot;&gt;
-&lt;/div&gt;&lt;div id=&quot;outline-container-sec-5-1&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;sec-5-1&quot;&gt;&lt;a href=&quot;http://adrai.github.io/flowchart.js/&quot;&gt;flowchart.js&lt;/a&gt;&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-5-1&quot;&gt;
-&lt;p&gt;
-Useful to draw logic diagram about inner workings of complicated piece of code.
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-6&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;sec-6&quot;&gt;Other interesting diagram tools&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-6&quot;&gt;
-&lt;ul class=&quot;org-ul&quot;&gt;
-&lt;li&gt;&lt;a href=&quot;http://modeling-languages.com/uml-tools/#textual&quot;&gt;A list of textual UML tools&lt;/a&gt;
-
-&lt;p&gt;
-Someone else keeps a list of textual tools.
-&lt;/p&gt;
-&lt;/li&gt;
-
-&lt;li&gt;&lt;a href=&quot;http://www.bottlecaps.de/rr/ui&quot;&gt;Railroad Diagram Generator&lt;/a&gt;
-
-&lt;p&gt;
-A tool for creating syntax diagrams. Together with &lt;code&gt;Jison&lt;/code&gt;, very handy when
-you design some DSLs.
-&lt;/p&gt;
-&lt;/li&gt;
-
-&lt;li&gt;&lt;a href=&quot;http://timeline.knightlab.com/&quot;&gt;Timeline JS&lt;/a&gt;
-
-&lt;p&gt;
-In case you need to make a timeline about something in the web.
-&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-7&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;sec-7&quot;&gt;Others&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-7&quot;&gt;
-&lt;/div&gt;&lt;div id=&quot;outline-container-sec-7-1&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;sec-7-1&quot;&gt;&lt;a href=&quot;http://zaach.github.io/jison/&quot;&gt;Jison&lt;/a&gt;: JavaScript parser generator!&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-7-1&quot;&gt;
-&lt;p&gt;
-Good for designing DSL with JavaScript, I think, similar to &lt;code&gt;Bison&lt;/code&gt;.
-&lt;/p&gt;
-
-&lt;p&gt;
-Many tools above utilize this library.
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&quot;outline-container-sec-7-2&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;sec-7-2&quot;&gt;&lt;a href=&quot;http://willthompson.co.uk/bustle/&quot;&gt;Bustle&lt;/a&gt;&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-7-2&quot;&gt;
-&lt;p&gt;
-A &lt;code&gt;DBus&lt;/code&gt; monitor with sequence diagram, looks very cool. If you ever use the
-default &lt;code&gt;dbus-monitor&lt;/code&gt;, you would appreciate the graphical representation ;P
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-7-3&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;sec-7-3&quot;&gt;&lt;a href=&quot;http://www.draw.io/&quot;&gt;draw.io&lt;/a&gt;&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-7-3&quot;&gt;
-&lt;p&gt;
-A nice in-browser IDE for drawing diagrams manually.
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-</description>
-        <pubDate>Thu, 11 Jun 2015 00:00:00 +0000</pubDate>
-        <link>http://carltonf.github.io/post/from-text-to-simple-uml-diagram-tools</link>
-        <guid isPermaLink="true">http://carltonf.github.io/post/from-text-to-simple-uml-diagram-tools</guid>
-        
-        <category>uml</category>
-        
-        <category>diagram</category>
-        
-        
-        <category></category>
-        
-        <category></category>
         
       </item>
     

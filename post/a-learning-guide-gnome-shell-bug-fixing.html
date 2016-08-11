@@ -5,11 +5,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,minimum-scale=1">
 
-  <title>Tag: notes</title>
-  <meta name="description" content="See further, but how far is far?
-">
+  <title>A learning guide for GNOME Shell bug fixing</title>
+  <meta name="description" content="A curated list of learning materials, references for GNOME Shell (bug-fixing)developers – very pragmatic.">
 
-  <link rel="canonical" href="http://carltonf.github.io/tags/notes/">
+  <link rel="canonical" href="http://carltonf.github.io/post/a-learning-guide-gnome-shell-bug-fixing">
   <link rel="alternate" type="application/rss+xml" title="Crystal Sight" href="http://carltonf.github.io/feed.xml">
 
   <script type="application/ld+json">
@@ -17,12 +16,11 @@
 {
   "@context": "http://schema.org",
   "@type": "NewsArticle",
-  "mainEntityOfPage": "http://carltonf.github.io/tags/notes/",
-  "headline": "Tag: notes",
-  "datePublished": "2016-08-11T16:35:52+00:00",
-  "dateModified": "2016-08-11T16:35:52+00:00",
-  "description": "See further, but how far is far?
-",
+  "mainEntityOfPage": "http://carltonf.github.io/post/a-learning-guide-gnome-shell-bug-fixing",
+  "headline": "A learning guide for GNOME Shell bug fixing",
+  "datePublished": "2016-08-11T00:00:00+00:00",
+  "dateModified": "2016-08-11T00:00:00+00:00",
+  "description": "A curated list of learning materials, references for GNOME Shell (bug-fixing)developers – very pragmatic.",
   "author": {
     "@type": "Person",
     "name": ""
@@ -598,71 +596,210 @@ li p {
 </header>
 
 
-<article class="post">
+<article>
+
+  <h2 itemprop="name">
+    <a href="" itemprop="url">A learning guide for GNOME Shell bug fixing</a>
+  </h2>
 
   <div class="post-meta">
-    <h1 class="post-title">Tag: notes</h1>
+    <time datetime="11 August 2016">
+      11 August 2016
+    </time>
   </div>
 
   <section>
-    <div class="post-list">
-  
-  <!-- Generating tag page -->
-    
-      <!-- NOTE snippet requiring variable `post` defined -->
-<div class="post-list-entry">
+    <p>A curated list of learning materials, references for GNOME Shell (bug-fixing)
+developers – <em>very</em> pragmatic.</p>
 
-  <hr>
-  <h2>
-    <a class="post-link" href="/post/powershell-tips-notes">Powershell Tips Notes</a>
-  </h2>
+<p>The other day, my team leader asked me to give some guide for new colleagues in
+the team. I came up with a list of learning materials, references <em>with strong
+personal opinions</em> <span id="sn-strong-opined" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">Any sane GNOME developers might scream at the incompleteness of the list.</span>. After passing the list to the new
+member, I realized this is also an opportunity to review my understanding. So
+here is the guideline list plus my review.</p>
 
-  <p> <p>An ongoing accreted list of Powershell tips&amp;tricks from multiple sources.</p>
+<p><strong>Some Conventions</strong>: different materials have different importance. I didn’t
+bother going into fine grades of proficiency level. <span id="sn-proficiency-level" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">This recalls the memory about the college entry exam, when every student was supposed to know the required proficiency level of every knowledge.</span> Only two levels are used: <strong>Master</strong> and <strong>General</strong>.</p>
 
- </p>
+<h1 id="materials">Materials</h1>
 
-  <div>
-    <span> Posted at <strong>Mar 7, 2016</strong> </span>
-    
-    • <a href="/tags/powershell"><span>powershell</span></a>
-    
-    • <a href="/tags/tips"><span>tips</span></a>
-    
-    • <a href="/tags/notes"><span>notes</span></a>
-    
-  </div>
+<h2 id="d-bushttpswwwfreedesktoporgwikisoftwaredbus"><a href="https://www.freedesktop.org/wiki/Software/dbus/">D-Bus</a></h2>
 
-</div>
+<p><strong>Master</strong></p>
 
-    
-      <!-- NOTE snippet requiring variable `post` defined -->
-<div class="post-list-entry">
+<p><code class="highlighter-rouge">D-Bus</code> is the core RPC mechanism for Linux applications. As with any RPC
+mechanism, it’s unlikely you’ll love it. Its syntax is bewildering and verbose;
+few supportive tools are of relatively low quality – merely usable. Anyway, you
+still need to know it well for its ubiquity in gnome.</p>
 
-  <hr>
-  <h2>
-    <a class="post-link" href="/post/reading-code-breakers">Reading: Code Breakers</a>
-  </h2>
+<p><span class="marginnote"><code class="highlighter-rouge">DBus</code> would have been much more important if the
+kernel module <a href="https://www.freedesktop.org/wiki/Software/systemd/kdbus/">kdbus</a>
+had been merged into kernel. The farthest progress it made was into
+<code class="highlighter-rouge">kernel-next</code>. I’ve read some articles at at
+<a href="http://www.phoronix.com/scan.php?page=search&amp;q=KDBUS">phoronix</a> talking about
+the main obstacle was about the security. As a mere side looker, I’ll not say
+more.</span></p>
 
-  <p> <p>Quotes and notes from book ~Colin F. Barnes~ <em>Code Breakers: Alpha</em>.</p>
+<ol>
+  <li>
+    <p><a href="https://dbus.freedesktop.org/doc/dbus-tutorial.html">D-Bus Tutorial</a></p>
 
- </p>
+    <p>The best introductory material.</p>
+  </li>
+  <li>
+    <p><a href="https://www.freedesktop.org/wiki/IntroductionToDBus/">D-Bus Intro</a></p>
 
-  <div>
-    <span> Posted at <strong>Mar 2, 2016</strong> </span>
-    
-    • <a href="/tags/reading"><span>reading</span></a>
-    
-    • <a href="/tags/notes"><span>notes</span></a>
-    
-  </div>
+    <p>Slightly more theoretical. Read after the first.</p>
+  </li>
+</ol>
 
-</div>
+<h2 id="freedesktoporg-specshttpswwwfreedesktoporgwikispecifications"><a href="https://www.freedesktop.org/wiki/Specifications/">Freedesktop.org Specs</a></h2>
 
-    
-  
-</div>
+<p><code class="highlighter-rouge">Freedesktop.org</code> specs are <em>NOT</em> standards but <em>recommendations</em>. Though most
+DEs have chosen to comply with <strong>some</strong> of these specs, the compliance level varies.
+Nevertheless, since they are somewhat ubiquitous in GNOME, developers are
+recommended to know at least the followings:</p>
 
+<ul>
+  <li>Desktop base directory spec: <em>Master</em></li>
+  <li>Desktop Entry specification: <em>Master</em></li>
+  <li>The Autostart specification: <em>General</em></li>
+  <li>The XSETTINGS:  <em>General</em></li>
+  <li>The File URI specification : <em>General</em></li>
+</ul>
+
+<p>Most of these recommendations are relatively small and the <em>Master</em> level
+would require less than one day to achieve.</p>
+
+<h2 id="gnome-shell-wikihttpswikignomeorgprojectsgnomeshell"><a href="https://wiki.gnome.org/Projects/GnomeShell">GNOME Shell Wiki</a></h2>
+
+<p>The main hub for GNOME-specific knowledge. Here I’ve listed some more important
+ones: <span id="sn-gnome-wiki" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">Things <em>might</em> have improved much these days. For a long time, only some C libraries have some decent API documents. The introspection bindings to <code class="highlighter-rouge">Gjs</code> is not complete but only a pragmatic subset. Shell UI components are completely undocumented and have no external API for programming/theming. Code and Wiki might be the only official <em>documents</em> for whatever the help they might offer.</span></p>
+
+<ul>
+  <li>General Information:  <em>Master</em>, helpful for debugging</li>
+  <li>Technology: <em>General</em>, you need to know the capacity of each component.</li>
+  <li>Looking Glass：<em>Master</em>. Not as useful as it claims to be but this is only
+built-in tool we have.</li>
+  <li>Development guide for GNOME Shell：<em>General</em>, this is more about feature
+development and upstream involvement.</li>
+</ul>
+
+<h2 id="javascripthttpwwwecma-internationalorgdefaulthtm"><a href="http://www.ecma-international.org/default.htm">JavaScript</a></h2>
+
+<p>I like <code class="highlighter-rouge">JavaScript</code>, but some do not. However, since GNOME Shell UI part is
+almost written completely in JavaScript, we all need to know it well.</p>
+
+<ul>
+  <li>
+    <p><a href="https://www.amazon.com/JavaScript-Good-Parts-Douglas-Crockford/dp/0596517742">JavaScript: The Good Parts</a></p>
+
+    <p>The only <code class="highlighter-rouge">JavaScript</code> book needed for the work (also one of the best JS books
+out there). The <code class="highlighter-rouge">JavaScript</code> engine used by GNOME Shell is
+<a href="https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey">SpiderMonkey</a>,
+version 24 <span id="sn-spidermonkey-version" class="margin-toggle sidenote-number"></span>
+    <span class="sidenote">Previous SP1, i.e. GNOME 3.10.x is shipped with version 17.</span>, a relatively recent JS engine. However, GNOME has
+only utilized a small set of JS features in a C-like way.</p>
+  </li>
+  <li>
+    <p><a href="https://www.amazon.com/JavaScript-Definitive-Guide-Activate-Guides-ebook/dp/B004XQX4K0">JavaScript: the Definitive Guide</a>.</p>
+
+    <p><strong>Not Recommended</strong> This may be the most popular book known to beginners.
+However, it’s popular for reasons irrelevant to us. The major part (about 70%)
+of the book is about client-side JavaScript, the JavaScript that runes in the
+browser. This book became popular when the language was still condemned to be <em>the
+shell scripting</em> for web pages, long before <code class="highlighter-rouge">JavaScript</code> rose up as a
+superstar language. So even for the client side part, much is deprecated in
+today’s practice. Plus, the last version (6th) is from 2011, though not
+outdated for our purpose.</p>
+  </li>
+  <li>
+    <p>Online references: <a href="https://developer.mozilla.org/en-US/">MDN</a> is great.
+Another site I’ve used often is <a href="http://devdocs.io/">Devdocs.io</a>, which has
+many other docs.</p>
+  </li>
+</ul>
+
+<h2 id="xorghttpswwwxorg"><a href="https://www.x.org/">X.org</a></h2>
+
+<p>You really do not want to learn too much about <code class="highlighter-rouge">X</code>, but you really need to learn
+much about it. Despite
+<a href="http://www.phoronix.com/scan.php?page=article&amp;item=x_wayland_situation&amp;num=1">the mess</a>,
+<code class="highlighter-rouge">X</code> is still the dominant <span id="sn-waylang" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">If not the only viable option, <a href="https://wayland.freedesktop.org/">Wayland</a> is still far from being an feasible alternative.</span> display technology in Linux Desktop. For us, <code class="highlighter-rouge">X</code> is too arcane
+to dive deep, too important to ignore. I would recommend the book
+<a href="https://www.amazon.com/X-Power-Tools-Chris-Tyler-ebook/dp/B0028N4W9W/">X Power Tools</a>
+for the introduction. <span id="sn-x-power" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">This book is not only about X, but also covers the whole Desktop software stack. Personally, I would recommend the whole book.</span></p>
+
+<h2 id="gnome-3-application-development-beginners-guidehttpswwwamazoncomgnome-application-development-beginners-guide-ebookdpb00av5oxum"><a href="https://www.amazon.com/GNOME-Application-Development-Beginners-Guide-ebook/dp/B00AV5OXUM/">GNOME 3 Application Development Beginner’s Guide</a></h2>
+
+<p>A book I only recommend because its high relevance to our
+work. In general, do not bother with <code class="highlighter-rouge">vala</code>, <code class="highlighter-rouge">anjuta</code>, <code class="highlighter-rouge">Gtk+</code> if you only work
+with Shell UI. And read the following chapters first, other parts are not
+recommended though.</p>
+
+<ul>
+  <li>Chapter 3</li>
+  <li>Chapter 4</li>
+  <li>Chapter 10</li>
+  <li>Chapter 11: <em>General</em></li>
+</ul>
+
+<p><span class="marginnote">This book was the one my old team leader
+recommended to me, 3 years ago. There was a
+<a href="https://github.com/beijinggug/gnome3-app-book">Chinese translation project</a> for
+it as well. I was listed as an translator, but never found enough interests to
+really work on it. The project itself seems to be abandoned long ago as well
+with only the first translated chapter released.</span></p>
+
+<p>With the breaking changes introduced in each GNOME 3 releases, many examples
+might not work at all. It’s not recommended to try to fix those demos as they
+might depend on internal Shell implementation and thus hard to fix. The book
+uses <a href="https://wiki.gnome.org/action/show/Projects/Seed">seed</a>, the rumored next
+JS binding for GNOME. <code class="highlighter-rouge">seed</code> has not replaced
+<a href="https://wiki.gnome.org/action/show/Projects/Gjs">gjs</a>, maybe
+<a href="http://ftp.gnome.org/pub/GNOME/sources/seed/">never will</a>. Before
+<a href="https://www.roojs.org/index.php/projects/gnome/introspection-docs.html">the latest update</a>,
+it is the only one that has some documents.</p>
+
+<h1 id="recommended-learning-order">Recommended Learning Order</h1>
+
+<p><span class="marginnote"><a href="http://baike.baidu.com/view/9647254.htm">“道生一, 一生二，二生三，三生万物”.</a></span></p>
+
+<p>Things have to come in order.</p>
+
+<p>I think the following order is appropriate for a beginner:</p>
+
+<ol>
+  <li>GNOME Shell Main Wiki</li>
+  <li>D-Bus Tutorial</li>
+  <li>JavaScript core</li>
+  <li>GNOME 3 Application Development Beginner’s Guide: the recommended parts.</li>
+  <li>X Power Tool:  really worth reading, but can be hard at the beginning.</li>
+</ol>
+
+
+    <p class="article-tombstone" style="direction: rtl; font-size: 2.5em"><br>∎</p>
   </section>
+
+  <div class="article-footer" style="width: 55%">
+    <div class="post-tags" style="float: left">
+      <b> Tags </b>
+      
+      • <a href="/tags/gnome"><span>gnome</span></a>
+      
+      • <a href="/tags/bug-fix"><span>bug-fix</span></a>
+      
+    </div>
+    <div class="post-comment-link" style="float: right" >
+      <b>Comment</b>:
+      <a href="https://github.com/carltonf/carltonf.github.io/issues/new" target="_blank">Github Issue</a>
+    </div>
+  </div>
 
 </article>
 
