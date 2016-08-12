@@ -6,8 +6,8 @@
 </description>
     <link>http://carltonf.github.io/</link>
     <atom:link href="http://carltonf.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 11 Aug 2016 16:35:52 +0000</pubDate>
-    <lastBuildDate>Thu, 11 Aug 2016 16:35:52 +0000</lastBuildDate>
+    <pubDate>Fri, 12 Aug 2016 02:15:18 +0000</pubDate>
+    <lastBuildDate>Fri, 12 Aug 2016 02:15:18 +0000</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
     
       <item>
@@ -169,6 +169,25 @@ JS binding for GNOME. &lt;code class=&quot;highlighter-rouge&quot;&gt;seed&lt;/c
 &lt;a href=&quot;https://www.roojs.org/index.php/projects/gnome/introspection-docs.html&quot;&gt;the latest update&lt;/a&gt;,
 it is the only one that has some documents.&lt;/p&gt;
 
+&lt;h2 id=&quot;sle-classichttpsbitbucketorgcarltonfsle-classic&quot;&gt;&lt;a href=&quot;https://bitbucket.org/carltonf/sle-classic&quot;&gt;SLE Classic&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;This part is actually about a SUSE-specific GNOME feature.&lt;/p&gt;
+
+&lt;p&gt;At the beginning of &lt;code class=&quot;highlighter-rouge&quot;&gt;SLE 12&lt;/code&gt; development, the drastic deviation of &lt;code class=&quot;highlighter-rouge&quot;&gt;GNOME 3&lt;/code&gt;
+from old desktop design of &lt;code class=&quot;highlighter-rouge&quot;&gt;GNOME 2&lt;/code&gt; (in &lt;code class=&quot;highlighter-rouge&quot;&gt;SLE 11&lt;/code&gt;) was considered a regression
+for users. &lt;span id=&quot;sn-gnome3-choice&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;In case you are curious about why &lt;code class=&quot;highlighter-rouge&quot;&gt;GNOME 3&lt;/code&gt; was picked back then, the answer is very &lt;em&gt;human&lt;/em&gt;: the remaining staff at Desktop Department were only familiar with &lt;code class=&quot;highlighter-rouge&quot;&gt;GNOME&lt;/code&gt;. The irony is that &lt;code class=&quot;highlighter-rouge&quot;&gt;GNOME 3&lt;/code&gt; is anything but a familiar &lt;code class=&quot;highlighter-rouge&quot;&gt;GNOME&lt;/code&gt;.&lt;/span&gt; To tackle this issue, a feature was
+proposed which is basically an incarnation of &lt;code class=&quot;highlighter-rouge&quot;&gt;SLE 11&lt;/code&gt; desktop look&amp;amp;feel. &lt;span id=&quot;sn-other-gnomelikes&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;For the record, &lt;a href=&quot;http://mate-desktop.com/&quot;&gt;Mate&lt;/a&gt; and &lt;a href=&quot;https://github.com/linuxmint/Cinnamon&quot;&gt;Cinnamon&lt;/a&gt; are popular GNOME-forked desktops which have done a much better job in preserving the traditional desktop design. The reason not to pick one of them was the concern over upstream community support. I’ll avoid another irony comment ;P&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;The repo at &lt;a href=&quot;https://bitbucket.org/carltonf/sle-classic&quot;&gt;Bitbucket&lt;/a&gt; was my
+personal repo to track the development of &lt;code class=&quot;highlighter-rouge&quot;&gt;SLE Classic&lt;/code&gt;. It has some useful
+notes and can serve a good reference for maintaining &lt;code class=&quot;highlighter-rouge&quot;&gt;SLE Classic&lt;/code&gt;. The commit
+log might also be of some interest but the old history is incomplete and
+convoluted as I was also beginner back then. At present, I believe it is merely
+an interim hack to help users migrate to newer desktop and should be
+discontinued in future &lt;code class=&quot;highlighter-rouge&quot;&gt;SLE&lt;/code&gt; releases.&lt;/p&gt;
+
 &lt;h1 id=&quot;recommended-learning-order&quot;&gt;Recommended Learning Order&lt;/h1&gt;
 
 &lt;p&gt;&lt;span class=&quot;marginnote&quot;&gt;&lt;a href=&quot;http://baike.baidu.com/view/9647254.htm&quot;&gt;“道生一, 一生二，二生三，三生万物”.&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;
@@ -184,7 +203,6 @@ it is the only one that has some documents.&lt;/p&gt;
   &lt;li&gt;GNOME 3 Application Development Beginner’s Guide: the recommended parts.&lt;/li&gt;
   &lt;li&gt;X Power Tool:  really worth reading, but can be hard at the beginning.&lt;/li&gt;
 &lt;/ol&gt;
-
 </description>
         <pubDate>Thu, 11 Aug 2016 00:00:00 +0000</pubDate>
         <link>http://carltonf.github.io/post/a-learning-guide-gnome-shell-bug-fixing</link>
