@@ -6,8 +6,8 @@
 </description>
     <link>http://carltonf.github.io/</link>
     <atom:link href="http://carltonf.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 12 Aug 2016 02:15:18 +0000</pubDate>
-    <lastBuildDate>Fri, 12 Aug 2016 02:15:18 +0000</lastBuildDate>
+    <pubDate>Thu, 18 Aug 2016 11:17:09 +0000</pubDate>
+    <lastBuildDate>Thu, 18 Aug 2016 11:17:09 +0000</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
     
       <item>
@@ -188,7 +188,25 @@ convoluted as I was also beginner back then. At present, I believe it is merely
 an interim hack to help users migrate to newer desktop and should be
 discontinued in future &lt;code class=&quot;highlighter-rouge&quot;&gt;SLE&lt;/code&gt; releases.&lt;/p&gt;
 
-&lt;h1 id=&quot;recommended-learning-order&quot;&gt;Recommended Learning Order&lt;/h1&gt;
+&lt;h1 id=&quot;final-notes&quot;&gt;Final Notes&lt;/h1&gt;
+
+&lt;h2 id=&quot;mentality&quot;&gt;Mentality&lt;/h2&gt;
+
+&lt;p&gt;Beginners for Shell might be surprised by the breaking changes &lt;em&gt;GNOME 3&lt;/em&gt;
+introduces every release, the lack of documentation in &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; part and
+the &lt;em&gt;pragmatic&lt;/em&gt; set of bindings offered to the &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; space. That’s all
+right, &lt;em&gt;GNOME 3&lt;/em&gt; strives to be something new and they are still in the process
+to be &lt;a href=&quot;https://wiki.gnome.org/GnomeOS&quot;&gt;something more&lt;/a&gt;. Despite being bitten by
+these issues in the past, I have come to the revelation that most of the time
+developers work with insufficient knowledge and instability might just be the
+norm in this line of work. &lt;span id=&quot;sn-80-20&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;In retrospect, I wrote a &lt;a href=&quot;/post/a-workflow-for-bug-fixing&quot;&gt;post&lt;/a&gt; about this quite a while ago.&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Nevertheless, these will still cause inconvenience in the future but at least
+you are warned. &lt;span id=&quot;sn-warned&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;Instead of wasting hours of searching in the doubt of one’s own inability to find necessary information. Been there, done that ;P&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;recommended-learning-order&quot;&gt;Recommended Learning Order&lt;/h2&gt;
 
 &lt;p&gt;&lt;span class=&quot;marginnote&quot;&gt;&lt;a href=&quot;http://baike.baidu.com/view/9647254.htm&quot;&gt;“道生一, 一生二，二生三，三生万物”.&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;
 
