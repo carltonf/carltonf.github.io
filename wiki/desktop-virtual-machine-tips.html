@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html ⚡ lang="en">
+<html amp lang="en">
   <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width,minimum-scale=1">
+  <!-- NOTE `content` setting is required to ensure GPU rasterization is enabled. -->
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 
   <title>Desktop Virtual Machine Tips</title>
   <meta name="description" content="mount virtual diskoriginal reference: How to mount a VirtualBox VDI image.">
@@ -45,7 +46,6 @@
 
   </script>
 
-  <!-- TODO So it's amp's style to include all styles in a single page? -->
   <style amp-custom>
   
   /* Import ET Book styles
@@ -550,11 +550,6 @@ pre {
   pre {
     width: 90%;
     padding: 0; } }
-/***** my custom styles *****/
-.post-list-entry hr {
-  width: 65%;
-  margin-left: 0%; }
-
 /***** tufte tweaks *****/
 /* the kramdown processor used by Github output <code> tag instead of .code
 class and thus we need to convert .code styles in tufte to code tag styles */
@@ -582,13 +577,58 @@ for listed paragraphs (<li><p> style), this yields very narrow paragraphs. */
 li p {
   width: 100%; }
 
+/***** my custom styles *****/
+#main-box {
+  margin-top: 0%; }
+  #main-box #name-box span {
+    font-size: 2em; }
+  #main-box #name-box #name {
+    font-size: 8em; }
+  #main-box #motto {
+    margin-left: 3%;
+    font-size: 1.6em; }
+  #main-box #about-box {
+    margin: 6em 0 0 1%; }
+    #main-box #about-box hr {
+      margin: 0 0 2em 22%;
+      width: 6em; }
+
+.post-list-entry {
+  padding-top: 1em; }
+
+.post-list-nav {
+  margin-top: 6em; }
+  .post-list-nav .pagination {
+    float: left; }
+  .post-list-nav .rss-subscribe {
+    float: right;
+    margin-right: 45%; }
+
+.post-article .article-tombstone {
+  direction: rtl;
+  font-size: 2.5em; }
+.post-article .article-footer {
+  width: 55%; }
+  .post-article .article-footer .post-tags {
+    float: left; }
+  .post-article .article-footer .post-comment-link {
+    float: right; }
+
+/* TODO bad style, 35% is in line with <hr>'s 65% width, factor these styles using SCSS vars  */
+
   </style>
-
-
 
   <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
 
+  
+  <!-- AMP cdn can not be accessed in mainland, so use the cached version. With
+  this script, we can still use AMP goodies like custom tags, shared good
+  practices, and external resource loading and etc. However, my site will not be
+  AMP-compliant or validated for Google AMP cache. This URL itself seems to be
+  part of the spec, see
+  https://github.com/ampproject/amphtml/blob/master/spec/amp-html-format.md -->
   <script async src="/assets/ampproject/cdn.ampproject.org-v0.js"></script>
+  
 </head>
 
   <body>
@@ -596,10 +636,10 @@ li p {
 </header>
 
 
-<article>
+<article class="post-article">
 
   <h2 itemprop="name">
-    <a href="" itemprop="url">Desktop Virtual Machine Tips</a>
+    <a href="/wiki/desktop-virtual-machine-tips.html" itemprop="url">Desktop Virtual Machine Tips</a>
   </h2>
 
   <div class="post-meta">
@@ -636,11 +676,11 @@ mount /dev/mbd0p1 /mnt/tmp
 </div>
 </div>
 
-    <p class="article-tombstone" style="direction: rtl; font-size: 2.5em"><br>∎</p>
+    <p class="article-tombstone"><br>∎</p>
   </section>
 
-  <div class="article-footer" style="width: 55%">
-    <div class="post-tags" style="float: left">
+  <div class="article-footer">
+    <div class="post-tags">
       <b> Tags </b>
       
       • <a href="/tags/vm"><span>vm</span></a>
@@ -648,7 +688,7 @@ mount /dev/mbd0p1 /mnt/tmp
       • <a href="/tags/tips"><span>tips</span></a>
       
     </div>
-    <div class="post-comment-link" style="float: right" >
+    <div class="post-comment-link">
       <b>Comment</b>:
       <a href="https://github.com/carltonf/carltonf.github.io/issues/new" target="_blank">Github Issue</a>
     </div>

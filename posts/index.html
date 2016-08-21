@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html ⚡ lang="en">
+<html amp lang="en">
   <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width,minimum-scale=1">
+  <!-- NOTE `content` setting is required to ensure GPU rasterization is enabled. -->
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 
   <title>Blog</title>
   <meta name="description" content="See further, but how far is far?
@@ -47,7 +48,6 @@
 
   </script>
 
-  <!-- TODO So it's amp's style to include all styles in a single page? -->
   <style amp-custom>
   
   /* Import ET Book styles
@@ -552,11 +552,6 @@ pre {
   pre {
     width: 90%;
     padding: 0; } }
-/***** my custom styles *****/
-.post-list-entry hr {
-  width: 65%;
-  margin-left: 0%; }
-
 /***** tufte tweaks *****/
 /* the kramdown processor used by Github output <code> tag instead of .code
 class and thus we need to convert .code styles in tufte to code tag styles */
@@ -584,13 +579,58 @@ for listed paragraphs (<li><p> style), this yields very narrow paragraphs. */
 li p {
   width: 100%; }
 
+/***** my custom styles *****/
+#main-box {
+  margin-top: 0%; }
+  #main-box #name-box span {
+    font-size: 2em; }
+  #main-box #name-box #name {
+    font-size: 8em; }
+  #main-box #motto {
+    margin-left: 3%;
+    font-size: 1.6em; }
+  #main-box #about-box {
+    margin: 6em 0 0 1%; }
+    #main-box #about-box hr {
+      margin: 0 0 2em 22%;
+      width: 6em; }
+
+.post-list-entry {
+  padding-top: 1em; }
+
+.post-list-nav {
+  margin-top: 6em; }
+  .post-list-nav .pagination {
+    float: left; }
+  .post-list-nav .rss-subscribe {
+    float: right;
+    margin-right: 45%; }
+
+.post-article .article-tombstone {
+  direction: rtl;
+  font-size: 2.5em; }
+.post-article .article-footer {
+  width: 55%; }
+  .post-article .article-footer .post-tags {
+    float: left; }
+  .post-article .article-footer .post-comment-link {
+    float: right; }
+
+/* TODO bad style, 35% is in line with <hr>'s 65% width, factor these styles using SCSS vars  */
+
   </style>
-
-
 
   <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
 
+  
+  <!-- AMP cdn can not be accessed in mainland, so use the cached version. With
+  this script, we can still use AMP goodies like custom tags, shared good
+  practices, and external resource loading and etc. However, my site will not be
+  AMP-compliant or validated for Google AMP cache. This URL itself seems to be
+  part of the spec, see
+  https://github.com/ampproject/amphtml/blob/master/spec/amp-html-format.md -->
   <script async src="/assets/ampproject/cdn.ampproject.org-v0.js"></script>
+  
 </head>
 
   <body>
@@ -608,7 +648,7 @@ li p {
     <div class="post-list">
   
     <!-- NOTE snippet requiring variable `post` defined -->
-<div class="post-list-entry" style="padding-top: 1em">
+<div class="post-list-entry">
 
   <h2>
     <a class="post-link" href="/post/a-learning-guide-gnome-shell-bug-fixing">A learning guide for GNOME Shell bug fixing</a>
@@ -632,7 +672,7 @@ developers – <em>very</em> pragmatic.</p>
 
   
     <!-- NOTE snippet requiring variable `post` defined -->
-<div class="post-list-entry" style="padding-top: 1em">
+<div class="post-list-entry">
 
   <h2>
     <a class="post-link" href="/post/revisiting-todo-of-this-site">Revisiting TODO of this site</a>
@@ -656,7 +696,7 @@ this site and some ideas about it in the future.</p>
 
   
     <!-- NOTE snippet requiring variable `post` defined -->
-<div class="post-list-entry" style="padding-top: 1em">
+<div class="post-list-entry">
 
   <h2>
     <a class="post-link" href="/post/powershell-tips-notes">Powershell Tips Notes</a>
@@ -681,7 +721,7 @@ this site and some ideas about it in the future.</p>
 
   
     <!-- NOTE snippet requiring variable `post` defined -->
-<div class="post-list-entry" style="padding-top: 1em">
+<div class="post-list-entry">
 
   <h2>
     <a class="post-link" href="/post/reading-code-breakers">Reading: Code Breakers</a>
@@ -704,7 +744,7 @@ this site and some ideas about it in the future.</p>
 
   
     <!-- NOTE snippet requiring variable `post` defined -->
-<div class="post-list-entry" style="padding-top: 1em">
+<div class="post-list-entry">
 
   <h2>
     <a class="post-link" href="/post/reflections-on-content-management">A Reflection on Content Management</a>
@@ -723,7 +763,7 @@ this site and some ideas about it in the future.</p>
 
   
     <!-- NOTE snippet requiring variable `post` defined -->
-<div class="post-list-entry" style="padding-top: 1em">
+<div class="post-list-entry">
 
   <h2>
     <a class="post-link" href="/post/adapt-vs-configure">Adapt other than Configure</a>
@@ -746,7 +786,7 @@ this site and some ideas about it in the future.</p>
 
   
     <!-- NOTE snippet requiring variable `post` defined -->
-<div class="post-list-entry" style="padding-top: 1em">
+<div class="post-list-entry">
 
   <h2>
     <a class="post-link" href="/post/installing-sled-12-with-pxe-using-libvirt">Installing SLED 12 with PXE using libvirt</a>
@@ -779,8 +819,8 @@ through PXE. Here is the struggle I've been through.
 </div>
 
 <!-- Pagination links: a special type of entry -->
-<div class="post-list-nav post-list-entry" style="margin-top: 6em;">
-  <div class="pagination" style="float: left">
+<div class="post-list-nav post-list-entry">
+  <div class="pagination">
     
     <span class="previous">Prev</span>
     
@@ -790,8 +830,7 @@ through PXE. Here is the struggle I've been through.
     
   </div>
 
-  <!-- TODO bad style, 35% is in line with <hr>'s 65% width, factor these styles using SCSS vars -->
-  <div class="rss-subscribe" style="float: right; margin-right: 35%">
+  <div class="rss-subscribe">
     subscribe <a href="/feed.xml">via RSS</a>
   </div>
 </div>
