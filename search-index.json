@@ -38,6 +38,14 @@
 
     
     {
+        "value": "Try Out Bash on Unbuntu on Windows",
+        "data": "http://carltonf.github.io/post/try-out-bash-on-unbuntu-on-windows"
+    }
+    
+    
+
+    
+    ,{
         "value": "A learning guide for GNOME Shell bug fixing",
         "data": "http://carltonf.github.io/post/a-learning-guide-gnome-shell-bug-fixing"
     }
@@ -504,6 +512,30 @@
     ,{
         "value": "Tag: gnome",
         "data": "http://carltonf.github.io/tags/gnome/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: windows",
+        "data": "http://carltonf.github.io/tags/windows/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: bash",
+        "data": "http://carltonf.github.io/tags/bash/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: ubuntu",
+        "data": "http://carltonf.github.io/tags/ubuntu/"
     }
     
     

@@ -6,9 +6,112 @@
 </description>
     <link>http://carltonf.github.io/</link>
     <atom:link href="http://carltonf.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 21 Aug 2016 05:59:08 +0000</pubDate>
-    <lastBuildDate>Sun, 21 Aug 2016 05:59:08 +0000</lastBuildDate>
+    <pubDate>Sat, 27 Aug 2016 05:03:14 +0000</pubDate>
+    <lastBuildDate>Sat, 27 Aug 2016 05:03:14 +0000</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
+    
+      <item>
+        <title>Try Out Bash on Unbuntu on Windows</title>
+        <description>&lt;p&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux&quot;&gt;Windows Subsystem for Linux&lt;/a&gt;
+is the new &lt;em&gt;toy&lt;/em&gt; Microsoft brings to developers. Having played it for one day,
+I feel it’s still not good enough for daily use, but a possible alternative when
+necessary.&lt;/p&gt;
+
+&lt;p&gt;Not long ago, Windows 10 has released its
+&lt;a href=&quot;http://www.howtogeek.com/248177/whats-new-in-windows-10s-anniversary-update/&quot;&gt;Anniversary Update&lt;/a&gt;,
+I’ve waited till it’s in the official update channel&lt;span id=&quot;sn-update&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;To be honest, I have little confidence that an Windows 10 update would not cause some regression. Anniversary Update is no exception, there are issues like the machine can not wake up from hibernation, double authorization required by Windows Hello and etc.&lt;/span&gt;. It’s still beta, and thus I didn’t expect very much
+from it.&lt;/p&gt;
+
+&lt;h1 id=&quot;installation&quot;&gt;Installation&lt;/h1&gt;
+
+&lt;p&gt;Ever since &lt;em&gt;WSL&lt;/em&gt; appeared in the &lt;em&gt;Insider&lt;/em&gt; preview channel, there were many
+articles covering the installation. The installation from the official update
+channel remains almost the same as in preview. It’s very easy and smooth &lt;span id=&quot;sn-update-smoothness&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;Hmmm… maybe worth mentioning, I’ve updated two machines to the Anniversary Update, one of them breaked &lt;code class=&quot;highlighter-rouge&quot;&gt;VirtualBox&lt;/code&gt;. Reinstalling &lt;code class=&quot;highlighter-rouge&quot;&gt;VirtualBox&lt;/code&gt; fixed it.&lt;/span&gt;. CLI tools like &lt;code class=&quot;highlighter-rouge&quot;&gt;lxrun&lt;/code&gt; are really nice.&lt;/p&gt;
+
+&lt;h1 id=&quot;usage&quot;&gt;Usage&lt;/h1&gt;
+
+&lt;p&gt;Packages can be installed from the official &lt;code class=&quot;highlighter-rouge&quot;&gt;Ubuntu&lt;/code&gt; repo. One thing suspicious is
+the lack of many &lt;code class=&quot;highlighter-rouge&quot;&gt;Ubuntu&lt;/code&gt; mirrors in the repo mirror list. Maybe it’s due to the
+fact that &lt;code class=&quot;highlighter-rouge&quot;&gt;WSL&lt;/code&gt; is still &lt;code class=&quot;highlighter-rouge&quot;&gt;Beta&lt;/code&gt;?&lt;/p&gt;
+
+&lt;p&gt;To my surprise, &lt;code class=&quot;highlighter-rouge&quot;&gt;tmux&lt;/code&gt; is pre-installed. The default console host is not to my taste
+and I tried to run &lt;code class=&quot;highlighter-rouge&quot;&gt;rxvt-unicode&lt;/code&gt;, which failed with errors about missing &lt;code class=&quot;highlighter-rouge&quot;&gt;tty&lt;/code&gt; files and
+etc. This is understandable, not much has been done for things under &lt;code class=&quot;highlighter-rouge&quot;&gt;/dev&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Then I tried to &lt;code class=&quot;highlighter-rouge&quot;&gt;ping&lt;/code&gt; and it didn’t work for some permission issues.&lt;/p&gt;
+
+&lt;p&gt;GUI-Emacs failed to work &lt;span id=&quot;sn-cli-emacs&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;The CLI version worked without a problem, but in terminal I actually prefer &lt;code class=&quot;highlighter-rouge&quot;&gt;vim&lt;/code&gt; over &lt;code class=&quot;highlighter-rouge&quot;&gt;Emacs&lt;/code&gt;.&lt;/span&gt;, but
+GUI-&lt;code class=&quot;highlighter-rouge&quot;&gt;Spacemacs&lt;/code&gt; can almost work. The vanilla &lt;code class=&quot;highlighter-rouge&quot;&gt;Emacs&lt;/code&gt; window showed up but didn’t
+react to any input. &lt;code class=&quot;highlighter-rouge&quot;&gt;Spacemacs&lt;/code&gt; started normally but the window could not be
+resized, startup parameters like &lt;code class=&quot;highlighter-rouge&quot;&gt;geometry&lt;/code&gt; settings didn’t work. &lt;span id=&quot;sn-spacemacs-works&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;The fact that &lt;code class=&quot;highlighter-rouge&quot;&gt;Spacemacs&lt;/code&gt; can “work” but the vanilla one doesn’t is really intriguing, though I didn’t spend effort to investigate the cause.&lt;/span&gt; I’ve followed threads like
+&lt;a href=&quot;https://www.reddit.com/r/Windows10/comments/4ea4w4/fyi_you_can_run_gui_linux_apps_from_bash/&quot;&gt;this one&lt;/a&gt;
+to install &lt;a href=&quot;https://sourceforge.net/projects/vcxsrv/&quot;&gt;VcXsrv&lt;/a&gt; &lt;span id=&quot;sn-vcxsrv&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;VcXsrv&lt;/code&gt; is an open source fork of &lt;a href=&quot;https://sourceforge.net/projects/xming/&quot;&gt;Xming&lt;/a&gt;. The latter has stopped updating its open source version in favour of subscription-based support and has some rough edges, which get fixed in &lt;code class=&quot;highlighter-rouge&quot;&gt;VcXsrv&lt;/code&gt;. &lt;code class=&quot;highlighter-rouge&quot;&gt;Xming&lt;/code&gt; seems to be better known, while I find &lt;code class=&quot;highlighter-rouge&quot;&gt;VcXsrv&lt;/code&gt; is easier to use.&lt;/span&gt;.&lt;/p&gt;
+
+&lt;p&gt;I’ve also tried &lt;code class=&quot;highlighter-rouge&quot;&gt;vim-gtk&lt;/code&gt; and it did work. &lt;code class=&quot;highlighter-rouge&quot;&gt;gvim&lt;/code&gt; seems to be the most taunted
+working &lt;code class=&quot;highlighter-rouge&quot;&gt;GUI&lt;/code&gt; application on &lt;code class=&quot;highlighter-rouge&quot;&gt;WSL&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;node&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;npm&lt;/code&gt; can be used normally. At least my small personal projects had
+run smoothly. It did have some errors at the start, run “&lt;code class=&quot;highlighter-rouge&quot;&gt;npm config set
+unsafe-perm=true&lt;/code&gt;” as suggested in
+&lt;a href=&quot;https://github.com/Microsoft/BashOnWindows/issues/14&quot;&gt;this issue&lt;/a&gt; and the rest
+went without any further issues.&lt;/p&gt;
+
+&lt;p&gt;I didn’t try crazy things like
+&lt;a href=&quot;https://www.reddit.com/r/Windows10/comments/4kkamr/so_with_wsl_you_can_run_gui_apps_window_managers/&quot;&gt; a full DE &lt;/a&gt;
+on &lt;code class=&quot;highlighter-rouge&quot;&gt;WSL&lt;/code&gt;, but those brave projects are fascinating.&lt;/p&gt;
+
+&lt;h1 id=&quot;verdict&quot;&gt;Verdict&lt;/h1&gt;
+
+&lt;p&gt;For sure, I will not give up my &lt;em&gt;boxerized&lt;/em&gt; environment &lt;span id=&quot;sn-boxerized-post&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;Hmmm…where is my long planned post on this setting?&lt;/span&gt; for
+&lt;code class=&quot;highlighter-rouge&quot;&gt;WSL&lt;/code&gt;. It can not replace useful Windows tools like &lt;a href=&quot;http://cmder.net/&quot;&gt;cmder&lt;/a&gt;
+and Emacs on Windows either, so I’ll not use it in my work or personal projects.
+&lt;code class=&quot;highlighter-rouge&quot;&gt;node&lt;/code&gt; seems to be a good thing to have but &lt;code class=&quot;highlighter-rouge&quot;&gt;node&lt;/code&gt; can natively run on &lt;code class=&quot;highlighter-rouge&quot;&gt;Windows&lt;/code&gt;
+already and web service stuff might encounter network permission issues like
+&lt;code class=&quot;highlighter-rouge&quot;&gt;ping&lt;/code&gt; down the road.&lt;/p&gt;
+
+&lt;h1 id=&quot;cynical-speculation&quot;&gt;&lt;em&gt;Cynical Speculation&lt;/em&gt;&lt;/h1&gt;
+
+&lt;p&gt;Despite recent high-profile open source activities from &lt;code class=&quot;highlighter-rouge&quot;&gt;Microsoft&lt;/code&gt; &lt;span id=&quot;sn-ms-opensource&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;&lt;a href=&quot;https://github.com/Microsoft/vscode/&quot;&gt;Visual Studio Code&lt;/a&gt;, &lt;a href=&quot;https://github.com/Microsoft/TypeScript&quot;&gt;TypeScript&lt;/a&gt;, &lt;a href=&quot;https://github.com/Microsoft/ChakraCore&quot;&gt;ChakraCore&lt;/a&gt; to name some of the most popular.&lt;/span&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;WSL&lt;/code&gt; is not open source. This might root from the close integration
+with the Windows kernel. Understandable? Maybe, but it’s a disappointment
+nevertheless. Some &lt;a href=&quot;https://news.ycombinator.com/item?id=11445301&quot;&gt;discussions&lt;/a&gt;
+online also shows that this is not the first time Microsoft tries to do
+something like this.&lt;/p&gt;
+
+&lt;p&gt;My gut feelings is that Microsoft is just staging a show here. All in the effort
+to put &lt;code class=&quot;highlighter-rouge&quot;&gt;Windows&lt;/code&gt; back into developers’ mind and back onto the focus of media.
+Just looks at the published name used in media - &lt;code class=&quot;highlighter-rouge&quot;&gt;Bash on Ubuntu on Windows&lt;/code&gt;,
+what a mouthful, lousy name! But it is carefully picked, and sorted in terms’
+popularity in developers’ mind: &lt;code class=&quot;highlighter-rouge&quot;&gt;Bash&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;Ubuntu&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;Windows&lt;/code&gt; - A bad name on
+its own right, a good marketing strategy in today’s IT context. &lt;code class=&quot;highlighter-rouge&quot;&gt;Windows&lt;/code&gt;
+piggybacks upon &lt;code class=&quot;highlighter-rouge&quot;&gt;Bash&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;Ubuntu&lt;/code&gt; to try to have a come back. Just like
+someone joked on the web about &lt;code class=&quot;highlighter-rouge&quot;&gt;WSL&lt;/code&gt;: it’s “&lt;em&gt;Linux without the Linux part&lt;/em&gt;” or
+“GNU/NT”. &lt;span id=&quot;sn-gnu-nt&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;Someone followed up: “Richard Stallman must be so proud.” ;P&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;However, it’s still an interesting show, and despite the caution for investing
+on this &lt;code class=&quot;highlighter-rouge&quot;&gt;WSL&lt;/code&gt; thing, the sheer number of issues at
+&lt;a href=&quot;https://github.com/Microsoft/BashOnWindows/issues&quot;&gt;Github&lt;/a&gt; have shown that
+there are people can benefit from &lt;code class=&quot;highlighter-rouge&quot;&gt;WSL&lt;/code&gt;.&lt;/p&gt;
+</description>
+        <pubDate>Sat, 27 Aug 2016 00:00:00 +0000</pubDate>
+        <link>http://carltonf.github.io/post/try-out-bash-on-unbuntu-on-windows</link>
+        <guid isPermaLink="true">http://carltonf.github.io/post/try-out-bash-on-unbuntu-on-windows</guid>
+        
+        <category>windows</category>
+        
+        <category>bash</category>
+        
+        <category>ubuntu</category>
+        
+        
+      </item>
     
       <item>
         <title>A learning guide for GNOME Shell bug fixing</title>
@@ -1245,220 +1348,6 @@ $13 binary compatibility (dealing with updating widely deployed packages)
         <category></category>
         
         <category></category>
-        
-      </item>
-    
-      <item>
-        <title>A workflow for bug fixing</title>
-        <description>&lt;p&gt;As a developer in SUSE Desktop Department, most of my work are bug fixing. Desktop bugs are diversified in nature: you constantly need to handle bugs from an unknown package or some esoteric features. To comb with this reality, I’ve been pondering on the proper methodology.&lt;/p&gt;
-
-&lt;p&gt;&lt;span class=&quot;marginnote&quot;&gt;About the diversities, here is a rhetoric saying with the &lt;em&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Pareto_principle&quot;&gt;80-20 principle&lt;/a&gt;&lt;/em&gt;: &lt;strong&gt;80% of the time we work with only 20% of the knowledge we need&lt;/strong&gt;.&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;DISCLAIM:&lt;/strong&gt; &lt;em&gt;this post has undergone some format conversions and the current formatting quality is not very good.&lt;/em&gt;&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;You want to learn! And not timid before the unknown.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;SRN: Search, Read, Note and repeat.&lt;/p&gt;
-
-    &lt;p&gt;One of my main complaints about my last job in a local company is that they have regulated web access excessively in the office: in order to search for information I have to use common terminals that are constantly in short. IMO, this restriction contributes as half to the failure of the new project as all other factors combined. From that time on, I decide that I should refuse to work on any new project without decent web access.&lt;/p&gt;
-
-    &lt;p&gt;Document reading is a trait that I believe many interviewers have overlooked (at least no one ever asks me about this part). In today’s fast-paced world, technology evolves quickly. Reading is the best way to keep in sync with the new developments.&lt;/p&gt;
-
-    &lt;p&gt;Noting is more about recording what you’ve found. You need to mark what info you think are more important, more relevant, what questions or unclear points you still have. For this purpose, pen&amp;amp;paper is always my favorite.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;A logical workflow.&lt;/p&gt;
-
-    &lt;p&gt;The first two steps help you become comfortable with a new package or field. After you’ve been briefed with the context and you need to handle the problem itself. The reality is we still know only very little so the previous steps tend to appear again and again.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h1 id=&quot;my-workflow&quot;&gt;My workflow&lt;/h1&gt;
-
-&lt;p&gt;In short: &lt;strong&gt;problem -&amp;gt; questions -&amp;gt; solutions -&amp;gt; actions&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;Divide and rephrase the &lt;strong&gt;Problem&lt;/strong&gt;.&lt;/p&gt;
-
-    &lt;p&gt;Bug reports from customers or QA are never the appropriate way you should think about the bugs. Reproduce the bugs, be creative, try out different cases. Play with the problem till you can divide/rephrase the problem in a way you’re confident it can be addressed technically.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Ask Questions.&lt;/p&gt;
-
-    &lt;p&gt;What is this? Why something work in A situation but not B? How the other program handle this situation? What if I do this?&lt;/p&gt;
-
-    &lt;p&gt;Whatever the question you ask or encounter. Do the SRN.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Make the bold assumptions and leave questions unanswered.&lt;/p&gt;
-
-    &lt;p&gt;A careful mind will always have more questions than what it can manage to answer in the limited period. Keep in mind the goal is fixing bugs, and questions can be dealt with by: &lt;strong&gt;making bold assumptions&lt;/strong&gt; if all known facts fit, &lt;strong&gt;unanswered&lt;/strong&gt; if not considered relevant, &lt;strong&gt;short answer&lt;/strong&gt; if that’s sufficient.&lt;/p&gt;
-
-    &lt;p&gt;I’ve always found &lt;strong&gt;assumption&lt;/strong&gt; is a very effective way of moving things forward. A striking fact is human minds work similarly: many times what you think intuitively is not too far away from what others’ve done. As long as the exact detail is not needed, by making assumptions, we save us time and progress fast. (And there is little to lose, correct it if we assumed wrong.)&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Iteration till a solution comes to your mind.&lt;/p&gt;
-
-    &lt;p&gt;There are no recipes for locating the solution. It comes to you at proper time ;P after enough work along the right direction.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h1 id=&quot;a-workflow-example&quot;&gt;A workflow example&lt;/h1&gt;
-
-&lt;p&gt;The rest of the article is a workflow document I’ve created while fixing a Desktop bug. It’s a reproduction as in work I actually only sketch on paper. I also would not include any references on the details because the outline is more important for ideas I’d like to share.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;&lt;strong&gt;Example&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Related the component is in &lt;code class=&quot;highlighter-rouge&quot;&gt;SLE Classic&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;extension.js&lt;/code&gt; part.&lt;/p&gt;
-
-&lt;h2 id=&quot;rephrasing&quot;&gt;Rephrasing&lt;/h2&gt;
-
-&lt;p&gt;As in my comment #3, the main issue is the misuse of GNOME Tweak tools.&lt;/p&gt;
-
-&lt;p&gt;Two real bugs remain:
-1.  Window buttons are not shown or displayed correctly across workspace.
-2.  Nautilus has issue dealing with window grouping.&lt;/p&gt;
-
-&lt;h2 id=&quot;workflow&quot;&gt;Workflow&lt;/h2&gt;
-
-&lt;h3 id=&quot;facts--questions&quot;&gt;FACTS &amp;amp; Questions&lt;/h3&gt;
-
-&lt;h4 id=&quot;done-how-windows-addremove-event-gets-detected&quot;&gt;DONE How windows add&amp;amp;remove event gets detected?&lt;/h4&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;this._workspaceSignals&lt;/code&gt; a hash map holds &lt;code class=&quot;highlighter-rouge&quot;&gt;window-added&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;window-removed&lt;/code&gt; listeners IDs.&lt;/p&gt;
-
-&lt;p&gt;The listeners are working as expected.&lt;/p&gt;
-
-&lt;h4 id=&quot;fact-the-grouping-works-correctly-in-one-single-workspace&quot;&gt;*FACT* The grouping works correctly in one single workspace.&lt;/h4&gt;
-
-&lt;h5 id=&quot;done-q-how-and-can-we-duplicate-the-logic-to-multiple-workspaces&quot;&gt;DONE &lt;strong&gt;Q&lt;/strong&gt;: How? And can we duplicate the logic to multiple workspaces?&lt;/h5&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;_populateWindowList&lt;/code&gt; has check on the grouping setting. If the grouping is turned on, &lt;code class=&quot;highlighter-rouge&quot;&gt;AppButton&lt;/code&gt; is used, o/w &lt;code class=&quot;highlighter-rouge&quot;&gt;WindowButton&lt;/code&gt; is employed.&lt;/p&gt;
-
-&lt;h6 id=&quot;done-q-why-only-windows-in-current-ws-is-displayed-no-grouping-for-simplicity&quot;&gt;DONE &lt;strong&gt;Q&lt;/strong&gt; Why only windows in current WS is displayed? (no grouping for simplicity.)&lt;/h6&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;WindowList&lt;/code&gt; holds all window/app buttons. Each button is responsible for checking whether it should be displayed with regards to current workspace.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;App and Window Button have different visibility criteria&lt;/strong&gt;. More on this later.&lt;/p&gt;
-
-&lt;h6 id=&quot;facts-appbutton-is-new-to-me&quot;&gt;&lt;strong&gt;FACTS&lt;/strong&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;AppButton&lt;/code&gt; is new to me.&lt;/h6&gt;
-
-&lt;p&gt;Two implications only happens to me later: bugs that were fixed for &lt;code class=&quot;highlighter-rouge&quot;&gt;WindowButton&lt;/code&gt; should be ported to &lt;code class=&quot;highlighter-rouge&quot;&gt;AppButton&lt;/code&gt;. &lt;code class=&quot;highlighter-rouge&quot;&gt;AppButton&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;WindowButton&lt;/code&gt; are similar in nature but do &lt;strong&gt;NOT&lt;/strong&gt; share a same class hierarchy, which I believe is an issue.&lt;/p&gt;
-
-&lt;p&gt;####### TODO Should &lt;code class=&quot;highlighter-rouge&quot;&gt;AppButton&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;WindowButton&lt;/code&gt; has a same parent?&lt;/p&gt;
-
-&lt;p&gt;To prevent duplicated code and emphasize the common role both play.&lt;/p&gt;
-
-&lt;h4 id=&quot;done-q-why-switching-backforth-workspaces-fixes-button-issues&quot;&gt;DONE &lt;strong&gt;Q&lt;/strong&gt;: Why switching back&amp;amp;forth workspaces fixes button issues?&lt;/h4&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;_populateWindowList&lt;/code&gt; recreate all active window/app buttons, but this routine only run at &lt;code class=&quot;highlighter-rouge&quot;&gt;notify::allocation&lt;/code&gt;, which is &lt;strong&gt;NOT&lt;/strong&gt; triggered with workspace change.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;AppButton&lt;/code&gt; is similar to &lt;code class=&quot;highlighter-rouge&quot;&gt;WindowButton&lt;/code&gt;, visibility check callback is hooked to &lt;code class=&quot;highlighter-rouge&quot;&gt;switch-workspace&lt;/code&gt; signal.&lt;/p&gt;
-
-    &lt;p&gt;This finding leads necessarily to the first solution.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3 id=&quot;solution-missing-or-legacy-buttons&quot;&gt;Solution: missing or legacy buttons.&lt;/h3&gt;
-
-&lt;h4 id=&quot;target-onwindowadded-grouped-branch&quot;&gt;TARGET: &lt;code class=&quot;highlighter-rouge&quot;&gt;_onWindowAdded&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;grouped&lt;/code&gt; branch.&lt;/h4&gt;
-
-&lt;p&gt;Add &lt;code class=&quot;highlighter-rouge&quot;&gt;AppButton&lt;/code&gt; visibility update callback into &lt;code class=&quot;highlighter-rouge&quot;&gt;windows-change&lt;/code&gt; signal from &lt;code class=&quot;highlighter-rouge&quot;&gt;ShellApp&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h4 id=&quot;fixes&quot;&gt;Fixes&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;No button in new workspace if we open a new window for an already running application.&lt;/li&gt;
-  &lt;li&gt;Remaining legacy button in a workspace after all windows of one application is closed. NOTE, the application is still running, i.e. it has opened window in some other workspace.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;solution-title-problem&quot;&gt;Solution: Title problem&lt;/h3&gt;
-
-&lt;h4 id=&quot;facts&quot;&gt;&lt;strong&gt;FACTS&lt;/strong&gt;&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Currently button title only gets updated with “windows-change”&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;[ ] “windows-change” is signaled even only by switching workspace&lt;/p&gt;
-
-    &lt;p&gt;This explains why switching fixes some issues. But why this event gets triggered?&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;target-windowschanged&quot;&gt;TARGET: &lt;code class=&quot;highlighter-rouge&quot;&gt;_windowsChanged&lt;/code&gt;&lt;/h4&gt;
-
-&lt;p&gt;There is a bug in original code. It doesn’t consider the case when an application has two single window in separate workspace as it does nothing if &lt;code class=&quot;highlighter-rouge&quot;&gt;this._windowTitle&lt;/code&gt; exists. Forcing update to fix this.&lt;/p&gt;
-
-&lt;h4 id=&quot;fix&quot;&gt;Fix&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Incorrectly displayed title, see original bug report for detail.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;done-q-an-app-gets-its-window-list-on-current-workspace-specifically-for-nautilus&quot;&gt;DONE Q: an app gets its window list on current workspace? Specifically for &lt;code class=&quot;highlighter-rouge&quot;&gt;Nautilus&lt;/code&gt;.&lt;/h3&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;_getWindowList&lt;/code&gt; uses API &lt;code class=&quot;highlighter-rouge&quot;&gt;Shell_app_get_windows&lt;/code&gt;, which returns &lt;strong&gt;all&lt;/strong&gt; windows belonging to a specific application.&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;win.located_on_workspace(ws)&lt;/code&gt; is used to check whether &lt;code class=&quot;highlighter-rouge&quot;&gt;win&lt;/code&gt; is in &lt;code class=&quot;highlighter-rouge&quot;&gt;ws&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h3 id=&quot;solution-desktop-is-shown-as-a-window-in-the-panel-with-grouping-on&quot;&gt;Solution: Desktop is shown as a window in the panel with grouping on.&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;_getWindowList&lt;/code&gt; should only check window types. Only return window of type &lt;code class=&quot;highlighter-rouge&quot;&gt;Meta.WindowType.NORMAL&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;done-q-why-an-nautilus-button-is-still-displayed-even-without-desktop&quot;&gt;DONE Q: Why an &lt;code class=&quot;highlighter-rouge&quot;&gt;Nautilus&lt;/code&gt; button is still displayed even without &lt;code class=&quot;highlighter-rouge&quot;&gt;Desktop&lt;/code&gt;.&lt;/h4&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;_updateVisibility&lt;/code&gt; uses API &lt;code class=&quot;highlighter-rouge&quot;&gt;Shell_app_is_on_workspace&lt;/code&gt; (&lt;code class=&quot;highlighter-rouge&quot;&gt;shell-app.c&lt;/code&gt;), which according to &lt;a href=&quot;https://mail.gnome.org/archives/commits-list/2011-January/msg04214.html&quot;&gt;this patch&lt;/a&gt;, will return &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt; for Desktop window (a workspace less window as we see).&lt;/p&gt;
-
-&lt;h4 id=&quot;sol&quot;&gt;Sol&lt;/h4&gt;
-
-&lt;p&gt;Use &lt;code class=&quot;highlighter-rouge&quot;&gt;(this._getWindowList() &amp;gt; 0)&lt;/code&gt; to test for visibility.&lt;/p&gt;
-
-&lt;p&gt;This is safe as &lt;code class=&quot;highlighter-rouge&quot;&gt;shell_app_is_on_workspace&lt;/code&gt; uses the same logic. The only difference is application in STARTING status and workspaceless window, both should be ignored anyway.&lt;/p&gt;
-
-&lt;h3 id=&quot;fact-if-grouping-is-enabled-context-menu-is-shaky-and-unusable-also-a-lot-of-stability-issue&quot;&gt;&lt;strong&gt;FACT:&lt;/strong&gt; If &lt;code class=&quot;highlighter-rouge&quot;&gt;grouping&lt;/code&gt; is enabled, context menu is shaky and unusable, also a lot of stability issue.&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;[X] “button-press-event” issue&lt;/li&gt;
-  &lt;li&gt;[X] &lt;code class=&quot;highlighter-rouge&quot;&gt;this._contextMenuManager&lt;/code&gt; should remove &lt;code class=&quot;highlighter-rouge&quot;&gt;this._appContextMenu&lt;/code&gt; if there is a single application window.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;final-report&quot;&gt;Final Report&lt;/h2&gt;
-
-&lt;p&gt;A patch has been submitted.&lt;/p&gt;
-
-&lt;p&gt;Both issues for demonstration 1 and nautilus have been fixed for &lt;strong&gt;SLE Classic&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;In short the original code contains multiple grouping bugs.&lt;/p&gt;
-
-&lt;p&gt;Details: In total 4 separate bugs are identified and addressed.
-1.  Failure to update buttons visibility when windows are added/removed for an application.
-2.  Window title is not updated correctly.
-3.  When deciding what windows should be displayed as buttons, failed to exclude abnormal windows like Nautilus Desktop.
-4.  (Found in Development) Forget to manage &lt;sub&gt;appContextMenu&lt;/sub&gt;, which, with grouping on, leads to instability and focus grabbing issue for button context menu&lt;/p&gt;
-
-&lt;p&gt;Further, I’ve overlooked AppButton in previous fix. So some patches for WindowButton is also ported to AppButton.&lt;/p&gt;
-
-&lt;p&gt;∎ &lt;strong&gt;Example End&lt;/strong&gt;&lt;/p&gt;
-</description>
-        <pubDate>Fri, 10 Jul 2015 16:18:00 +0000</pubDate>
-        <link>http://carltonf.github.io/post/a-workflow-for-bug-fixing</link>
-        <guid isPermaLink="true">http://carltonf.github.io/post/a-workflow-for-bug-fixing</guid>
-        
-        <category>bug-fix</category>
-        
-        <category>workflow</category>
-        
         
       </item>
     

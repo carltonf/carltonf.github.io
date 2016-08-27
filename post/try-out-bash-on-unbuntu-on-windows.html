@@ -6,11 +6,10 @@
   <!-- NOTE `content` setting is required to ensure GPU rasterization is enabled. -->
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 
-  <title>Tag: todo</title>
-  <meta name="description" content="See further, but how far is far?
-">
+  <title>Try Out Bash on Unbuntu on Windows</title>
+  <meta name="description" content="Windows Subsystem for Linuxis the new toy Microsoft brings to developers. Having played it for one day,I feel it’s still not good enough for daily use, but a...">
 
-  <link rel="canonical" href="http://carltonf.github.io/tags/todo/">
+  <link rel="canonical" href="http://carltonf.github.io/post/try-out-bash-on-unbuntu-on-windows">
   <link rel="alternate" type="application/rss+xml" title="Crystal Sight" href="http://carltonf.github.io/feed.xml">
 
   <script type="application/ld+json">
@@ -18,12 +17,11 @@
 {
   "@context": "http://schema.org",
   "@type": "NewsArticle",
-  "mainEntityOfPage": "http://carltonf.github.io/tags/todo/",
-  "headline": "Tag: todo",
-  "datePublished": "2016-08-27T05:03:14+00:00",
-  "dateModified": "2016-08-27T05:03:14+00:00",
-  "description": "See further, but how far is far?
-",
+  "mainEntityOfPage": "http://carltonf.github.io/post/try-out-bash-on-unbuntu-on-windows",
+  "headline": "Try Out Bash on Unbuntu on Windows",
+  "datePublished": "2016-08-27T00:00:00+00:00",
+  "dateModified": "2016-08-27T00:00:00+00:00",
+  "description": "Windows Subsystem for Linuxis the new toy Microsoft brings to developers. Having played it for one day,I feel it’s still not good enough for daily use, but a...",
   "author": {
     "@type": "Person",
     "name": ""
@@ -638,72 +636,132 @@ li p {
 </header>
 
 
-<article class="post">
+<article class="post-article">
+
+  <h2 itemprop="name">
+    <a href="/post/try-out-bash-on-unbuntu-on-windows" itemprop="url">Try Out Bash on Unbuntu on Windows</a>
+  </h2>
 
   <div class="post-meta">
-    <h1 class="post-title">Tag: todo</h1>
+    <time datetime="27 August 2016">
+      27 August 2016
+    </time>
+    
+    • <i>Updated at </i>
+    <time datetime="27 August 2016">
+      27 August 2016
+    </time>
+    
   </div>
 
   <section>
-    <div class="post-list">
-  
-  <!-- Generating tag page -->
-    
-      <!-- NOTE snippet requiring variable `post` defined -->
-<div class="post-list-entry">
+    <p><a href="https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux">Windows Subsystem for Linux</a>
+is the new <em>toy</em> Microsoft brings to developers. Having played it for one day,
+I feel it’s still not good enough for daily use, but a possible alternative when
+necessary.</p>
 
-  <h2>
-    <a class="post-link" href="/post/revisiting-todo-of-this-site">Revisiting TODO of this site</a>
-  </h2>
+<p>Not long ago, Windows 10 has released its
+<a href="http://www.howtogeek.com/248177/whats-new-in-windows-10s-anniversary-update/">Anniversary Update</a>,
+I’ve waited till it’s in the official update channel<span id="sn-update" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">To be honest, I have little confidence that an Windows 10 update would not cause some regression. Anniversary Update is no exception, there are issues like the machine can not wake up from hibernation, double authorization required by Windows Hello and etc.</span>. It’s still beta, and thus I didn’t expect very much
+from it.</p>
 
-  <p> <p>With a revamping done, it’s a good moment to reflect upon the old plan I had for
-this site and some ideas about it in the future.</p>
+<h1 id="installation">Installation</h1>
 
- </p>
+<p>Ever since <em>WSL</em> appeared in the <em>Insider</em> preview channel, there were many
+articles covering the installation. The installation from the official update
+channel remains almost the same as in preview. It’s very easy and smooth <span id="sn-update-smoothness" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">Hmmm… maybe worth mentioning, I’ve updated two machines to the Anniversary Update, one of them breaked <code class="highlighter-rouge">VirtualBox</code>. Reinstalling <code class="highlighter-rouge">VirtualBox</code> fixed it.</span>. CLI tools like <code class="highlighter-rouge">lxrun</code> are really nice.</p>
 
-  <div>
-    <span> Posted at <strong>Aug 6, 2016</strong> </span>
-    
-    • <a href="/tags/todo"><span>todo</span></a>
-    
-    • <a href="/tags/admin"><span>admin</span></a>
-    
-  </div>
+<h1 id="usage">Usage</h1>
 
-</div>
+<p>Packages can be installed from the official <code class="highlighter-rouge">Ubuntu</code> repo. One thing suspicious is
+the lack of many <code class="highlighter-rouge">Ubuntu</code> mirrors in the repo mirror list. Maybe it’s due to the
+fact that <code class="highlighter-rouge">WSL</code> is still <code class="highlighter-rouge">Beta</code>?</p>
 
-    
-      <!-- NOTE snippet requiring variable `post` defined -->
-<div class="post-list-entry">
+<p>To my surprise, <code class="highlighter-rouge">tmux</code> is pre-installed. The default console host is not to my taste
+and I tried to run <code class="highlighter-rouge">rxvt-unicode</code>, which failed with errors about missing <code class="highlighter-rouge">tty</code> files and
+etc. This is understandable, not much has been done for things under <code class="highlighter-rouge">/dev</code>.</p>
 
-  <h2>
-    <a class="post-link" href="/post/old-todo-page">TODO (old page before 201608)</a>
-  </h2>
+<p>Then I tried to <code class="highlighter-rouge">ping</code> and it didn’t work for some permission issues.</p>
 
-  <p> <i>DISCLAIM: This post is the old TODO page. Archived as a psot for reference.</i>
-<p>
-We list some long-term TODO entries here. For now only entries related to this
-blog site are included.
-</p>
+<p>GUI-Emacs failed to work <span id="sn-cli-emacs" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">The CLI version worked without a problem, but in terminal I actually prefer <code class="highlighter-rouge">vim</code> over <code class="highlighter-rouge">Emacs</code>.</span>, but
+GUI-<code class="highlighter-rouge">Spacemacs</code> can almost work. The vanilla <code class="highlighter-rouge">Emacs</code> window showed up but didn’t
+react to any input. <code class="highlighter-rouge">Spacemacs</code> started normally but the window could not be
+resized, startup parameters like <code class="highlighter-rouge">geometry</code> settings didn’t work. <span id="sn-spacemacs-works" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">The fact that <code class="highlighter-rouge">Spacemacs</code> can “work” but the vanilla one doesn’t is really intriguing, though I didn’t spend effort to investigate the cause.</span> I’ve followed threads like
+<a href="https://www.reddit.com/r/Windows10/comments/4ea4w4/fyi_you_can_run_gui_linux_apps_from_bash/">this one</a>
+to install <a href="https://sourceforge.net/projects/vcxsrv/">VcXsrv</a> <span id="sn-vcxsrv" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote"><code class="highlighter-rouge">VcXsrv</code> is an open source fork of <a href="https://sourceforge.net/projects/xming/">Xming</a>. The latter has stopped updating its open source version in favour of subscription-based support and has some rough edges, which get fixed in <code class="highlighter-rouge">VcXsrv</code>. <code class="highlighter-rouge">Xming</code> seems to be better known, while I find <code class="highlighter-rouge">VcXsrv</code> is easier to use.</span>.</p>
 
- </p>
+<p>I’ve also tried <code class="highlighter-rouge">vim-gtk</code> and it did work. <code class="highlighter-rouge">gvim</code> seems to be the most taunted
+working <code class="highlighter-rouge">GUI</code> application on <code class="highlighter-rouge">WSL</code>.</p>
 
-  <div>
-    <span> Posted at <strong>Aug 3, 2015</strong> </span>
-    
-    • <a href="/tags/todo"><span>todo</span></a>
-    
-    • <a href="/tags/admin"><span>admin</span></a>
-    
-  </div>
+<p><code class="highlighter-rouge">node</code> and <code class="highlighter-rouge">npm</code> can be used normally. At least my small personal projects had
+run smoothly. It did have some errors at the start, run “<code class="highlighter-rouge">npm config set
+unsafe-perm=true</code>” as suggested in
+<a href="https://github.com/Microsoft/BashOnWindows/issues/14">this issue</a> and the rest
+went without any further issues.</p>
 
-</div>
+<p>I didn’t try crazy things like
+<a href="https://www.reddit.com/r/Windows10/comments/4kkamr/so_with_wsl_you_can_run_gui_apps_window_managers/"> a full DE </a>
+on <code class="highlighter-rouge">WSL</code>, but those brave projects are fascinating.</p>
 
-    
-  
-</div>
+<h1 id="verdict">Verdict</h1>
 
+<p>For sure, I will not give up my <em>boxerized</em> environment <span id="sn-boxerized-post" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">Hmmm…where is my long planned post on this setting?</span> for
+<code class="highlighter-rouge">WSL</code>. It can not replace useful Windows tools like <a href="http://cmder.net/">cmder</a>
+and Emacs on Windows either, so I’ll not use it in my work or personal projects.
+<code class="highlighter-rouge">node</code> seems to be a good thing to have but <code class="highlighter-rouge">node</code> can natively run on <code class="highlighter-rouge">Windows</code>
+already and web service stuff might encounter network permission issues like
+<code class="highlighter-rouge">ping</code> down the road.</p>
+
+<h1 id="cynical-speculation"><em>Cynical Speculation</em></h1>
+
+<p>Despite recent high-profile open source activities from <code class="highlighter-rouge">Microsoft</code> <span id="sn-ms-opensource" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote"><a href="https://github.com/Microsoft/vscode/">Visual Studio Code</a>, <a href="https://github.com/Microsoft/TypeScript">TypeScript</a>, <a href="https://github.com/Microsoft/ChakraCore">ChakraCore</a> to name some of the most popular.</span>, <code class="highlighter-rouge">WSL</code> is not open source. This might root from the close integration
+with the Windows kernel. Understandable? Maybe, but it’s a disappointment
+nevertheless. Some <a href="https://news.ycombinator.com/item?id=11445301">discussions</a>
+online also shows that this is not the first time Microsoft tries to do
+something like this.</p>
+
+<p>My gut feelings is that Microsoft is just staging a show here. All in the effort
+to put <code class="highlighter-rouge">Windows</code> back into developers’ mind and back onto the focus of media.
+Just looks at the published name used in media - <code class="highlighter-rouge">Bash on Ubuntu on Windows</code>,
+what a mouthful, lousy name! But it is carefully picked, and sorted in terms’
+popularity in developers’ mind: <code class="highlighter-rouge">Bash</code>, <code class="highlighter-rouge">Ubuntu</code> and <code class="highlighter-rouge">Windows</code> - A bad name on
+its own right, a good marketing strategy in today’s IT context. <code class="highlighter-rouge">Windows</code>
+piggybacks upon <code class="highlighter-rouge">Bash</code> and <code class="highlighter-rouge">Ubuntu</code> to try to have a come back. Just like
+someone joked on the web about <code class="highlighter-rouge">WSL</code>: it’s “<em>Linux without the Linux part</em>” or
+“GNU/NT”. <span id="sn-gnu-nt" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">Someone followed up: “Richard Stallman must be so proud.” ;P</span></p>
+
+<p>However, it’s still an interesting show, and despite the caution for investing
+on this <code class="highlighter-rouge">WSL</code> thing, the sheer number of issues at
+<a href="https://github.com/Microsoft/BashOnWindows/issues">Github</a> have shown that
+there are people can benefit from <code class="highlighter-rouge">WSL</code>.</p>
+
+    <p class="article-tombstone"><br>∎</p>
   </section>
+
+  <div class="article-footer">
+    <div class="post-tags">
+      <b> Tags </b>
+      
+      • <a href="/tags/windows"><span>windows</span></a>
+      
+      • <a href="/tags/bash"><span>bash</span></a>
+      
+      • <a href="/tags/ubuntu"><span>ubuntu</span></a>
+      
+    </div>
+    <div class="post-comment-link">
+      <b>Comment</b>:
+      <a href="https://github.com/carltonf/carltonf.github.io/issues/new" target="_blank">Github Issue</a>
+    </div>
+  </div>
 
 </article>
 
