@@ -6,8 +6,8 @@
 </description>
     <link>http://carltonf.github.io/</link>
     <atom:link href="http://carltonf.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 27 Aug 2016 05:03:14 +0000</pubDate>
-    <lastBuildDate>Sat, 27 Aug 2016 05:03:14 +0000</lastBuildDate>
+    <pubDate>Mon, 29 Aug 2016 13:53:28 +0000</pubDate>
+    <lastBuildDate>Mon, 29 Aug 2016 13:53:28 +0000</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
     
       <item>
@@ -25,10 +25,12 @@ from it.&lt;/p&gt;
 
 &lt;h1 id=&quot;installation&quot;&gt;Installation&lt;/h1&gt;
 
-&lt;p&gt;Ever since &lt;em&gt;WSL&lt;/em&gt; appeared in the &lt;em&gt;Insider&lt;/em&gt; preview channel, there were many
-articles covering the installation. The installation from the official update
-channel remains almost the same as in preview. It’s very easy and smooth &lt;span id=&quot;sn-update-smoothness&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
-      &lt;span class=&quot;sidenote&quot;&gt;Hmmm… maybe worth mentioning, I’ve updated two machines to the Anniversary Update, one of them breaked &lt;code class=&quot;highlighter-rouge&quot;&gt;VirtualBox&lt;/code&gt;. Reinstalling &lt;code class=&quot;highlighter-rouge&quot;&gt;VirtualBox&lt;/code&gt; fixed it.&lt;/span&gt;. CLI tools like &lt;code class=&quot;highlighter-rouge&quot;&gt;lxrun&lt;/code&gt; are really nice.&lt;/p&gt;
+&lt;p&gt;Ever since &lt;em&gt;WSL&lt;/em&gt; appeared in the &lt;em&gt;Insider&lt;/em&gt; preview channel, there were
+&lt;a href=&quot;https://msdn.microsoft.com/en-us/commandline/wsl/install_guide&quot;&gt;many articles&lt;/a&gt;
+covering the installation. The installation from the official update channel
+remains almost the same as in preview. It’s very easy and smooth &lt;span id=&quot;sn-update-smoothness&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;Hmmm… maybe worth mentioning, I’ve updated two machines to the Anniversary Update, one of them breaked &lt;code class=&quot;highlighter-rouge&quot;&gt;VirtualBox&lt;/code&gt;. Reinstalling &lt;code class=&quot;highlighter-rouge&quot;&gt;VirtualBox&lt;/code&gt; fixed it.&lt;/span&gt;. CLI tools like &lt;code class=&quot;highlighter-rouge&quot;&gt;lxrun&lt;/code&gt; are really nice &lt;span id=&quot;sn-lxrun&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;To avoid confusion, &lt;code class=&quot;highlighter-rouge&quot;&gt;lxrun&lt;/code&gt; is only used to manage installation of linux subsystem, Linux subsystem needs to be enabled &lt;strong&gt;first&lt;/strong&gt;. There is a &lt;a href=&quot;https://msdn.microsoft.com/en-us/commandline/wsl/install_guide#enable-the-windows-subsystem-for-linux-feature-command-line&quot;&gt;PowerShell guide&lt;/a&gt; to enable WSL in CLI.&lt;/span&gt;.&lt;/p&gt;
 
 &lt;h1 id=&quot;usage&quot;&gt;Usage&lt;/h1&gt;
 
@@ -43,10 +45,10 @@ etc. This is understandable, not much has been done for things under &lt;code cl
 &lt;p&gt;Then I tried to &lt;code class=&quot;highlighter-rouge&quot;&gt;ping&lt;/code&gt; and it didn’t work for some permission issues.&lt;/p&gt;
 
 &lt;p&gt;GUI-Emacs failed to work &lt;span id=&quot;sn-cli-emacs&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
-      &lt;span class=&quot;sidenote&quot;&gt;The CLI version worked without a problem, but in terminal I actually prefer &lt;code class=&quot;highlighter-rouge&quot;&gt;vim&lt;/code&gt; over &lt;code class=&quot;highlighter-rouge&quot;&gt;Emacs&lt;/code&gt;.&lt;/span&gt;, but
-GUI-&lt;code class=&quot;highlighter-rouge&quot;&gt;Spacemacs&lt;/code&gt; can almost work. The vanilla &lt;code class=&quot;highlighter-rouge&quot;&gt;Emacs&lt;/code&gt; window showed up but didn’t
-react to any input. &lt;code class=&quot;highlighter-rouge&quot;&gt;Spacemacs&lt;/code&gt; started normally but the window could not be
-resized, startup parameters like &lt;code class=&quot;highlighter-rouge&quot;&gt;geometry&lt;/code&gt; settings didn’t work. &lt;span id=&quot;sn-spacemacs-works&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;The CLI version worked without a problem, but these days in terminal I actually prefer &lt;code class=&quot;highlighter-rouge&quot;&gt;vim&lt;/code&gt; over &lt;code class=&quot;highlighter-rouge&quot;&gt;Emacs&lt;/code&gt;.&lt;/span&gt;,
+but GUI-&lt;code class=&quot;highlighter-rouge&quot;&gt;Spacemacs&lt;/code&gt; can almost work. The vanilla &lt;code class=&quot;highlighter-rouge&quot;&gt;Emacs&lt;/code&gt; window showed up but
+didn’t react to any input. &lt;code class=&quot;highlighter-rouge&quot;&gt;Spacemacs&lt;/code&gt; started normally but the window could not
+be resized, startup parameters like &lt;code class=&quot;highlighter-rouge&quot;&gt;geometry&lt;/code&gt; settings didn’t work. &lt;span id=&quot;sn-spacemacs-works&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
       &lt;span class=&quot;sidenote&quot;&gt;The fact that &lt;code class=&quot;highlighter-rouge&quot;&gt;Spacemacs&lt;/code&gt; can “work” but the vanilla one doesn’t is really intriguing, though I didn’t spend effort to investigate the cause.&lt;/span&gt; I’ve followed threads like
 &lt;a href=&quot;https://www.reddit.com/r/Windows10/comments/4ea4w4/fyi_you_can_run_gui_linux_apps_from_bash/&quot;&gt;this one&lt;/a&gt;
 to install &lt;a href=&quot;https://sourceforge.net/projects/vcxsrv/&quot;&gt;VcXsrv&lt;/a&gt; &lt;span id=&quot;sn-vcxsrv&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;

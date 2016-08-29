@@ -648,8 +648,8 @@ li p {
     </time>
     
     • <i>Updated at </i>
-    <time datetime="27 August 2016">
-      27 August 2016
+    <time datetime="29 August 2016">
+      29 August 2016
     </time>
     
   </div>
@@ -668,10 +668,12 @@ from it.</p>
 
 <h1 id="installation">Installation</h1>
 
-<p>Ever since <em>WSL</em> appeared in the <em>Insider</em> preview channel, there were many
-articles covering the installation. The installation from the official update
-channel remains almost the same as in preview. It’s very easy and smooth <span id="sn-update-smoothness" class="margin-toggle sidenote-number"></span>
-      <span class="sidenote">Hmmm… maybe worth mentioning, I’ve updated two machines to the Anniversary Update, one of them breaked <code class="highlighter-rouge">VirtualBox</code>. Reinstalling <code class="highlighter-rouge">VirtualBox</code> fixed it.</span>. CLI tools like <code class="highlighter-rouge">lxrun</code> are really nice.</p>
+<p>Ever since <em>WSL</em> appeared in the <em>Insider</em> preview channel, there were
+<a href="https://msdn.microsoft.com/en-us/commandline/wsl/install_guide">many articles</a>
+covering the installation. The installation from the official update channel
+remains almost the same as in preview. It’s very easy and smooth <span id="sn-update-smoothness" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">Hmmm… maybe worth mentioning, I’ve updated two machines to the Anniversary Update, one of them breaked <code class="highlighter-rouge">VirtualBox</code>. Reinstalling <code class="highlighter-rouge">VirtualBox</code> fixed it.</span>. CLI tools like <code class="highlighter-rouge">lxrun</code> are really nice <span id="sn-lxrun" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">To avoid confusion, <code class="highlighter-rouge">lxrun</code> is only used to manage installation of linux subsystem, Linux subsystem needs to be enabled <strong>first</strong>. There is a <a href="https://msdn.microsoft.com/en-us/commandline/wsl/install_guide#enable-the-windows-subsystem-for-linux-feature-command-line">PowerShell guide</a> to enable WSL in CLI.</span>.</p>
 
 <h1 id="usage">Usage</h1>
 
@@ -686,10 +688,10 @@ etc. This is understandable, not much has been done for things under <code class
 <p>Then I tried to <code class="highlighter-rouge">ping</code> and it didn’t work for some permission issues.</p>
 
 <p>GUI-Emacs failed to work <span id="sn-cli-emacs" class="margin-toggle sidenote-number"></span>
-      <span class="sidenote">The CLI version worked without a problem, but in terminal I actually prefer <code class="highlighter-rouge">vim</code> over <code class="highlighter-rouge">Emacs</code>.</span>, but
-GUI-<code class="highlighter-rouge">Spacemacs</code> can almost work. The vanilla <code class="highlighter-rouge">Emacs</code> window showed up but didn’t
-react to any input. <code class="highlighter-rouge">Spacemacs</code> started normally but the window could not be
-resized, startup parameters like <code class="highlighter-rouge">geometry</code> settings didn’t work. <span id="sn-spacemacs-works" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">The CLI version worked without a problem, but these days in terminal I actually prefer <code class="highlighter-rouge">vim</code> over <code class="highlighter-rouge">Emacs</code>.</span>,
+but GUI-<code class="highlighter-rouge">Spacemacs</code> can almost work. The vanilla <code class="highlighter-rouge">Emacs</code> window showed up but
+didn’t react to any input. <code class="highlighter-rouge">Spacemacs</code> started normally but the window could not
+be resized, startup parameters like <code class="highlighter-rouge">geometry</code> settings didn’t work. <span id="sn-spacemacs-works" class="margin-toggle sidenote-number"></span>
       <span class="sidenote">The fact that <code class="highlighter-rouge">Spacemacs</code> can “work” but the vanilla one doesn’t is really intriguing, though I didn’t spend effort to investigate the cause.</span> I’ve followed threads like
 <a href="https://www.reddit.com/r/Windows10/comments/4ea4w4/fyi_you_can_run_gui_linux_apps_from_bash/">this one</a>
 to install <a href="https://sourceforge.net/projects/vcxsrv/">VcXsrv</a> <span id="sn-vcxsrv" class="margin-toggle sidenote-number"></span>
