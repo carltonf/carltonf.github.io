@@ -6,11 +6,10 @@
   <!-- NOTE `content` setting is required to ensure GPU rasterization is enabled. -->
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 
-  <title>Tag: ubuntu</title>
-  <meta name="description" content="See further, but how far is far?
-">
+  <title>Writing habit and tools</title>
+  <meta name="description" content="As a follow up to my TODO review, I’verolled out the first draft of a writing habit, together with an over-engineredtool, habit, to enforce it.">
 
-  <link rel="canonical" href="http://carltonf.github.io/tags/ubuntu/">
+  <link rel="canonical" href="http://carltonf.github.io/post/writing-habit-and-tools">
   <link rel="alternate" type="application/rss+xml" title="Crystal Sight" href="http://carltonf.github.io/feed.xml">
 
   <script type="application/ld+json">
@@ -18,12 +17,11 @@
 {
   "@context": "http://schema.org",
   "@type": "NewsArticle",
-  "mainEntityOfPage": "http://carltonf.github.io/tags/ubuntu/",
-  "headline": "Tag: ubuntu",
-  "datePublished": "2016-08-30T13:26:29+00:00",
-  "dateModified": "2016-08-30T13:26:29+00:00",
-  "description": "See further, but how far is far?
-",
+  "mainEntityOfPage": "http://carltonf.github.io/post/writing-habit-and-tools",
+  "headline": "Writing habit and tools",
+  "datePublished": "2016-08-30T00:00:00+00:00",
+  "dateModified": "2016-08-30T00:00:00+00:00",
+  "description": "As a follow up to my TODO review, I’verolled out the first draft of a writing habit, together with an over-engineredtool, habit, to enforce it.",
   "author": {
     "@type": "Person",
     "name": ""
@@ -638,49 +636,157 @@ li p {
 </header>
 
 
-<article class="post">
+<article class="post-article">
+
+  <h2 itemprop="name">
+    <a href="/post/writing-habit-and-tools" itemprop="url">Writing habit and tools</a>
+  </h2>
 
   <div class="post-meta">
-    <h1 class="post-title">Tag: ubuntu</h1>
+    <time datetime="30 August 2016">
+      30 August 2016
+    </time>
+    
+    • <i>Updated at </i>
+    <time datetime="30 August 2016">
+      30 August 2016
+    </time>
+    
   </div>
 
   <section>
-    <div class="post-list">
-  
-  <!-- Generating tag page -->
-    
-      <!-- NOTE snippet requiring variable `post` defined -->
-<div class="post-list-entry">
+    <p>As a follow up to my <a href="/post/revisiting-todo-of-this-site">TODO review</a>, I’ve
+rolled out the first draft of a writing habit, together with an over-enginered
+tool, <a href="https://github.com/carltonf/habit">habit</a>, to enforce it.</p>
 
-  <h2>
-    <a class="post-link" href="/post/try-out-bash-on-unbuntu-on-windows">Try Out Bash on Unbuntu on Windows</a>
-  </h2>
+<h1 id="the-life-cycle-of-a-post">The Life Cycle of a Post</h1>
 
-  <p> <p><a href="https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux">Windows Subsystem for Linux</a>
-is the new <em>toy</em> Microsoft brings to developers. Having played it for one day,
-I feel it’s still not good enough for daily use, but a possible alternative when
-necessary.</p>
+<p>The life cycle of a post <span id="sn-life-cycle" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">A nerdy term, maybe more plainly, the steps for writing posts. ;P</span> is the sequence of stages and states a post
+will undergo through. I’ve devised two stages each with its own set of states:
+<span id="sn-s-naming" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">In retrospect, the naming is a little bit too mouthful and I might change them later. The reason behind all these <em>present tense</em> is my (clumsy?) attempt to emphasize the dynamic, continuous nature of each phase.</span></p>
 
- </p>
+<ul>
+  <li><strong>draft</strong>: <em>scaffolding</em>, <em>fledging</em>, <em>editing</em></li>
+  <li><strong>post</strong>: <em>polishing</em>, <em>reviewing</em></li>
+</ul>
 
-  <div>
-    <span> Posted at <strong>Aug 27, 2016</strong> </span>
-    
-    • <a href="/tags/windows"><span>windows</span></a>
-    
-    • <a href="/tags/bash"><span>bash</span></a>
-    
-    • <a href="/tags/ubuntu"><span>ubuntu</span></a>
-    
-  </div>
+<h2 id="goals-of-topic">Goals of Topic</h2>
 
-</div>
+<p>In consistence with my view of
+<a href="/post/revisiting-todo-of-this-site#the-philosophy-collection">post as idea-observational diary</a>,
+the transition between stages and states are not strictly defined. In fact, I
+would rather like free-style transitions among them. Posts represent ideas,
+as ideas evolve so should posts.</p>
 
-    
-  
-</div>
+<h2 id="draft">Draft</h2>
 
+<p>Influenced by the <a href="https://jekyllrb.com/docs/drafts/"><code class="highlighter-rouge">Jekyll</code>’s way</a> of
+organizing posts, <code class="highlighter-rouge">draft</code> is simply a stage when posts are not deemed as befit
+publishing.</p>
+
+<h3 id="scaffolding">Scaffolding</h3>
+
+<p>This may sound like just a fancy way to say <em>outline</em>, but by using a different
+word I try to emphasize the importance of <em>goal-setting</em>. Just like building
+scaffold, once erected, the building is constructed as such. The later phases
+are discouraged to stray too far away from the initial goal <span id="sn-programmers-straying" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">Maybe it’s not only my own bad habit, all programmers may like to do something <em>smarter</em>, <em>better</em> or <em>more</em>. The end result is usually <em>over-engineering</em>, <em>pre-mature optimization</em> and <em>unmet deadline</em>. Sigh…</span>.</p>
+
+<h3 id="fledging">Fledging</h3>
+
+<p>At this state, I am conducting research and gathering raw materials for the post
+in work. Throughout the years, I’ve learned the importance of extensive
+references and citations. They are not merely there to make the work look more
+professional, but to support the post, establish connections among different
+knowledge bits and most importantly make the post <strong>maintainable</strong>.</p>
+
+<p><strong>Connections:</strong> In an age of ubiquitous access to Internet and fast searching,
+memorizing exact details is usually not worth the effort. It’s more important to
+construct a mind map holding references to those details.</p>
+
+<p><strong>Maintainable:</strong> You might not even remember you write this post a year later.
+How do I reach this conclusion? Why do I say that? I read some of my diaries in
+high school and could not believe they were written by me <span id="sn-diary" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">I was shocked by the beautiful and sensational sentences (in Chinese for sure) in my old diaries. I know I’ll never be able to write something like that. Sigh, I used to be a sensitive youth and now I’m just “old and mean”.</span>. I used to
+think the extensive references following the article are only for research
+papers. Now I believe they are necessary for anyone who takes their thoughts
+serious. They’re required to make long-term post reviewing possible.</p>
+
+<h3 id="editing">Editing</h3>
+
+<p>A large potion of the work in this state is about formating. However, I’ll
+remind myself this state is more about the style: remove all unnecessary parts,
+check all references, check the spell, make sure the main body focused on topic
+and move all smartness to side notes.</p>
+
+<h2 id="post">Post</h2>
+
+<p>A post enters this stage when it’s published. There several guidelines I’ll try
+to follow:</p>
+
+<ol>
+  <li><em>publish early, publish often</em> <span id="sn-early-often" class="margin-toggle sidenote-number"></span>
+   <span class="sidenote">A variant from the famous <a href="https://en.wikipedia.org/wiki/Release_early,_release_often">Release early, release often</a>.</span>: this principle is particularly important. Whenever a post takes too long
+to publish, it’s a time to think whether the original goal is too big and whether
+it’d be better to divide into multiple smaller posts.</li>
+  <li>Though rare, it’s <strong>OK</strong> to transition back to draft. In such a case, a
+question should also be asked whether it’s better to write a follow-up post.</li>
+</ol>
+
+<h3 id="polishing">Polishing</h3>
+
+<p>Typos, ill-formatted text, wrong references, extra style tweakings and other
+non-content-modifying changes.</p>
+
+<h3 id="reviewing">Reviewing</h3>
+
+<p>The changes that modify the content belong to this state. The <em>maintainability</em>
+ of the post will be very important at this state. Just like code, posts are
+ works of thoughts, in the long run, it’s the maintenance that costs the most.</p>
+
+<h1 id="tool-enforcement">Tool Enforcement</h1>
+
+<p>I’ve written a tool in <code class="highlighter-rouge">node</code> called <a href="https://github.com/carltonf/habit">habit</a>
+to enforce the stages and states above <span id="sn-tool-naming" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">For now it’s a tool only for writing post, but I have the intention to grow it into a generic habit enforcer. <code class="highlighter-rouge">node</code> is picked as I’m most familiar with it and shell scripts are not good for long-term growth. For the record, I indeed <a href="https://github.com/carltonf/carltonf-blog-source/commit/a245ebc6687cef69b914d76a46cddc87b43a2f95">implemented</a> some functions of <code class="highlighter-rouge">habit</code> in <code class="highlighter-rouge">fish</code> shell script before migrated to <code class="highlighter-rouge">habit</code>.</span></p>
+
+<h2 id="how-the-tool-enforce-the-habit">How the tool enforce the habit</h2>
+
+<p>Check out the <a href="https://github.com/carltonf/habit">README</a> for details. It
+suffices to say <code class="highlighter-rouge">habit</code> helps the author focus on a single post;
+unify, provision and validate <code class="highlighter-rouge">Git</code> commit message to track stages and states;
+manage posts’ meta data, draft creation and post publishing <span id="sn-creation-publishing" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">At the time of writing, these are just plans. <a href="https://github.com/jekyll/jekyll-compose">Jekyll-compose</a> is not sufficient for our needs.</span>.</p>
+
+<p>Over-engineered? Yes for now, but it’s better to have a tool to remember rules
+for us than rely on forgetting human mind.</p>
+
+<h2 id="the-designimplementation---cli-in-node">The design&amp;implementation - CLI in Node</h2>
+
+<p>See <a href="#">CLI tool development wiht nodejs - an example</a> <span id="sn-cli-node" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">TODO Planned.</span></p>
+
+    <p class="article-tombstone"><br>∎</p>
   </section>
+
+  <div class="article-footer">
+    <div class="post-tags">
+      <b> Tags </b>
+      
+      • <a href="/tags/writing"><span>writing</span></a>
+      
+      • <a href="/tags/habit"><span>habit</span></a>
+      
+      • <a href="/tags/tool"><span>tool</span></a>
+      
+    </div>
+    <div class="post-comment-link">
+      <b>Comment</b>:
+      <a href="https://github.com/carltonf/carltonf.github.io/issues/new" target="_blank">Github Issue</a>
+    </div>
+  </div>
 
 </article>
 

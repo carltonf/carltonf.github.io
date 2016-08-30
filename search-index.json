@@ -38,6 +38,14 @@
 
     
     {
+        "value": "Writing habit and tools",
+        "data": "http://carltonf.github.io/post/writing-habit-and-tools"
+    }
+    
+    
+
+    
+    ,{
         "value": "Try Out Bash on Unbuntu on Windows",
         "data": "http://carltonf.github.io/post/try-out-bash-on-unbuntu-on-windows"
     }
@@ -536,6 +544,30 @@
     ,{
         "value": "Tag: ubuntu",
         "data": "http://carltonf.github.io/tags/ubuntu/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: writing",
+        "data": "http://carltonf.github.io/tags/writing/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: habit",
+        "data": "http://carltonf.github.io/tags/habit/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: tool",
+        "data": "http://carltonf.github.io/tags/tool/"
     }
     
     

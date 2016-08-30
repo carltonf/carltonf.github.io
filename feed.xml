@@ -6,9 +6,137 @@
 </description>
     <link>http://carltonf.github.io/</link>
     <atom:link href="http://carltonf.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 29 Aug 2016 13:53:28 +0000</pubDate>
-    <lastBuildDate>Mon, 29 Aug 2016 13:53:28 +0000</lastBuildDate>
+    <pubDate>Tue, 30 Aug 2016 13:26:29 +0000</pubDate>
+    <lastBuildDate>Tue, 30 Aug 2016 13:26:29 +0000</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
+    
+      <item>
+        <title>Writing habit and tools</title>
+        <description>&lt;p&gt;As a follow up to my &lt;a href=&quot;/post/revisiting-todo-of-this-site&quot;&gt;TODO review&lt;/a&gt;, I’ve
+rolled out the first draft of a writing habit, together with an over-enginered
+tool, &lt;a href=&quot;https://github.com/carltonf/habit&quot;&gt;habit&lt;/a&gt;, to enforce it.&lt;/p&gt;
+
+&lt;h1 id=&quot;the-life-cycle-of-a-post&quot;&gt;The Life Cycle of a Post&lt;/h1&gt;
+
+&lt;p&gt;The life cycle of a post &lt;span id=&quot;sn-life-cycle&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;A nerdy term, maybe more plainly, the steps for writing posts. ;P&lt;/span&gt; is the sequence of stages and states a post
+will undergo through. I’ve devised two stages each with its own set of states:
+&lt;span id=&quot;sn-s-naming&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;In retrospect, the naming is a little bit too mouthful and I might change them later. The reason behind all these &lt;em&gt;present tense&lt;/em&gt; is my (clumsy?) attempt to emphasize the dynamic, continuous nature of each phase.&lt;/span&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;draft&lt;/strong&gt;: &lt;em&gt;scaffolding&lt;/em&gt;, &lt;em&gt;fledging&lt;/em&gt;, &lt;em&gt;editing&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;post&lt;/strong&gt;: &lt;em&gt;polishing&lt;/em&gt;, &lt;em&gt;reviewing&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;goals-of-topic&quot;&gt;Goals of Topic&lt;/h2&gt;
+
+&lt;p&gt;In consistence with my view of
+&lt;a href=&quot;/post/revisiting-todo-of-this-site#the-philosophy-collection&quot;&gt;post as idea-observational diary&lt;/a&gt;,
+the transition between stages and states are not strictly defined. In fact, I
+would rather like free-style transitions among them. Posts represent ideas,
+as ideas evolve so should posts.&lt;/p&gt;
+
+&lt;h2 id=&quot;draft&quot;&gt;Draft&lt;/h2&gt;
+
+&lt;p&gt;Influenced by the &lt;a href=&quot;https://jekyllrb.com/docs/drafts/&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Jekyll&lt;/code&gt;’s way&lt;/a&gt; of
+organizing posts, &lt;code class=&quot;highlighter-rouge&quot;&gt;draft&lt;/code&gt; is simply a stage when posts are not deemed as befit
+publishing.&lt;/p&gt;
+
+&lt;h3 id=&quot;scaffolding&quot;&gt;Scaffolding&lt;/h3&gt;
+
+&lt;p&gt;This may sound like just a fancy way to say &lt;em&gt;outline&lt;/em&gt;, but by using a different
+word I try to emphasize the importance of &lt;em&gt;goal-setting&lt;/em&gt;. Just like building
+scaffold, once erected, the building is constructed as such. The later phases
+are discouraged to stray too far away from the initial goal &lt;span id=&quot;sn-programmers-straying&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;Maybe it’s not only my own bad habit, all programmers may like to do something &lt;em&gt;smarter&lt;/em&gt;, &lt;em&gt;better&lt;/em&gt; or &lt;em&gt;more&lt;/em&gt;. The end result is usually &lt;em&gt;over-engineering&lt;/em&gt;, &lt;em&gt;pre-mature optimization&lt;/em&gt; and &lt;em&gt;unmet deadline&lt;/em&gt;. Sigh…&lt;/span&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;fledging&quot;&gt;Fledging&lt;/h3&gt;
+
+&lt;p&gt;At this state, I am conducting research and gathering raw materials for the post
+in work. Throughout the years, I’ve learned the importance of extensive
+references and citations. They are not merely there to make the work look more
+professional, but to support the post, establish connections among different
+knowledge bits and most importantly make the post &lt;strong&gt;maintainable&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Connections:&lt;/strong&gt; In an age of ubiquitous access to Internet and fast searching,
+memorizing exact details is usually not worth the effort. It’s more important to
+construct a mind map holding references to those details.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Maintainable:&lt;/strong&gt; You might not even remember you write this post a year later.
+How do I reach this conclusion? Why do I say that? I read some of my diaries in
+high school and could not believe they were written by me &lt;span id=&quot;sn-diary&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;I was shocked by the beautiful and sensational sentences (in Chinese for sure) in my old diaries. I know I’ll never be able to write something like that. Sigh, I used to be a sensitive youth and now I’m just “old and mean”.&lt;/span&gt;. I used to
+think the extensive references following the article are only for research
+papers. Now I believe they are necessary for anyone who takes their thoughts
+serious. They’re required to make long-term post reviewing possible.&lt;/p&gt;
+
+&lt;h3 id=&quot;editing&quot;&gt;Editing&lt;/h3&gt;
+
+&lt;p&gt;A large potion of the work in this state is about formating. However, I’ll
+remind myself this state is more about the style: remove all unnecessary parts,
+check all references, check the spell, make sure the main body focused on topic
+and move all smartness to side notes.&lt;/p&gt;
+
+&lt;h2 id=&quot;post&quot;&gt;Post&lt;/h2&gt;
+
+&lt;p&gt;A post enters this stage when it’s published. There several guidelines I’ll try
+to follow:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;em&gt;publish early, publish often&lt;/em&gt; &lt;span id=&quot;sn-early-often&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+   &lt;span class=&quot;sidenote&quot;&gt;A variant from the famous &lt;a href=&quot;https://en.wikipedia.org/wiki/Release_early,_release_often&quot;&gt;Release early, release often&lt;/a&gt;.&lt;/span&gt;: this principle is particularly important. Whenever a post takes too long
+to publish, it’s a time to think whether the original goal is too big and whether
+it’d be better to divide into multiple smaller posts.&lt;/li&gt;
+  &lt;li&gt;Though rare, it’s &lt;strong&gt;OK&lt;/strong&gt; to transition back to draft. In such a case, a
+question should also be asked whether it’s better to write a follow-up post.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;polishing&quot;&gt;Polishing&lt;/h3&gt;
+
+&lt;p&gt;Typos, ill-formatted text, wrong references, extra style tweakings and other
+non-content-modifying changes.&lt;/p&gt;
+
+&lt;h3 id=&quot;reviewing&quot;&gt;Reviewing&lt;/h3&gt;
+
+&lt;p&gt;The changes that modify the content belong to this state. The &lt;em&gt;maintainability&lt;/em&gt;
+ of the post will be very important at this state. Just like code, posts are
+ works of thoughts, in the long run, it’s the maintenance that costs the most.&lt;/p&gt;
+
+&lt;h1 id=&quot;tool-enforcement&quot;&gt;Tool Enforcement&lt;/h1&gt;
+
+&lt;p&gt;I’ve written a tool in &lt;code class=&quot;highlighter-rouge&quot;&gt;node&lt;/code&gt; called &lt;a href=&quot;https://github.com/carltonf/habit&quot;&gt;habit&lt;/a&gt;
+to enforce the stages and states above &lt;span id=&quot;sn-tool-naming&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;For now it’s a tool only for writing post, but I have the intention to grow it into a generic habit enforcer. &lt;code class=&quot;highlighter-rouge&quot;&gt;node&lt;/code&gt; is picked as I’m most familiar with it and shell scripts are not good for long-term growth. For the record, I indeed &lt;a href=&quot;https://github.com/carltonf/carltonf-blog-source/commit/a245ebc6687cef69b914d76a46cddc87b43a2f95&quot;&gt;implemented&lt;/a&gt; some functions of &lt;code class=&quot;highlighter-rouge&quot;&gt;habit&lt;/code&gt; in &lt;code class=&quot;highlighter-rouge&quot;&gt;fish&lt;/code&gt; shell script before migrated to &lt;code class=&quot;highlighter-rouge&quot;&gt;habit&lt;/code&gt;.&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;how-the-tool-enforce-the-habit&quot;&gt;How the tool enforce the habit&lt;/h2&gt;
+
+&lt;p&gt;Check out the &lt;a href=&quot;https://github.com/carltonf/habit&quot;&gt;README&lt;/a&gt; for details. It
+suffices to say &lt;code class=&quot;highlighter-rouge&quot;&gt;habit&lt;/code&gt; helps the author focus on a single post;
+unify, provision and validate &lt;code class=&quot;highlighter-rouge&quot;&gt;Git&lt;/code&gt; commit message to track stages and states;
+manage posts’ meta data, draft creation and post publishing &lt;span id=&quot;sn-creation-publishing&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;At the time of writing, these are just plans. &lt;a href=&quot;https://github.com/jekyll/jekyll-compose&quot;&gt;Jekyll-compose&lt;/a&gt; is not sufficient for our needs.&lt;/span&gt;.&lt;/p&gt;
+
+&lt;p&gt;Over-engineered? Yes for now, but it’s better to have a tool to remember rules
+for us than rely on forgetting human mind.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-designimplementation---cli-in-node&quot;&gt;The design&amp;amp;implementation - CLI in Node&lt;/h2&gt;
+
+&lt;p&gt;See &lt;a href=&quot;#&quot;&gt;CLI tool development wiht nodejs - an example&lt;/a&gt; &lt;span id=&quot;sn-cli-node&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;TODO Planned.&lt;/span&gt;&lt;/p&gt;
+</description>
+        <pubDate>Tue, 30 Aug 2016 00:00:00 +0000</pubDate>
+        <link>http://carltonf.github.io/post/writing-habit-and-tools</link>
+        <guid isPermaLink="true">http://carltonf.github.io/post/writing-habit-and-tools</guid>
+        
+        <category>writing</category>
+        
+        <category>habit</category>
+        
+        <category>tool</category>
+        
+        
+      </item>
     
       <item>
         <title>Try Out Bash on Unbuntu on Windows</title>
@@ -1048,303 +1176,6 @@ more.
         <category>todo</category>
         
         <category>admin</category>
-        
-        
-        <category></category>
-        
-        <category></category>
-        
-      </item>
-    
-      <item>
-        <title>Java Programming Language Specification</title>
-        <description>&lt;p&gt;
-The last several weeks I've been skimming through &lt;i&gt;James Gosling&lt;/i&gt;, &lt;i&gt;Bill Joy&lt;/i&gt;,
-&lt;i&gt;Guy Steel&lt;/i&gt;, &lt;i&gt;Gilad Bracha&lt;/i&gt;, &lt;i&gt;The Java&lt;sup&gt;TM&lt;/sup&gt; Language Specification - 3rd edition&lt;/i&gt;.
-An old book, but I happen to have a printed version around. So I guessed that
-reading through it would be helpful for me to understand language
-specification in general.
-&lt;/p&gt;
-
-&lt;p&gt;
-The main motive behind this endeavor is the revelation of the multitude of
-languages that I have to work with these days. I've been following development
-of JavaScript as well and there is a need to understand formal JS specification
-as it constantly evolves.
-&lt;/p&gt;
-
-&lt;p&gt;
-The overall experience is rewarding though I only managed to absorb tiny portion
-from that book. Most Java specific parts are skipped. The following is the note
-I've taken while reading.
-&lt;/p&gt;
-
-&lt;hr  /&gt;
-&lt;hr  /&gt;
-&lt;p&gt;
-&lt;b&gt;Notes&lt;/b&gt;
-&lt;/p&gt;
-&lt;script src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;&gt;
-&lt;/script&gt;
-
-&lt;div id=&quot;outline-container-sec-1&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;sec-1&quot;&gt;Goal&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-1&quot;&gt;
-&lt;p&gt;
-Learn the conventions &amp;amp; terminology for language specification. 
-&lt;b&gt;NOT Learning Java for now&lt;/b&gt;
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-2&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;sec-2&quot;&gt;Lexical Grammar&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-2&quot;&gt;
-&lt;ul class=&quot;org-ul&quot;&gt;
-&lt;li&gt;raw stream of Unicode chars
-&lt;/li&gt;
-&lt;li&gt;translation (escaped Unicode char)
-&lt;/li&gt;
-&lt;li&gt;remove white space and comments
-&lt;/li&gt;
-&lt;li&gt;tokenized
-&lt;/li&gt;
-&lt;li&gt;syntactic grammar
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-2-1&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;sec-2-1&quot;&gt;Extra Notes&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-2-1&quot;&gt;
-&lt;ul class=&quot;org-ul&quot;&gt;
-&lt;li&gt;In translation, the longest possible translation.
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-3&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;sec-3&quot;&gt;Syntactic Grammar&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-3&quot;&gt;
-&lt;p&gt;
-Tokens are the terminal symbols of the syntactic grammar.
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-4&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;sec-4&quot;&gt;Language Compatibility&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-4&quot;&gt;
-&lt;ul class=&quot;org-ul&quot;&gt;
-&lt;li&gt;language compatibility
-&lt;/li&gt;
-&lt;li&gt;platform compatibility
-&lt;/li&gt;
-&lt;li&gt;migration compatibility
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-5&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;sec-5&quot;&gt;&lt;code&gt;subtype&lt;/code&gt; and &lt;code&gt;supertype&lt;/code&gt;&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-5&quot;&gt;
-&lt;p&gt;
-&lt;code&gt;Subtyping&lt;/code&gt; does not extend through generic types: \( T&lt;:U \) does not imply that
-\( C\langle T \rangle &lt;: C\langle U \rangle \).
-&lt;/p&gt;
-
-&lt;p&gt;
-Here we need to understand that &lt;code&gt;subtype&lt;/code&gt; relationship is NOT the same as
-&lt;code&gt;subset&lt;/code&gt;.
-&lt;/p&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-5-1&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;sec-5-1&quot;&gt;&lt;span class=&quot;todo TODO&quot;&gt;TODO&lt;/span&gt; Some deep digging for the type system theory?&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-5-1&quot;&gt;
-&lt;p&gt;
-Related to set theory and category theory (all three seem to be able to serve as
-a foundation of Math.)
-&lt;/p&gt;
-
-&lt;p&gt;
-I've done some search on this topic, later fill this part with materials found.
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-6&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;sec-6&quot;&gt;&lt;span class=&quot;todo TODO&quot;&gt;TODO&lt;/span&gt; There is a clear separation of concepts between &lt;code&gt;Array&lt;/code&gt; and &lt;code&gt;Class&lt;/code&gt;. Why?&lt;/h2&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-7&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;sec-7&quot;&gt;Bewildered concepts&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-7&quot;&gt;
-&lt;p&gt;
-Something we don't truly understand, but nevertheless widely seen.
-&lt;/p&gt;
-
-&lt;ul class=&quot;org-ul&quot;&gt;
-&lt;li&gt;heap pollution
-&lt;/li&gt;
-&lt;li&gt;capture conversion
-&lt;/li&gt;
-&lt;li&gt;unchecked warning
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-8&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;sec-8&quot;&gt;Names&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-8&quot;&gt;
-&lt;ul class=&quot;org-ul&quot;&gt;
-&lt;li&gt;Simple Names and Qualified Names
-&lt;/li&gt;
-&lt;li&gt;Names represent entities in a program
-&lt;/li&gt;
-&lt;li&gt;&lt;b&gt;Declarations&lt;/b&gt; with &lt;b&gt;Identifiers&lt;/b&gt; introduces entities that have &lt;b&gt;Names&lt;/b&gt; into program.
-
-&lt;p&gt;
-Names are constructed with identifiers. But not all identifiers are part of
-Names (e.g. identifier used as label)
-&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-8-1&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;sec-8-1&quot;&gt;Scope&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-8-1&quot;&gt;
-&lt;ul class=&quot;org-ul&quot;&gt;
-&lt;li&gt;Scope of a Declaration
-
-&lt;p&gt;
-The &lt;b&gt;scope of a declaration&lt;/b&gt; is the region of the program within which the
-&lt;b&gt;entity&lt;/b&gt; declared by the declaration can be referred to with a &lt;b&gt;simple name&lt;/b&gt;
-(provided it is visible, i.e. not shadowed).
-&lt;/p&gt;
-&lt;/li&gt;
-
-&lt;li&gt;&lt;code&gt;in scope&lt;/code&gt;
-&lt;/li&gt;
-
-&lt;li&gt;&lt;code&gt;shadowing&lt;/code&gt; vs &lt;code&gt;hiding&lt;/code&gt; vs &lt;code&gt;obscuring&lt;/code&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-8-2&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;sec-8-2&quot;&gt;Name Obscuring&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-8-2&quot;&gt;
-&lt;p&gt;
-arise from the resolution of ambiguity of simple names in some contexts.
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-8-3&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;sec-8-3&quot;&gt;Identifier&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-8-3&quot;&gt;
-&lt;p&gt;
-an unlimited-length sequence of &lt;span class=&quot;underline&quot;&gt;Java&lt;/span&gt; letters and &lt;span class=&quot;underline&quot;&gt;Java&lt;/span&gt; digits.
-&lt;/p&gt;
-
-&lt;ul class=&quot;org-ul&quot;&gt;
-&lt;li&gt;identifiers in labeled statement
-&lt;/li&gt;
-&lt;li&gt;$3.8
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-9&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;sec-9&quot;&gt;Packages&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-9&quot;&gt;
-&lt;/div&gt;&lt;div id=&quot;outline-container-sec-9-1&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;sec-9-1&quot;&gt;storage&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-9-1&quot;&gt;
-&lt;ul class=&quot;org-ul&quot;&gt;
-&lt;li&gt;file
-
-&lt;p&gt;
-some limitation for this format
-&lt;/p&gt;
-&lt;/li&gt;
-
-&lt;li&gt;database
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-9-2&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;sec-9-2&quot;&gt;compilation units&lt;/h3&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-10&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;sec-10&quot;&gt;Definite Assignment&lt;/h2&gt;
-&lt;/div&gt;
-
-
-&lt;div id=&quot;outline-container-sec-11&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;sec-11&quot;&gt;Key references&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-11&quot;&gt;
-&lt;ul class=&quot;org-ul&quot;&gt;
-&lt;li&gt;$2.4
-&lt;/li&gt;
-&lt;li&gt;$6 Names
-
-&lt;p&gt;
-forms, scope, access
-&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.amazon.com/Types-Programming-Languages-Benjamin-Pierce-ebook/dp/B00AJXZ5JE/ref=tmm_kin_title_0?_encoding=UTF8&amp;amp;sr=8-1&amp;amp;qid=1436357919&quot;&gt;Amazon.com: Types and Programming Languages eBook: Benjamin C. Pierce: Kindle Store&lt;/a&gt;
-  A book on type theory.
-&lt;/li&gt;
-
-&lt;li&gt;$14.5 &quot;dangling else&quot; problem
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&quot;outline-container-sec-12&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;sec-12&quot;&gt;Skipped&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-12&quot;&gt;
-&lt;p&gt;
-$8 - $11, from Classes to Exceptions
-&lt;/p&gt;
-
-&lt;p&gt;
-$13 binary compatibility (dealing with updating widely deployed packages)
-&lt;/p&gt;
-
-
-&lt;hr  /&gt;
-&lt;hr  /&gt;
-&lt;p&gt;
-&lt;b&gt;Notes End&lt;/b&gt;
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-</description>
-        <pubDate>Mon, 13 Jul 2015 00:00:00 +0000</pubDate>
-        <link>http://carltonf.github.io/post/java-programming-language-specification</link>
-        <guid isPermaLink="true">http://carltonf.github.io/post/java-programming-language-specification</guid>
-        
-        <category>java</category>
-        
-        <category>specification</category>
-        
-        <category>prog-lang</category>
         
         
         <category></category>
