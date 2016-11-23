@@ -567,7 +567,7 @@ h1 code, h2 code, h3 code {
   font-size: 1rem; }
 
 @media screen and (max-width: 760px) {
-  pre.code {
+  pre code {
     width: 87.5%; } }
 pre code {
   width: 52.5%;
@@ -616,6 +616,20 @@ li p {
   .post-article .article-footer .post-comment-link {
     float: right; }
 
+/** Tweak code block style */
+pre.highlight {
+  /* NOTE: 'auto' to adjust to the existence of sidenote block */
+  width: auto;
+  /* NOTE: add a gap between sidenote block and code block */
+  padding-right: 2.5%;
+  /* NOTE: not too long when there is no sidenote block */
+  margin-right: 10%; }
+  pre.highlight code {
+    width: auto;
+    display: block;
+    box-shadow: -5px 0 10px #9c9c9c;
+    font-size: inherit; }
+
 /* TODO bad style, 35% is in line with <hr>'s 65% width, factor these styles using SCSS vars  */
 
   </style>
@@ -646,6 +660,48 @@ li p {
 
   <section>
     <div class="post-list">
+  
+    <!-- NOTE snippet requiring variable `post` defined -->
+<div class="post-list-entry">
+
+  <h2>
+    <a class="post-link" href="/post/reading-code-breakers">Reading: Code Breakers</a>
+  </h2>
+
+  <p> <p>Quotes and notes from book ~Colin F. Barnes~ <em>Code Breakers: Alpha</em>.</p>
+
+ </p>
+
+  <div>
+    <span> Posted at <strong>Mar 2, 2016</strong> </span>
+    
+    • <a href="/tags/reading"><span>reading</span></a>
+    
+    • <a href="/tags/notes"><span>notes</span></a>
+    
+  </div>
+
+</div>
+
+  
+    <!-- NOTE snippet requiring variable `post` defined -->
+<div class="post-list-entry">
+
+  <h2>
+    <a class="post-link" href="/post/reflections-on-content-management">A Reflection on Content Management</a>
+  </h2>
+
+  <p> <p>Just some thoughts on “How do I manage files/content on computers?”.</p>
+
+ </p>
+
+  <div>
+    <span> Posted at <strong>Feb 29, 2016</strong> </span>
+    
+  </div>
+
+</div>
+
   
     <!-- NOTE snippet requiring variable `post` defined -->
 <div class="post-list-entry">
@@ -782,52 +838,6 @@ specification in general.
 </div>
 
   
-    <!-- NOTE snippet requiring variable `post` defined -->
-<div class="post-list-entry">
-
-  <h2>
-    <a class="post-link" href="/post/from-text-to-simple-uml-diagram-tools">From Text to simple UML diagram - Tools</a>
-  </h2>
-
-  <p> My review and survey on textual uml tools </p>
-
-  <div>
-    <span> Posted at <strong>Jun 11, 2015</strong> </span>
-    
-    • <a href="/tags/uml"><span>uml</span></a>
-    
-    • <a href="/tags/diagram"><span>diagram</span></a>
-    
-  </div>
-
-</div>
-
-  
-    <!-- NOTE snippet requiring variable `post` defined -->
-<div class="post-list-entry">
-
-  <h2>
-    <a class="post-link" href="/post/copy-change-be-careful">Copy & Change: be careful</a>
-  </h2>
-
-  <p> The story about a file-roller bug </p>
-
-  <div>
-    <span> Posted at <strong>Apr 2, 2015</strong> </span>
-    
-    • <a href="/tags/libarchive"><span>libarchive</span></a>
-    
-    • <a href="/tags/file-roller"><span>file-roller</span></a>
-    
-    • <a href="/tags/compiler"><span>compiler</span></a>
-    
-    • <a href="/tags/sparse"><span>sparse</span></a>
-    
-  </div>
-
-</div>
-
-  
 </div>
 
 <!-- Pagination links: a special type of entry -->
@@ -839,7 +849,7 @@ specification in general.
     <span><a href="/posts" class="previous">Latest</a></span>
     • <span><a href="/posts/" class="previous">Prev</a></span>
     
-    • <em class="page_number "> 2 / 3</em> •
+    • <em class="page_number "> 2 / 4</em> •
     
     <a href="/posts/page3/" class="next">Next</a>
     

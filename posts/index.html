@@ -567,7 +567,7 @@ h1 code, h2 code, h3 code {
   font-size: 1rem; }
 
 @media screen and (max-width: 760px) {
-  pre.code {
+  pre code {
     width: 87.5%; } }
 pre code {
   width: 52.5%;
@@ -616,6 +616,20 @@ li p {
   .post-article .article-footer .post-comment-link {
     float: right; }
 
+/** Tweak code block style */
+pre.highlight {
+  /* NOTE: 'auto' to adjust to the existence of sidenote block */
+  width: auto;
+  /* NOTE: add a gap between sidenote block and code block */
+  padding-right: 2.5%;
+  /* NOTE: not too long when there is no sidenote block */
+  margin-right: 10%; }
+  pre.highlight code {
+    width: auto;
+    display: block;
+    box-shadow: -5px 0 10px #9c9c9c;
+    font-size: inherit; }
+
 /* TODO bad style, 35% is in line with <hr>'s 65% width, factor these styles using SCSS vars  */
 
   </style>
@@ -646,6 +660,60 @@ li p {
 
   <section>
     <div class="post-list">
+  
+    <!-- NOTE snippet requiring variable `post` defined -->
+<div class="post-list-entry">
+
+  <h2>
+    <a class="post-link" href="/post/understand-minimal-gobject-for-code-reading">Understand 'Just Enough' GObject For Code Reading</a>
+  </h2>
+
+  <p> <p>Without referring to <code class="highlighter-rouge">GObject</code> documentation or any online posts <span id="sn-doc" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">For the record, I can not claim I have never been exposed to <code class="highlighter-rouge">GObject</code> materials. The best I can say is that I haven’t <em>systematically</em> learnt <code class="highlighter-rouge">GObject</code>.</span>, understand <em>just enough</em> knowledge about <code class="highlighter-rouge">GObject</code> for the
+purpose of reading related code. The process is question-driven and
+code-inspired.</p>
+
+ </p>
+
+  <div>
+    <span> Posted at <strong>Oct 18, 2016</strong> </span>
+    
+    • <a href="/tags/gobject"><span>gobject</span></a>
+    
+    • <a href="/tags/code-reading"><span>code-reading</span></a>
+    
+    • <a href="/tags/question-driven"><span>question-driven</span></a>
+    
+    • <a href="/tags/gnome-session"><span>gnome-session</span></a>
+    
+  </div>
+
+</div>
+
+  
+    <!-- NOTE snippet requiring variable `post` defined -->
+<div class="post-list-entry">
+
+  <h2>
+    <a class="post-link" href="/post/code-reading-the-racing-of-two-agents">Code-Reading: The Racing Of Two Agents</a>
+  </h2>
+
+  <p> <p>From a bug due to a race condition between two polkit agents, this post explain
+the handling of the startup components and autostart apps within <code class="highlighter-rouge">gnome-session</code>.</p>
+
+ </p>
+
+  <div>
+    <span> Posted at <strong>Oct 17, 2016</strong> </span>
+    
+    • <a href="/tags/code-reading"><span>code-reading</span></a>
+    
+    • <a href="/tags/sle"><span>sle</span></a>
+    
+  </div>
+
+</div>
+
   
     <!-- NOTE snippet requiring variable `post` defined -->
 <div class="post-list-entry">
@@ -775,48 +843,6 @@ this site and some ideas about it in the future.</p>
 </div>
 
   
-    <!-- NOTE snippet requiring variable `post` defined -->
-<div class="post-list-entry">
-
-  <h2>
-    <a class="post-link" href="/post/reading-code-breakers">Reading: Code Breakers</a>
-  </h2>
-
-  <p> <p>Quotes and notes from book ~Colin F. Barnes~ <em>Code Breakers: Alpha</em>.</p>
-
- </p>
-
-  <div>
-    <span> Posted at <strong>Mar 2, 2016</strong> </span>
-    
-    • <a href="/tags/reading"><span>reading</span></a>
-    
-    • <a href="/tags/notes"><span>notes</span></a>
-    
-  </div>
-
-</div>
-
-  
-    <!-- NOTE snippet requiring variable `post` defined -->
-<div class="post-list-entry">
-
-  <h2>
-    <a class="post-link" href="/post/reflections-on-content-management">A Reflection on Content Management</a>
-  </h2>
-
-  <p> <p>Just some thoughts on “How do I manage files/content on computers?”.</p>
-
- </p>
-
-  <div>
-    <span> Posted at <strong>Feb 29, 2016</strong> </span>
-    
-  </div>
-
-</div>
-
-  
 </div>
 
 <!-- Pagination links: a special type of entry -->
@@ -825,7 +851,7 @@ this site and some ideas about it in the future.</p>
     
     <span class="previous">Prev</span>
     
-    • <em class="page_number "> 1 / 3</em> •
+    • <em class="page_number "> 1 / 4</em> •
     
     <a href="/posts/page2/" class="next">Next</a>
     

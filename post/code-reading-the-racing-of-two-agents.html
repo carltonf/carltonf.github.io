@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html amp lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- NOTE `content` setting is required to ensure GPU rasterization is enabled. -->
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+
+  <title>Code-Reading: The Racing Of Two Agents</title>
+  <meta name="description" content="From a bug due to a race condition between two polkit agents, this post explainthe handling of the startup components and autostart apps within gnome-session.">
+
+  <link rel="canonical" href="http://carltonf.github.io/post/code-reading-the-racing-of-two-agents">
+  <link rel="alternate" type="application/rss+xml" title="Crystal Sight" href="http://carltonf.github.io/feed.xml">
+
+  <script type="application/ld+json">
+  
+{
+  "@context": "http://schema.org",
+  "@type": "NewsArticle",
+  "mainEntityOfPage": "http://carltonf.github.io/post/code-reading-the-racing-of-two-agents",
+  "headline": "Code-Reading: The Racing Of Two Agents",
+  "datePublished": "2016-10-17T00:00:00+00:00",
+  "dateModified": "2016-10-17T00:00:00+00:00",
+  "description": "From a bug due to a race condition between two polkit agents, this post explainthe handling of the startup components and autostart apps within gnome-session.",
+  "author": {
+    "@type": "Person",
+    "name": ""
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Crystal Sight",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://carltonf.github.io",
+      "width": 60,
+      "height": 60
+    }
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "http://carltonf.github.io",
+    "height": 60,
+    "width": 60
+  }
+}
+
+  </script>
+
+  <style amp-custom>
+  
+  /* Import ET Book styles
+   adapted from https://github.com/edwardtufte/et-book/blob/gh-pages/et-book.css */
+@font-face {
+  font-family: "et-book";
+  src: url("/assets/et-book/et-book-roman-line-figures/et-book-roman-line-figures.eot");
+  src: url("/assets/et-book/et-book-roman-line-figures/et-book-roman-line-figures.eot?#iefix") format("embedded-opentype"), url("/assets/et-book/et-book-roman-line-figures/et-book-roman-line-figures.woff") format("woff"), url("/assets/et-book/et-book-roman-line-figures/et-book-roman-line-figures.ttf") format("truetype"), url("/assets/et-book/et-book-roman-line-figures/et-book-roman-line-figures.svg#etbookromanosf") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+@font-face {
+  font-family: "et-book";
+  src: url("/assets/et-book/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.eot");
+  src: url("/assets/et-book/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.eot?#iefix") format("embedded-opentype"), url("/assets/et-book/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.woff") format("woff"), url("/assets/et-book/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.ttf") format("truetype"), url("/assets/et-book/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.svg#etbookromanosf") format("svg");
+  font-weight: normal;
+  font-style: italic; }
+@font-face {
+  font-family: "et-book";
+  src: url("/assets/et-book/et-book-bold-line-figures/et-book-bold-line-figures.eot");
+  src: url("/assets/et-book/et-book-bold-line-figures/et-book-bold-line-figures.eot?#iefix") format("embedded-opentype"), url("/assets/et-book/et-book-bold-line-figures/et-book-bold-line-figures.woff") format("woff"), url("/assets/et-book/et-book-bold-line-figures/et-book-bold-line-figures.ttf") format("truetype"), url("/assets/et-book/et-book-bold-line-figures/et-book-bold-line-figures.svg#etbookromanosf") format("svg");
+  font-weight: bold;
+  font-style: normal; }
+@font-face {
+  font-family: "et-book-roman-old-style";
+  src: url("/assets/et-book/et-book-roman-old-style-figures/et-book-roman-old-style-figures.eot");
+  src: url("/assets/et-book/et-book-roman-old-style-figures/et-book-roman-old-style-figures.eot?#iefix") format("embedded-opentype"), url("/assets/et-book/et-book-roman-old-style-figures/et-book-roman-old-style-figures.woff") format("woff"), url("/assets/et-book/et-book-roman-old-style-figures/et-book-roman-old-style-figures.ttf") format("truetype"), url("/assets/et-book/et-book-roman-old-style-figures/et-book-roman-old-style-figures.svg#etbookromanosf") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+/* Tufte CSS styles */
+html {
+  font-size: 15px; }
+
+body {
+  width: 87.5%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 12.5%;
+  font-family: et-book, Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
+  background-color: #fffff8;
+  color: #111;
+  max-width: 1400px;
+  counter-reset: sidenote-counter; }
+
+h1 {
+  font-weight: 400;
+  margin-top: 4rem;
+  margin-bottom: 1.5rem;
+  font-size: 3.2rem;
+  line-height: 1; }
+
+h2 {
+  font-style: italic;
+  font-weight: 400;
+  margin-top: 2.1rem;
+  margin-bottom: 0;
+  font-size: 2.2rem;
+  line-height: 1; }
+
+h3 {
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.7rem;
+  margin-top: 2rem;
+  margin-bottom: 0;
+  line-height: 1; }
+
+p.subtitle {
+  font-style: italic;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  display: block;
+  line-height: 1; }
+
+.numeral {
+  font-family: et-book-roman-old-style; }
+
+.danger {
+  color: red; }
+
+article {
+  position: relative;
+  padding: 5rem 0rem; }
+
+section {
+  padding-top: 1rem;
+  padding-bottom: 1rem; }
+
+p, ol, ul, .pagination a, .pagination em, table {
+  font-size: 1.4rem; }
+
+p {
+  line-height: 2rem;
+  margin-top: 1.4rem;
+  margin-bottom: 1.4rem;
+  padding-right: 0;
+  vertical-align: baseline; }
+
+/* Chapter Epigraphs */
+div.epigraph {
+  margin: 5em 0; }
+
+div.epigraph > blockquote {
+  margin-top: 3em;
+  margin-bottom: 3em; }
+
+div.epigraph > blockquote, div.epigraph > blockquote > p {
+  font-style: italic; }
+
+div.epigraph > blockquote > footer {
+  font-style: normal; }
+
+div.epigraph > blockquote > footer > cite {
+  font-style: italic; }
+
+/* end chapter epigraphs styles */
+blockquote {
+  font-size: 1.4rem; }
+
+blockquote p {
+  width: 50%; }
+
+blockquote .footer {
+  width: 50%;
+  font-size: 1.1rem;
+  text-align: right; }
+
+ol, ul {
+  width: 45%;
+  -webkit-padding-start: 5%;
+  -webkit-padding-end: 5%; }
+
+li {
+  padding: 0.5rem 0; }
+
+figure {
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  max-width: 55%;
+  -webkit-margin-start: 0;
+  -webkit-margin-end: 0;
+  margin: 0 0 3em 0; }
+
+figcaption {
+  float: right;
+  clear: right;
+  margin-right: -48%;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  vertical-align: baseline;
+  position: relative;
+  max-width: 40%; }
+
+figure.fullwidth figcaption {
+  margin-right: 24%; }
+
+/* Links: replicate underline that clears descenders */
+a:link, a:visited {
+  color: inherit; }
+
+a:link {
+  text-decoration: none;
+  background: -webkit-linear-gradient(#fffff8, #fffff8), -webkit-linear-gradient(#fffff8, #fffff8), -webkit-linear-gradient(#333, #333);
+  background: linear-gradient(#fffff8, #fffff8), linear-gradient(#fffff8, #fffff8), linear-gradient(#333, #333);
+  -webkit-background-size: 0.05em 1px, 0.05em 1px, 1px 1px;
+  -moz-background-size: 0.05em 1px, 0.05em 1px, 1px 1px;
+  background-size: 0.05em 1px, 0.05em 1px, 1px 1px;
+  background-repeat: no-repeat, no-repeat, repeat-x;
+  text-shadow: 0.03em 0 #fffff8, -0.03em 0 #fffff8, 0 0.03em #fffff8, 0 -0.03em #fffff8, 0.06em 0 #fffff8, -0.06em 0 #fffff8, 0.09em 0 #fffff8, -0.09em 0 #fffff8, 0.12em 0 #fffff8, -0.12em 0 #fffff8, 0.15em 0 #fffff8, -0.15em 0 #fffff8;
+  background-position: 0% 93%, 100% 93%, 0% 93%; }
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  a:link {
+    background-position-y: 87%, 87%, 87%; } }
+a:link::selection {
+  text-shadow: 0.03em 0 #b4d5fe, -0.03em 0 #b4d5fe, 0 0.03em #b4d5fe, 0 -0.03em #b4d5fe, 0.06em 0 #b4d5fe, -0.06em 0 #b4d5fe, 0.09em 0 #b4d5fe, -0.09em 0 #b4d5fe, 0.12em 0 #b4d5fe, -0.12em 0 #b4d5fe, 0.15em 0 #b4d5fe, -0.15em 0 #b4d5fe;
+  background: #b4d5fe; }
+
+a:link::-moz-selection {
+  text-shadow: 0.03em 0 #b4d5fe, -0.03em 0 #b4d5fe, 0 0.03em #b4d5fe, 0 -0.03em #b4d5fe, 0.06em 0 #b4d5fe, -0.06em 0 #b4d5fe, 0.09em 0 #b4d5fe, -0.09em 0 #b4d5fe, 0.12em 0 #b4d5fe, -0.12em 0 #b4d5fe, 0.15em 0 #b4d5fe, -0.15em 0 #b4d5fe;
+  background: #b4d5fe; }
+
+/* Sidenotes, margin notes, figures, captions */
+img {
+  max-width: 100%; }
+
+.sidenote, .marginnote {
+  float: right;
+  clear: right;
+  margin-right: -60%;
+  width: 50%;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 1.1rem;
+  line-height: 1.3;
+  vertical-align: baseline;
+  position: relative; }
+
+.table-caption {
+  float: right;
+  clear: right;
+  margin-right: -60%;
+  width: 50%;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 1.0rem;
+  line-height: 1.6; }
+
+.sidenote-number {
+  counter-increment: sidenote-counter; }
+
+.sidenote-number:after, .sidenote:before {
+  content: counter(sidenote-counter) " ";
+  font-family: et-book-roman-old-style;
+  position: relative;
+  vertical-align: baseline; }
+
+.sidenote-number:after {
+  content: counter(sidenote-counter);
+  font-size: 1rem;
+  top: -0.5rem;
+  left: 0.1rem; }
+
+.sidenote:before {
+  content: counter(sidenote-counter) " ";
+  top: -0.5rem; }
+
+p, footer, table, div.table-wrapper-small, div.supertable-wrapper > p, div.booktabs-wrapper {
+  width: 55%; }
+
+div.fullwidth, table.fullwidth {
+  width: 100%; }
+
+div.table-wrapper {
+  overflow-x: auto;
+  font-family: "Trebuchet MS", "Gill Sans", "Gill Sans MT", sans-serif; }
+
+@media screen and (max-width: 760px) {
+  p, h1, h2, h3, footer {
+    width: 90%; }
+
+  pre.code {
+    width: 87.5%; }
+
+  ul {
+    width: 85%; }
+
+  figure {
+    max-width: 90%; }
+
+  figcaption, figure.fullwidth figcaption {
+    margin-right: 0%;
+    max-width: none; }
+
+  blockquote p, blockquote .footer {
+    width: 90%; } }
+.sans {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+  letter-spacing: .03em; }
+
+.code {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 1.125rem;
+  line-height: 1.6; }
+
+h1 .code, h2 .code, h3 .code {
+  font-size: 0.80em; }
+
+.marginnote .code, .sidenote .code {
+  font-size: 1rem; }
+
+pre.code {
+  width: 52.5%;
+  padding-left: 2.5%;
+  overflow-x: auto; }
+
+.fullwidth {
+  max-width: 90%;
+  clear: both; }
+
+span.newthought {
+  font-variant: small-caps;
+  font-size: 1.2em; }
+
+.margin-toggle {
+  display: none; }
+
+.sidenote-number {
+  display: inline; }
+
+.margin-toggle:not(.sidenote-number) {
+  display: none; }
+
+@media (max-width: 760px) {
+  .margin-toggle:not(.sidenote-number) {
+    display: none; }
+
+  .sidenote, .marginnote {
+    display: none; }
+
+  .margin-toggle:checked + .sidenote,
+  .margin-toggle:checked + .marginnote {
+    display: block;
+    float: left;
+    left: 1rem;
+    clear: both;
+    width: 95%;
+    margin: 1rem 2.5%;
+    vertical-align: baseline;
+    position: relative; }
+
+  label {
+    cursor: pointer; }
+
+  pre.code {
+    width: 90%;
+    padding: 0; }
+
+  .table-caption {
+    display: block;
+    float: right;
+    clear: both;
+    width: 98%;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    margin-left: 1%;
+    margin-right: 1%;
+    vertical-align: baseline;
+    position: relative; }
+
+  div.table-wrapper, table, table.booktabs {
+    width: 85%; }
+
+  div.table-wrapper {
+    border-right: 1px solid #efefef; }
+
+  img {
+    width: 100%; } }
+/**
+ * Syntax highlighting styles
+ */
+.highlight .c {
+  color: #998;
+  font-style: italic; }
+.highlight .err {
+  color: #a61717;
+  background-color: #e3d2d2; }
+.highlight .k {
+  font-weight: bold; }
+.highlight .o {
+  font-weight: bold; }
+.highlight .cm {
+  color: #998;
+  font-style: italic; }
+.highlight .cp {
+  color: #999;
+  font-weight: bold; }
+.highlight .c1 {
+  color: #998;
+  font-style: italic; }
+.highlight .cs {
+  color: #999;
+  font-weight: bold;
+  font-style: italic; }
+.highlight .gd {
+  color: #000;
+  background-color: #fdd; }
+.highlight .gd .x {
+  color: #000;
+  background-color: #faa; }
+.highlight .ge {
+  font-style: italic; }
+.highlight .gr {
+  color: #a00; }
+.highlight .gh {
+  color: #999; }
+.highlight .gi {
+  color: #000;
+  background-color: #dfd; }
+.highlight .gi .x {
+  color: #000;
+  background-color: #afa; }
+.highlight .go {
+  color: #888; }
+.highlight .gp {
+  color: #555; }
+.highlight .gs {
+  font-weight: bold; }
+.highlight .gu {
+  color: #aaa; }
+.highlight .gt {
+  color: #a00; }
+.highlight .kc {
+  font-weight: bold; }
+.highlight .kd {
+  font-weight: bold; }
+.highlight .kp {
+  font-weight: bold; }
+.highlight .kr {
+  font-weight: bold; }
+.highlight .kt {
+  color: #458;
+  font-weight: bold; }
+.highlight .m {
+  color: #099; }
+.highlight .s {
+  color: #d14; }
+.highlight .na {
+  color: #008080; }
+.highlight .nb {
+  color: #0086B3; }
+.highlight .nc {
+  color: #458;
+  font-weight: bold; }
+.highlight .no {
+  color: #008080; }
+.highlight .ni {
+  color: #800080; }
+.highlight .ne {
+  color: #900;
+  font-weight: bold; }
+.highlight .nf {
+  color: #900;
+  font-weight: bold; }
+.highlight .nn {
+  color: #555; }
+.highlight .nt {
+  color: #000080; }
+.highlight .nv {
+  color: #008080; }
+.highlight .ow {
+  font-weight: bold; }
+.highlight .w {
+  color: #bbb; }
+.highlight .mf {
+  color: #099; }
+.highlight .mh {
+  color: #099; }
+.highlight .mi {
+  color: #099; }
+.highlight .mo {
+  color: #099; }
+.highlight .sb {
+  color: #d14; }
+.highlight .sc {
+  color: #d14; }
+.highlight .sd {
+  color: #d14; }
+.highlight .s2 {
+  color: #d14; }
+.highlight .se {
+  color: #d14; }
+.highlight .sh {
+  color: #d14; }
+.highlight .si {
+  color: #d14; }
+.highlight .sx {
+  color: #d14; }
+.highlight .sr {
+  color: #009926; }
+.highlight .s1 {
+  color: #d14; }
+.highlight .ss {
+  color: #990073; }
+.highlight .bp {
+  color: #999; }
+.highlight .vc {
+  color: #008080; }
+.highlight .vg {
+  color: #008080; }
+.highlight .vi {
+  color: #008080; }
+.highlight .il {
+  color: #099; }
+
+main {
+  margin-top: 20px; }
+
+amp-img {
+  background-color: grey; }
+
+article {
+  padding: 2.5rem 0; }
+
+header {
+  margin-top: 20px; }
+
+.post-meta {
+  margin-top: 10px; }
+
+pre {
+  width: 52.5%;
+  padding-left: 2.5%;
+  overflow-x: auto; }
+
+@media (max-width: 760px) {
+  pre {
+    width: 90%;
+    padding: 0; } }
+/***** tufte tweaks *****/
+/* the kramdown processor used by Github output <code> tag instead of .code
+class and thus we need to convert .code styles in tufte to code tag styles */
+code {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 1.125rem;
+  line-height: 1.6; }
+
+h1 code, h2 code, h3 code {
+  font-size: 0.80em; }
+
+.marginnote code, .sidenote code {
+  font-size: 1rem; }
+
+@media screen and (max-width: 760px) {
+  pre code {
+    width: 87.5%; } }
+pre code {
+  width: 52.5%;
+  padding-left: 2.5%;
+  overflow-x: auto; }
+
+/* p is generally confined to 55% width, which is ok in general. unfortunately
+for listed paragraphs (<li><p> style), this yields very narrow paragraphs. */
+li p {
+  width: 100%; }
+
+/***** my custom styles *****/
+#main-box {
+  margin-top: 0%; }
+  #main-box #name-box span {
+    font-size: 2em; }
+  #main-box #name-box #name {
+    font-size: 8em; }
+  #main-box #motto {
+    margin-left: 3%;
+    font-size: 1.6em; }
+  #main-box #about-box {
+    margin: 6em 0 0 1%; }
+    #main-box #about-box hr {
+      margin: 0 0 2em 22%;
+      width: 6em; }
+
+.post-list-entry {
+  padding-top: 1em; }
+
+.post-list-nav {
+  margin-top: 6em; }
+  .post-list-nav .pagination {
+    float: left; }
+  .post-list-nav .rss-subscribe {
+    float: right;
+    margin-right: 45%; }
+
+.post-article .article-tombstone {
+  direction: rtl;
+  font-size: 2.5em; }
+.post-article .article-footer {
+  width: 55%; }
+  .post-article .article-footer .post-tags {
+    float: left; }
+  .post-article .article-footer .post-comment-link {
+    float: right; }
+
+/** Tweak code block style */
+pre.highlight {
+  /* NOTE: 'auto' to adjust to the existence of sidenote block */
+  width: auto;
+  /* NOTE: add a gap between sidenote block and code block */
+  padding-right: 2.5%;
+  /* NOTE: not too long when there is no sidenote block */
+  margin-right: 10%; }
+  pre.highlight code {
+    width: auto;
+    display: block;
+    box-shadow: -5px 0 10px #9c9c9c;
+    font-size: inherit; }
+
+/* TODO bad style, 35% is in line with <hr>'s 65% width, factor these styles using SCSS vars  */
+
+  </style>
+
+  <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+
+  
+  <!-- AMP cdn can not be accessed in mainland, so use the cached version. With
+  this script, we can still use AMP goodies like custom tags, shared good
+  practices, and external resource loading and etc. However, my site will not be
+  AMP-compliant or validated for Google AMP cache. This URL itself seems to be
+  part of the spec, see
+  https://github.com/ampproject/amphtml/blob/master/spec/amp-html-format.md -->
+  <script async src="/assets/ampproject/cdn.ampproject.org-v0.js"></script>
+  
+</head>
+
+  <body>
+    <header>
+</header>
+
+
+<article class="post-article">
+
+  <h2 itemprop="name">
+    <a href="/post/code-reading-the-racing-of-two-agents" itemprop="url">Code-Reading: The Racing Of Two Agents</a>
+  </h2>
+
+  <div class="post-meta">
+    <time datetime="17 October 2016">
+      17 October 2016
+    </time>
+    
+    • <i>Updated at </i>
+    <time datetime="23 November 2016">
+      23 November 2016
+    </time>
+    
+  </div>
+
+  <section>
+    <p>From a bug due to a race condition between two polkit agents, this post explain
+the handling of the startup components and autostart apps within <code class="highlighter-rouge">gnome-session</code>.</p>
+
+<h1 id="components">Components</h1>
+
+<h2 id="gnome-session">GNOME Session</h2>
+
+<p>Other than the X server, <code class="highlighter-rouge">gnome-session</code><span id="sn-gs-name" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">In SP2, the <code class="highlighter-rouge">comm</code> is actually called <code class="highlighter-rouge">gnome-session-binary</code> which is <code class="highlighter-rouge">exec</code>-ed from a shell script called <code class="highlighter-rouge">gnome-session</code>. This indirection is meant to solve a environment passing bug. A very interesting problem worth a separate post.</span> is the daemon managing
+all the <em>interesting</em> stuff within a <em>session</em>. For our purpose, the startup
+sequence is of most interest to us.<span id="sn-endsession" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">There is a <a href="#">Code-Reading(PLANNED)</a> post covering the end session part as well.</span> Other
+components talk back to <code class="highlighter-rouge">gnome-session</code> through the exported DBus service
+<code class="highlighter-rouge">org.gnome.SessionManager</code>. The term <code class="highlighter-rouge">SessionManager</code> is used interchangable
+with <code class="highlighter-rouge">gnome-session</code>.</p>
+
+<p><code class="highlighter-rouge">gnome-session</code> does have some documentations oneline. However, they all seem to
+be outdated (compared the info I got from the code.). Nevertheless, they still
+provide some insights and you can find the <a href="https://wiki.gnome.org/Projects/SessionManagement/GnomeSession">longer version</a>
+and <a href="https://wiki.gnome.org/Projects/SessionManagement/NewGnomeSession">the newer, shorter version</a> here.</p>
+
+<h3 id="saved-session">Saved Session</h3>
+
+<p>The concept of <em>a saved session</em> is also important for our discussion. Bascially
+the session will try to save all the open apps and their <em>states</em> upon logout
+and restores these saved apps at the next login. There seems to be a
+protocol(part of <a href="https://www.x.org/releases/X11R7.6/doc/libSM/xsmp.html">XSMP</a>) on this saving behavior, however it doesn’t seem to be
+well supported among apps, not even within GNOME. <span id="sn-xsmp" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">Much earlier there was a bug about saved sessions. The previous investigation convinced me that this feature is deprecated and not maintained in the upstream.</span></p>
+
+<p>Without delving into details about <code class="highlighter-rouge">XSMP</code>, it’s sufficient to show saved
+session’s desktop files here:</p>
+
+<p><strong>TODO</strong> normal app desktop, shell desktop files</p>
+
+<h2 id="gnome-shell">GNOME Shell</h2>
+
+<p>Normally the agent <a href="https://github.com/GNOME/gnome-shell/tree/3.20.4/js/ui/components/polkitAgent.js">built into</a> the Shell is what users use. As
+Shell is the <em>required app</em> (and thus an <em>autostart app</em>) for <code class="highlighter-rouge">gnome-session</code>,
+it’s handled slightly different from other <em>clients</em>, i.e. <code class="highlighter-rouge">gnome-session</code> will
+try to restart these apps if they die and end the current session if a required
+component fails too often. <span id="sn-required-app" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">Q: Is this really the specialty for <em>required app</em>? Further, I’m puzzled by the line <code class="highlighter-rouge">X-GNOME-AutoRestart=false</code>.</span></p>
+
+<ol>
+  <li>Required apps are defined in <a href="https://github.com/GNOME/gnome-session/tree/eba0460033804d2d5ce60953c76fd75f396cc43e/data/gnome.session.desktop.in.in">session key file</a> by
+<a href="https://github.com/GNOME/gnome-session/tree/eba0460033804d2d5ce60953c76fd75f396cc43e/gnome-session/gsm-session-fill.c#L206">searching predefined locations</a>.</li>
+  <li>On failure, required apps are restarted automatically. Until a limit is
+reached, the whole session ends with failure.</li>
+  <li>The naming for <code class="highlighter-rouge">GNOME Shell</code> as a component is <a href="https://github.com/GNOME/gnome-shell/tree/3.20.4/data/org.gnome.Shell.desktop.in.in">org.gnome.Shell</a>. However,
+it’s worth citing the desktop file here:</li>
+</ol>
+
+<div class="language-ini highlighter-rouge"><pre class="highlight"><code><span class="nn">[Desktop Entry]</span>
+<span class="py">Type</span><span class="p">=</span><span class="s">Application</span>
+<span class="py">_Name</span><span class="p">=</span><span class="s">GNOME Shell</span>
+<span class="py">_Comment</span><span class="p">=</span><span class="s">Window management and application launching</span>
+<span class="py">Exec</span><span class="p">=</span><span class="s">@bindir@/gnome-shell</span>
+<span class="c"># ...
+</span><span class="py">NoDisplay</span><span class="p">=</span><span class="s">true</span>
+<span class="py">X-GNOME-Autostart-Phase</span><span class="p">=</span><span class="s">DisplayServer</span>
+<span class="py">X-GNOME-Provides</span><span class="p">=</span><span class="s">panel;windowmanager;</span>
+<span class="py">X-GNOME-Autostart-Notify</span><span class="p">=</span><span class="s">true</span>
+<span class="py">X-GNOME-AutoRestart</span><span class="p">=</span><span class="s">false</span>
+</code></pre>
+</div>
+
+<h2 id="polkit-gnome"><code class="highlighter-rouge">polkit-gnome</code></h2>
+
+<p>A separate, independent polkit agent that can work outside GNOME ecosystem. The
+executable, named <code class="highlighter-rouge">polkit-gnome-authentication-agent-1</code>, installed under
+<code class="highlighter-rouge">@LIBDIR</code> (usually <code class="highlighter-rouge">/usr/share/lib/</code>).</p>
+
+<p>The current distribution still ships an autostart desktop file. <span id="sn-pkgnome-desktop" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">The earliest entry in the changelog on this desktop file is <em>“Add as a source a .desktop file to start polkit agent: it was removed from tarball, but we still need it.”</em> <a href="https://github.com/GNOME/PolicyKit-gnome/commit/47ca445decf21b8de13d804b870d6ce171bad306">Here</a> seems to be the upstream commit that removed this file.</span> Much of the problem is caused by this file and
+its content is worthy full citation here:</p>
+
+<div class="language-ini highlighter-rouge"><pre class="highlight"><code><span class="c"># polkit-gnome-authentication-agent-1.desktop.in
+</span><span class="nn">[Desktop Entry]</span>
+<span class="py">Name</span><span class="p">=</span><span class="s">PolicyKit Authentication Agent</span>
+<span class="c"># ...
+</span><span class="py">Comment</span><span class="p">=</span><span class="s">PolicyKit Authentication Agent</span>
+<span class="c"># ...
+</span><span class="py">Exec</span><span class="p">=</span><span class="s">@LIBDIR@/polkit-gnome-authentication-agent-1</span>
+<span class="py">Terminal</span><span class="p">=</span><span class="s">false</span>
+<span class="py">Type</span><span class="p">=</span><span class="s">Application</span>
+<span class="py">Categories</span><span class="p">=</span>
+<span class="py">NoDisplay</span><span class="p">=</span><span class="s">true</span>
+<span class="py">NotShowIn</span><span class="p">=</span><span class="s">KDE;</span>
+<span class="py">AutostartCondition</span><span class="p">=</span><span class="s">GNOME3 unless-session gnome</span>
+</code></pre>
+</div>
+
+<p>The <code class="highlighter-rouge">AutostartCondition</code> doesn’t seem to be well documented, but it means that
+this agent should be automatically started on login if the session <em>is of</em>
+‘<code class="highlighter-rouge">GNOME3</code> but not <code class="highlighter-rouge">gnome</code>‘<span id="sn-GNOME3-not-gnome" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">I was going to say <code class="highlighter-rouge">gnome-fallback</code>, which was <em>discontinued</em> around the time <code class="highlighter-rouge">GNOME</code> 3.10 was released, and thus coincides with the dev&amp;release of <code class="highlighter-rouge">SLE-12</code>, <code class="highlighter-rouge">REHL 7</code> and etc. However, a little search has surprised me that <code class="highlighter-rouge">gnome-fallback</code> was alive as <a href="https://wiki.gnome.org/Projects/GnomeFlashback">gnome-flashback</a> for quite a while (it’s <a href="https://git.gnome.org/browse/gnome-flashback/">official</a>)! The history about <code class="highlighter-rouge">GNOME 3</code>, <code class="highlighter-rouge">fallback</code>, <code class="highlighter-rouge">classic</code> and <code class="highlighter-rouge">flashback</code> is convoluting, and I found <a href="https://ubuntuforums.org/showthread.php?t=2185161">this post</a> more or less match what I know. Now I’m starting to wonder whether <code class="highlighter-rouge">flashback</code> will make a <em>comeback</em>! ;P</span>.</p>
+
+<h1 id="sequence">Sequence</h1>
+
+<p>Before describing each sequence in details, we explain the symptom as seen in the
+bug. The <em>default</em> theming of <code class="highlighter-rouge">shell-agent</code> authentication diaglog is <strong>black</strong>,
+while the diaglog from <code class="highlighter-rouge">polkit-gnome</code> is <strong>white</strong>. This makes the issue
+ostentatious, easily catched by <a href="https://openqa.opensuse.org/">openQA</a>: the
+usual black dialogue is not found instead the white dialog is shown.</p>
+
+<h2 id="the-normal-sequence">The normal sequence</h2>
+
+<p><code class="highlighter-rouge">SessionManager</code> has internal <a href="https://github.com/GNOME/gnome-session/tree/eba0460033804d2d5ce60953c76fd75f396cc43e/gnome-session/gsm-manager.h#L54"><code class="highlighter-rouge">phases</code></a>, which follows a
+<em>nearly</em> <a href="https://github.com/GNOME/gnome-session/tree/eba0460033804d2d5ce60953c76fd75f396cc43e/gnome-session/gsm-manager.c#L497">linear style</a> of state transitions. <span id="sn-linear-state" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">A notable exception is during ending session (logout/reboot/shutdown),<code class="highlighter-rouge">GSM_MANAGER_PHASE_QUERY_END_SESSION</code> can transition back to <code class="highlighter-rouge">GSM_MANAGER_PHASE_RUNNING</code> in case of failures. Covered in another <a href="#">post</a></span></p>
+
+<p>As shown above <code class="highlighter-rouge">Shell</code> starts at <code class="highlighter-rouge">DisplayServer</code> phase,
+(<code class="highlighter-rouge">X-GNOME-Autostart-Phase=DisplayServer</code>), much earlier than the
+<a href="https://github.com/GNOME/gnome-session/tree/eba0460033804d2d5ce60953c76fd75f396cc43e/gnome-session/gsm-autostart-app.c#L614">default</a> <code class="highlighter-rouge">Application</code> phase. <code class="highlighter-rouge">polkit-gnome</code> was started at
+this default phase as it has no explicit phase setting. So usually, <code class="highlighter-rouge">Shell</code>
+starts and registers itself as agent before <code class="highlighter-rouge">polkit-gnome</code> can do <em>anything</em>.</p>
+
+<p>The autostart condition <code class="highlighter-rouge">GNOME3 unless-session gnome</code> will be <code class="highlighter-rouge">true</code> under
+<code class="highlighter-rouge">gnome-classic</code> and thus <code class="highlighter-rouge">polkit-gnome</code> will start. However, since there is only
+one allowed polkit agent, <code class="highlighter-rouge">polkit-gnome</code> will fail and exit.</p>
+
+<h2 id="what-if-there-is-an-saved-session">What if there is an saved session</h2>
+
+<p>In a <code class="highlighter-rouge">saved session</code> situation, <code class="highlighter-rouge">gnome-session</code> will detect the relevant
+settings and saved session files under user home directory. It will load saved
+<code class="highlighter-rouge">apps</code> from saved session files <strong>first</strong>, before the normal loading of
+<code class="highlighter-rouge">required</code> and <code class="highlighter-rouge">autostart</code> apps. <span id="sn-loading-order" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">The latter desktop files would not override earlier desktop files. <code class="highlighter-rouge">gnome-session</code> use the <code class="highlighter-rouge">provides</code> field to decide whether a later loaded desktop file is effective.</span></p>
+
+<p><code class="highlighter-rouge">org.gnome.Shell</code>, as saved session file, the desktop entry file does <strong>NOT</strong>
+have the autostart phase set to <code class="highlighter-rouge">DisplayServer</code>, actually, not set at all. So
+it’s started at <code class="highlighter-rouge">Application</code> phase, together with <code class="highlighter-rouge">polkit-gnome</code>.
+<code class="highlighter-rouge">polkit-gnome</code> is a much simpler program and might register itself as <code class="highlighter-rouge">polkit
+agent</code>, while <code class="highlighter-rouge">shell</code> is still running to get to its <code class="highlighter-rouge">JS</code> part.</p>
+
+<p>In observation, with a <code class="highlighter-rouge">saved session</code>, <code class="highlighter-rouge">polkit-gnome</code> almost always win as the
+real agent.</p>
+
+<h2 id="what-if-shell-died">What if Shell died</h2>
+
+<p>When <code class="highlighter-rouge">Shell</code> dies, it gets restarted by <code class="highlighter-rouge">gnome-session</code>. <span id="sn-shell-restart" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">This is not to be confused with the built-in restart as <code class="highlighter-rouge">Alt-F2, r</code> would offter, in which the process itself remains the same.</span> The
+timing can be unfortunate for it can coincidences with the starting of
+<code class="highlighter-rouge">polkit-gnome</code>, and be outrun by it in registering as polkit agent.</p>
+
+<h1 id="debugging">Debugging</h1>
+
+<p>In this section, I will show important questions I asked during debugging and
+some useful tips to prove points mentioned in the <a href="#sequence">Sequence</a>.</p>
+
+<h2 id="polkit-gnome-starts-under-gnome-classic"><code class="highlighter-rouge">polkit-gnome</code> starts under <code class="highlighter-rouge">gnome-classic</code></h2>
+
+<p>To prove this point, two approaches can be taken:</p>
+
+<ol>
+  <li>Use <a href="https://www.suse.com/documentation/sles11/singlehtml/audit_quickstart/audit_quickstart.html">Linux Audit</a>.</li>
+  <li><em>Manual Injection</em>. Change the destktop entry file or the executable itself.
+In our case, capture the stdin/stderr are sufficient.</li>
+</ol>
+
+<p>It’s usually better to use <code class="highlighter-rouge">Audit</code> first and then empoly <code class="highlighter-rouge">Injection</code> to get more
+details.</p>
+
+<h3 id="linux-auditing">Linux Auditing</h3>
+
+<p>This seems to be the only non-intrusive approach. At the cost of complexity,
+<code class="highlighter-rouge">Audit</code> is very powerful and capable of much more. <span id="sn-dtrace" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">At the time of writing, I’ve read some news on a <a href="http://www.brendangregg.com/blog/2016-10-27/dtrace-for-linux-2016.html">Dtrace-like functionality for kernel</a>. Looks very interesting and promising, though I’m not knowledged enough, yet, to comment on the usefulness for debugging problems like this post’s.</span></p>
+
+<p>Make sure all prerequiresites are met <span id="sn-audit-post" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">(Yelling!) I have been working on another post for more detials. Plainning…</span>.</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c">## Precaution: all commands are executed under root prviliages.</span>
+
+<span class="c"># setup rules, you can optionally add more filter fields, uid might be a good addition.</span>
+auditctl -a <span class="nb">exit</span>,always -F <span class="nv">arch</span><span class="o">=</span>b64 -S all -F <span class="nv">path</span><span class="o">=</span>/usr/lib/polkit-gnome-authentication-agent-1
+
+<span class="c"># verify the above is the only rule, not necessary but helpful in inspecting the log.</span>
+auditctl -l
+
+<span class="c"># Logout and Login back again, in a new terminal, the -ts since time is the time</span>
+<span class="c"># *just* before you login. Not necessary but helpful in reducting output size.</span>
+ausearch -i -ts 16:10
+</code></pre>
+</div>
+
+<p>You should see something like:</p>
+
+<div class="language-text highlighter-rouge"><pre class="highlight"><code>----
+type=UNKNOWN[1327] msg=audit(10/27/16 16:03:10.518:106) : proctitle="/usr/lib/polkit-gnome-authentication-agent-1" 
+type=PATH msg=audit(10/27/16 16:03:10.518:106) : item=1 name=/lib64/ld-linux-x86-64.so.2 inode=38532 dev=00:26 mode=file,755 ouid=root ogid=root rdev=00:00 nametype=NORMAL 
+type=PATH msg=audit(10/27/16 16:03:10.518:106) : item=0 name=/usr/lib/polkit-gnome-authentication-agent-1 inode=160885 dev=00:26 mode=file,755 ouid=root ogid=root rdev=00:00 nametype=NORMAL 
+type=CWD msg=audit(10/27/16 16:03:10.518:106) :  cwd=/home/vagrant 
+type=EXECVE msg=audit(10/27/16 16:03:10.518:106) : argc=1 a0=/usr/lib/polkit-gnome-authentication-agent-1 
+type=SYSCALL msg=audit(10/27/16 16:03:10.518:106) : arch=x86_64 syscall=execve success=yes exit=0 a0=0x11be100 a1=0x11be0a0 a2=0x11be150 a3=0xfc2c9fc5 items=2 ppid=1726 pid=1968 auid=vagrant uid=vagrant gid=users euid=
+vagrant suid=vagrant fsuid=vagrant egid=users sgid=users fsgid=users tty=(none) ses=91 comm=polkit-gnome-au exe=/usr/lib/polkit-gnome-authentication-agent-1 key=(null) 
+</code></pre>
+</div>
+
+<p>From the log we can deduce: <code class="highlighter-rouge">ppid=1726</code> (<code class="highlighter-rouge">ps -up 1726</code> shows that it’s
+<code class="highlighter-rouge">gnome-session-binary</code>) calls <code class="highlighter-rouge">execve</code> with
+<code class="highlighter-rouge">/usr/lib/polkit-gnome-authentication-agent-1</code> as the sole argument. In other
+words, <code class="highlighter-rouge">gnome-session</code> started <code class="highlighter-rouge">polkit-gnome</code>.</p>
+
+<h3 id="manual-injection">Manual Injection</h3>
+
+<p><code class="highlighter-rouge">Linux Auditing</code> is clean and quick, great for verifying unintend execution.
+However, it doesn’t capture possible output from processes. For this we would
+have to inject extra code into the start sequence. Surely, we can replace
+<code class="highlighter-rouge">polkit-gnome-authentication-agent-1</code> with a custom script, which calls the real
+executable only with io rediction to some custom files. However, I’d like to
+introduce <a href="https://www.freedesktop.org/software/systemd/man/systemd-cat.html">systemd-cat</a> to take full advantage of <code class="highlighter-rouge">journald</code>. <span id="sn-systemd-cat" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">And avoids the hassles of managing log files. <code class="highlighter-rouge">systemd-cat</code> can be really useful to debug <code class="highlighter-rouge">gnome-shell</code> by piping JS logs into <code class="highlighter-rouge">journald</code>. With advanced options offered by <code class="highlighter-rouge">journalctl</code>, this way is much sweeter than weeding through log files or terminal output, particularly so for <code class="highlighter-rouge">gdm</code> shell.</span></p>
+
+<p>First change the <code class="highlighter-rouge">Exec</code><span id="sn-exec-line" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote"><code class="highlighter-rouge">Exec</code> line has specific format requirement, in doubt consult the <a href="https://specifications.freedesktop.org/desktop-entry-spec/latest/ar01s06.html">documentation</a></span> line to something
+like:</p>
+
+<div class="language-ini highlighter-rouge"><pre class="highlight"><code><span class="c"># /etc/xdg/autostart/polkit-gnome-authentication-agent-1.desktop
+</span><span class="py">Exec</span><span class="p">=</span><span class="s">systemd-cat -t PK-G /usr/lib/polkit-gnome-authentication-agent-1</span>
+</code></pre>
+</div>
+
+<p>Then use <code class="highlighter-rouge">journalctl -t PK-G</code> to pick log from <code class="highlighter-rouge">polkit-gnome</code> out specifically.
+<span id="sn-journctl-since" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">As with <code class="highlighter-rouge">ausearch</code>, a since-time can be passed with <code class="highlighter-rouge">-S,--since=</code>. Notably <code class="highlighter-rouge">journctl</code> features far richer time formats as documented in <code class="highlighter-rouge">man systemd.time</code>. You can use relative time setting like <code class="highlighter-rouge">journalctl -S -1min</code>. <code class="highlighter-rouge">ausearch</code> doesn’t seem to support advanced time format. However, we can always use <code class="highlighter-rouge">date</code> to achieve similar result. For example, to get audit logs since 90 sec ago, we can use <code class="highlighter-rouge">ausearch -i -ts $(date +'%H:%M:%S' -d '-300sec')</code>.</span></p>
+
+<div class="language-text highlighter-rouge"><pre class="highlight"><code>-- Logs begin at Wed 2016-10-26 18:35:03 CST, end at Thu 2016-10-27 16:36:48 CST. --
+Oct 27 16:36:44 linux-rblp.suse PK-G[2704]: ** (polkit-gnome-authentication-agent-1:2704): WARNING **: Unable to register authentication agent: GDBus.Error:org.freedesktop.PolicyKit1.Error.Failed: An authentication age
+Oct 27 16:36:44 linux-rblp.suse PK-G[2704]: Cannot register authentication agent: GDBus.Error:org.freedesktop.PolicyKit1.Error.Failed: An authentication agent already exists for the given subject
+</code></pre>
+</div>
+
+<h2 id="why-polkit-gnome-started">Why <code class="highlighter-rouge">polkit-gnome</code> started?</h2>
+
+<p>The culprit is the condition line <code class="highlighter-rouge">GNOME3 unless-session gnome</code>. The current
+session name referred in this condition can be looked up by introspecting
+<code class="highlighter-rouge">org.gnome.SessionManager</code> object.</p>
+
+<p><span class="marginnote">Since the naming is not the same for this <code class="highlighter-rouge">session-name</code>, there were some
+confusion at the beginning, as some believed it refering to a <code class="highlighter-rouge">dconf</code> setting.
+It turns out this setting is the <em>default</em> if no session type is specified on
+the <code class="highlighter-rouge">gnome-session</code> command line.</span></p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>gdbus introspect --session --dest org.gnome.SessionManager <span class="se">\</span>
+    --object-path /org/gnome/SessionManager | grep -i session
+    
+<span class="c">## Output&gt;    readonly s SessionName = 'gnome-classic'</span>
+
+<span class="c"># alternatively you can get to the desired property value directly, though much</span>
+<span class="c"># more complicated and not recommended. (And you're going to introspect first</span>
+<span class="c"># anyway ;P)</span>
+gdbus call --session --dest org.gnome.SessionManager <span class="se">\</span>
+    --object-path /org/gnome/SessionManager <span class="se">\</span>
+    --method org.freedesktop.DBus.Properties.Get <span class="se">\</span>
+    org.gnome.SessionManager SessionName
+
+<span class="c">## Output&gt; (&lt;'gnome-classic'&gt;,)</span>
+</code></pre>
+</div>
+
+    <p class="article-tombstone"><br>∎</p>
+  </section>
+
+  <div class="article-footer">
+    <div class="post-tags">
+      <b> Tags </b>
+      
+      • <a href="/tags/code-reading"><span>code-reading</span></a>
+      
+      • <a href="/tags/sle"><span>sle</span></a>
+      
+    </div>
+    <div class="post-comment-link">
+      <b>Comment</b>:
+      <a href="https://github.com/carltonf/carltonf.github.io/issues/new" target="_blank">Github Issue</a>
+    </div>
+  </div>
+
+</article>
+
+<footer class="site-footer">
+  <hr>
+
+  <section class="navigation-links">
+    <!-- NOTE: Manually arrange pages as 'site.pages' are not sorted. -->
+    <a class="page-link" href="/">Home</a>
+    • <a class="page-link" href="/posts">Blog</a>
+    • <a class="page-link" href="/wiki">Wiki</a>
+    • <a class="page-link" href="/contact">Contact Me</a>
+    • <a class="page-link" href="/search">Search</a>
+  </section>
+  <section class="copyright">
+    All content copyright <a href="/contact">Carl Xiong</a> &copy; 2016
+    &bull; All rights reserved.
+  </section>
+</footer>
+
+
+  </body>
+</html>

@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html amp lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- NOTE `content` setting is required to ensure GPU rasterization is enabled. -->
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+
+  <title>Understand &#39;Just Enough&#39; GObject For Code Reading</title>
+  <meta name="description" content="Without referring to GObject documentation or any online posts       For the record, I can not claim I have never been exposed to GObject materials. The best...">
+
+  <link rel="canonical" href="http://carltonf.github.io/post/understand-minimal-gobject-for-code-reading">
+  <link rel="alternate" type="application/rss+xml" title="Crystal Sight" href="http://carltonf.github.io/feed.xml">
+
+  <script type="application/ld+json">
+  
+{
+  "@context": "http://schema.org",
+  "@type": "NewsArticle",
+  "mainEntityOfPage": "http://carltonf.github.io/post/understand-minimal-gobject-for-code-reading",
+  "headline": "Understand &#39;Just Enough&#39; GObject For Code Reading",
+  "datePublished": "2016-10-18T00:00:00+00:00",
+  "dateModified": "2016-10-18T00:00:00+00:00",
+  "description": "Without referring to GObject documentation or any online posts       For the record, I can not claim I have never been exposed to GObject materials. The best...",
+  "author": {
+    "@type": "Person",
+    "name": ""
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Crystal Sight",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://carltonf.github.io",
+      "width": 60,
+      "height": 60
+    }
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "http://carltonf.github.io",
+    "height": 60,
+    "width": 60
+  }
+}
+
+  </script>
+
+  <style amp-custom>
+  
+  /* Import ET Book styles
+   adapted from https://github.com/edwardtufte/et-book/blob/gh-pages/et-book.css */
+@font-face {
+  font-family: "et-book";
+  src: url("/assets/et-book/et-book-roman-line-figures/et-book-roman-line-figures.eot");
+  src: url("/assets/et-book/et-book-roman-line-figures/et-book-roman-line-figures.eot?#iefix") format("embedded-opentype"), url("/assets/et-book/et-book-roman-line-figures/et-book-roman-line-figures.woff") format("woff"), url("/assets/et-book/et-book-roman-line-figures/et-book-roman-line-figures.ttf") format("truetype"), url("/assets/et-book/et-book-roman-line-figures/et-book-roman-line-figures.svg#etbookromanosf") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+@font-face {
+  font-family: "et-book";
+  src: url("/assets/et-book/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.eot");
+  src: url("/assets/et-book/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.eot?#iefix") format("embedded-opentype"), url("/assets/et-book/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.woff") format("woff"), url("/assets/et-book/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.ttf") format("truetype"), url("/assets/et-book/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.svg#etbookromanosf") format("svg");
+  font-weight: normal;
+  font-style: italic; }
+@font-face {
+  font-family: "et-book";
+  src: url("/assets/et-book/et-book-bold-line-figures/et-book-bold-line-figures.eot");
+  src: url("/assets/et-book/et-book-bold-line-figures/et-book-bold-line-figures.eot?#iefix") format("embedded-opentype"), url("/assets/et-book/et-book-bold-line-figures/et-book-bold-line-figures.woff") format("woff"), url("/assets/et-book/et-book-bold-line-figures/et-book-bold-line-figures.ttf") format("truetype"), url("/assets/et-book/et-book-bold-line-figures/et-book-bold-line-figures.svg#etbookromanosf") format("svg");
+  font-weight: bold;
+  font-style: normal; }
+@font-face {
+  font-family: "et-book-roman-old-style";
+  src: url("/assets/et-book/et-book-roman-old-style-figures/et-book-roman-old-style-figures.eot");
+  src: url("/assets/et-book/et-book-roman-old-style-figures/et-book-roman-old-style-figures.eot?#iefix") format("embedded-opentype"), url("/assets/et-book/et-book-roman-old-style-figures/et-book-roman-old-style-figures.woff") format("woff"), url("/assets/et-book/et-book-roman-old-style-figures/et-book-roman-old-style-figures.ttf") format("truetype"), url("/assets/et-book/et-book-roman-old-style-figures/et-book-roman-old-style-figures.svg#etbookromanosf") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+/* Tufte CSS styles */
+html {
+  font-size: 15px; }
+
+body {
+  width: 87.5%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 12.5%;
+  font-family: et-book, Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
+  background-color: #fffff8;
+  color: #111;
+  max-width: 1400px;
+  counter-reset: sidenote-counter; }
+
+h1 {
+  font-weight: 400;
+  margin-top: 4rem;
+  margin-bottom: 1.5rem;
+  font-size: 3.2rem;
+  line-height: 1; }
+
+h2 {
+  font-style: italic;
+  font-weight: 400;
+  margin-top: 2.1rem;
+  margin-bottom: 0;
+  font-size: 2.2rem;
+  line-height: 1; }
+
+h3 {
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.7rem;
+  margin-top: 2rem;
+  margin-bottom: 0;
+  line-height: 1; }
+
+p.subtitle {
+  font-style: italic;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  display: block;
+  line-height: 1; }
+
+.numeral {
+  font-family: et-book-roman-old-style; }
+
+.danger {
+  color: red; }
+
+article {
+  position: relative;
+  padding: 5rem 0rem; }
+
+section {
+  padding-top: 1rem;
+  padding-bottom: 1rem; }
+
+p, ol, ul, .pagination a, .pagination em, table {
+  font-size: 1.4rem; }
+
+p {
+  line-height: 2rem;
+  margin-top: 1.4rem;
+  margin-bottom: 1.4rem;
+  padding-right: 0;
+  vertical-align: baseline; }
+
+/* Chapter Epigraphs */
+div.epigraph {
+  margin: 5em 0; }
+
+div.epigraph > blockquote {
+  margin-top: 3em;
+  margin-bottom: 3em; }
+
+div.epigraph > blockquote, div.epigraph > blockquote > p {
+  font-style: italic; }
+
+div.epigraph > blockquote > footer {
+  font-style: normal; }
+
+div.epigraph > blockquote > footer > cite {
+  font-style: italic; }
+
+/* end chapter epigraphs styles */
+blockquote {
+  font-size: 1.4rem; }
+
+blockquote p {
+  width: 50%; }
+
+blockquote .footer {
+  width: 50%;
+  font-size: 1.1rem;
+  text-align: right; }
+
+ol, ul {
+  width: 45%;
+  -webkit-padding-start: 5%;
+  -webkit-padding-end: 5%; }
+
+li {
+  padding: 0.5rem 0; }
+
+figure {
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  max-width: 55%;
+  -webkit-margin-start: 0;
+  -webkit-margin-end: 0;
+  margin: 0 0 3em 0; }
+
+figcaption {
+  float: right;
+  clear: right;
+  margin-right: -48%;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  vertical-align: baseline;
+  position: relative;
+  max-width: 40%; }
+
+figure.fullwidth figcaption {
+  margin-right: 24%; }
+
+/* Links: replicate underline that clears descenders */
+a:link, a:visited {
+  color: inherit; }
+
+a:link {
+  text-decoration: none;
+  background: -webkit-linear-gradient(#fffff8, #fffff8), -webkit-linear-gradient(#fffff8, #fffff8), -webkit-linear-gradient(#333, #333);
+  background: linear-gradient(#fffff8, #fffff8), linear-gradient(#fffff8, #fffff8), linear-gradient(#333, #333);
+  -webkit-background-size: 0.05em 1px, 0.05em 1px, 1px 1px;
+  -moz-background-size: 0.05em 1px, 0.05em 1px, 1px 1px;
+  background-size: 0.05em 1px, 0.05em 1px, 1px 1px;
+  background-repeat: no-repeat, no-repeat, repeat-x;
+  text-shadow: 0.03em 0 #fffff8, -0.03em 0 #fffff8, 0 0.03em #fffff8, 0 -0.03em #fffff8, 0.06em 0 #fffff8, -0.06em 0 #fffff8, 0.09em 0 #fffff8, -0.09em 0 #fffff8, 0.12em 0 #fffff8, -0.12em 0 #fffff8, 0.15em 0 #fffff8, -0.15em 0 #fffff8;
+  background-position: 0% 93%, 100% 93%, 0% 93%; }
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  a:link {
+    background-position-y: 87%, 87%, 87%; } }
+a:link::selection {
+  text-shadow: 0.03em 0 #b4d5fe, -0.03em 0 #b4d5fe, 0 0.03em #b4d5fe, 0 -0.03em #b4d5fe, 0.06em 0 #b4d5fe, -0.06em 0 #b4d5fe, 0.09em 0 #b4d5fe, -0.09em 0 #b4d5fe, 0.12em 0 #b4d5fe, -0.12em 0 #b4d5fe, 0.15em 0 #b4d5fe, -0.15em 0 #b4d5fe;
+  background: #b4d5fe; }
+
+a:link::-moz-selection {
+  text-shadow: 0.03em 0 #b4d5fe, -0.03em 0 #b4d5fe, 0 0.03em #b4d5fe, 0 -0.03em #b4d5fe, 0.06em 0 #b4d5fe, -0.06em 0 #b4d5fe, 0.09em 0 #b4d5fe, -0.09em 0 #b4d5fe, 0.12em 0 #b4d5fe, -0.12em 0 #b4d5fe, 0.15em 0 #b4d5fe, -0.15em 0 #b4d5fe;
+  background: #b4d5fe; }
+
+/* Sidenotes, margin notes, figures, captions */
+img {
+  max-width: 100%; }
+
+.sidenote, .marginnote {
+  float: right;
+  clear: right;
+  margin-right: -60%;
+  width: 50%;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 1.1rem;
+  line-height: 1.3;
+  vertical-align: baseline;
+  position: relative; }
+
+.table-caption {
+  float: right;
+  clear: right;
+  margin-right: -60%;
+  width: 50%;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 1.0rem;
+  line-height: 1.6; }
+
+.sidenote-number {
+  counter-increment: sidenote-counter; }
+
+.sidenote-number:after, .sidenote:before {
+  content: counter(sidenote-counter) " ";
+  font-family: et-book-roman-old-style;
+  position: relative;
+  vertical-align: baseline; }
+
+.sidenote-number:after {
+  content: counter(sidenote-counter);
+  font-size: 1rem;
+  top: -0.5rem;
+  left: 0.1rem; }
+
+.sidenote:before {
+  content: counter(sidenote-counter) " ";
+  top: -0.5rem; }
+
+p, footer, table, div.table-wrapper-small, div.supertable-wrapper > p, div.booktabs-wrapper {
+  width: 55%; }
+
+div.fullwidth, table.fullwidth {
+  width: 100%; }
+
+div.table-wrapper {
+  overflow-x: auto;
+  font-family: "Trebuchet MS", "Gill Sans", "Gill Sans MT", sans-serif; }
+
+@media screen and (max-width: 760px) {
+  p, h1, h2, h3, footer {
+    width: 90%; }
+
+  pre.code {
+    width: 87.5%; }
+
+  ul {
+    width: 85%; }
+
+  figure {
+    max-width: 90%; }
+
+  figcaption, figure.fullwidth figcaption {
+    margin-right: 0%;
+    max-width: none; }
+
+  blockquote p, blockquote .footer {
+    width: 90%; } }
+.sans {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+  letter-spacing: .03em; }
+
+.code {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 1.125rem;
+  line-height: 1.6; }
+
+h1 .code, h2 .code, h3 .code {
+  font-size: 0.80em; }
+
+.marginnote .code, .sidenote .code {
+  font-size: 1rem; }
+
+pre.code {
+  width: 52.5%;
+  padding-left: 2.5%;
+  overflow-x: auto; }
+
+.fullwidth {
+  max-width: 90%;
+  clear: both; }
+
+span.newthought {
+  font-variant: small-caps;
+  font-size: 1.2em; }
+
+.margin-toggle {
+  display: none; }
+
+.sidenote-number {
+  display: inline; }
+
+.margin-toggle:not(.sidenote-number) {
+  display: none; }
+
+@media (max-width: 760px) {
+  .margin-toggle:not(.sidenote-number) {
+    display: none; }
+
+  .sidenote, .marginnote {
+    display: none; }
+
+  .margin-toggle:checked + .sidenote,
+  .margin-toggle:checked + .marginnote {
+    display: block;
+    float: left;
+    left: 1rem;
+    clear: both;
+    width: 95%;
+    margin: 1rem 2.5%;
+    vertical-align: baseline;
+    position: relative; }
+
+  label {
+    cursor: pointer; }
+
+  pre.code {
+    width: 90%;
+    padding: 0; }
+
+  .table-caption {
+    display: block;
+    float: right;
+    clear: both;
+    width: 98%;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    margin-left: 1%;
+    margin-right: 1%;
+    vertical-align: baseline;
+    position: relative; }
+
+  div.table-wrapper, table, table.booktabs {
+    width: 85%; }
+
+  div.table-wrapper {
+    border-right: 1px solid #efefef; }
+
+  img {
+    width: 100%; } }
+/**
+ * Syntax highlighting styles
+ */
+.highlight .c {
+  color: #998;
+  font-style: italic; }
+.highlight .err {
+  color: #a61717;
+  background-color: #e3d2d2; }
+.highlight .k {
+  font-weight: bold; }
+.highlight .o {
+  font-weight: bold; }
+.highlight .cm {
+  color: #998;
+  font-style: italic; }
+.highlight .cp {
+  color: #999;
+  font-weight: bold; }
+.highlight .c1 {
+  color: #998;
+  font-style: italic; }
+.highlight .cs {
+  color: #999;
+  font-weight: bold;
+  font-style: italic; }
+.highlight .gd {
+  color: #000;
+  background-color: #fdd; }
+.highlight .gd .x {
+  color: #000;
+  background-color: #faa; }
+.highlight .ge {
+  font-style: italic; }
+.highlight .gr {
+  color: #a00; }
+.highlight .gh {
+  color: #999; }
+.highlight .gi {
+  color: #000;
+  background-color: #dfd; }
+.highlight .gi .x {
+  color: #000;
+  background-color: #afa; }
+.highlight .go {
+  color: #888; }
+.highlight .gp {
+  color: #555; }
+.highlight .gs {
+  font-weight: bold; }
+.highlight .gu {
+  color: #aaa; }
+.highlight .gt {
+  color: #a00; }
+.highlight .kc {
+  font-weight: bold; }
+.highlight .kd {
+  font-weight: bold; }
+.highlight .kp {
+  font-weight: bold; }
+.highlight .kr {
+  font-weight: bold; }
+.highlight .kt {
+  color: #458;
+  font-weight: bold; }
+.highlight .m {
+  color: #099; }
+.highlight .s {
+  color: #d14; }
+.highlight .na {
+  color: #008080; }
+.highlight .nb {
+  color: #0086B3; }
+.highlight .nc {
+  color: #458;
+  font-weight: bold; }
+.highlight .no {
+  color: #008080; }
+.highlight .ni {
+  color: #800080; }
+.highlight .ne {
+  color: #900;
+  font-weight: bold; }
+.highlight .nf {
+  color: #900;
+  font-weight: bold; }
+.highlight .nn {
+  color: #555; }
+.highlight .nt {
+  color: #000080; }
+.highlight .nv {
+  color: #008080; }
+.highlight .ow {
+  font-weight: bold; }
+.highlight .w {
+  color: #bbb; }
+.highlight .mf {
+  color: #099; }
+.highlight .mh {
+  color: #099; }
+.highlight .mi {
+  color: #099; }
+.highlight .mo {
+  color: #099; }
+.highlight .sb {
+  color: #d14; }
+.highlight .sc {
+  color: #d14; }
+.highlight .sd {
+  color: #d14; }
+.highlight .s2 {
+  color: #d14; }
+.highlight .se {
+  color: #d14; }
+.highlight .sh {
+  color: #d14; }
+.highlight .si {
+  color: #d14; }
+.highlight .sx {
+  color: #d14; }
+.highlight .sr {
+  color: #009926; }
+.highlight .s1 {
+  color: #d14; }
+.highlight .ss {
+  color: #990073; }
+.highlight .bp {
+  color: #999; }
+.highlight .vc {
+  color: #008080; }
+.highlight .vg {
+  color: #008080; }
+.highlight .vi {
+  color: #008080; }
+.highlight .il {
+  color: #099; }
+
+main {
+  margin-top: 20px; }
+
+amp-img {
+  background-color: grey; }
+
+article {
+  padding: 2.5rem 0; }
+
+header {
+  margin-top: 20px; }
+
+.post-meta {
+  margin-top: 10px; }
+
+pre {
+  width: 52.5%;
+  padding-left: 2.5%;
+  overflow-x: auto; }
+
+@media (max-width: 760px) {
+  pre {
+    width: 90%;
+    padding: 0; } }
+/***** tufte tweaks *****/
+/* the kramdown processor used by Github output <code> tag instead of .code
+class and thus we need to convert .code styles in tufte to code tag styles */
+code {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 1.125rem;
+  line-height: 1.6; }
+
+h1 code, h2 code, h3 code {
+  font-size: 0.80em; }
+
+.marginnote code, .sidenote code {
+  font-size: 1rem; }
+
+@media screen and (max-width: 760px) {
+  pre code {
+    width: 87.5%; } }
+pre code {
+  width: 52.5%;
+  padding-left: 2.5%;
+  overflow-x: auto; }
+
+/* p is generally confined to 55% width, which is ok in general. unfortunately
+for listed paragraphs (<li><p> style), this yields very narrow paragraphs. */
+li p {
+  width: 100%; }
+
+/***** my custom styles *****/
+#main-box {
+  margin-top: 0%; }
+  #main-box #name-box span {
+    font-size: 2em; }
+  #main-box #name-box #name {
+    font-size: 8em; }
+  #main-box #motto {
+    margin-left: 3%;
+    font-size: 1.6em; }
+  #main-box #about-box {
+    margin: 6em 0 0 1%; }
+    #main-box #about-box hr {
+      margin: 0 0 2em 22%;
+      width: 6em; }
+
+.post-list-entry {
+  padding-top: 1em; }
+
+.post-list-nav {
+  margin-top: 6em; }
+  .post-list-nav .pagination {
+    float: left; }
+  .post-list-nav .rss-subscribe {
+    float: right;
+    margin-right: 45%; }
+
+.post-article .article-tombstone {
+  direction: rtl;
+  font-size: 2.5em; }
+.post-article .article-footer {
+  width: 55%; }
+  .post-article .article-footer .post-tags {
+    float: left; }
+  .post-article .article-footer .post-comment-link {
+    float: right; }
+
+/** Tweak code block style */
+pre.highlight {
+  /* NOTE: 'auto' to adjust to the existence of sidenote block */
+  width: auto;
+  /* NOTE: add a gap between sidenote block and code block */
+  padding-right: 2.5%;
+  /* NOTE: not too long when there is no sidenote block */
+  margin-right: 10%; }
+  pre.highlight code {
+    width: auto;
+    display: block;
+    box-shadow: -5px 0 10px #9c9c9c;
+    font-size: inherit; }
+
+/* TODO bad style, 35% is in line with <hr>'s 65% width, factor these styles using SCSS vars  */
+
+  </style>
+
+  <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+
+  
+  <!-- AMP cdn can not be accessed in mainland, so use the cached version. With
+  this script, we can still use AMP goodies like custom tags, shared good
+  practices, and external resource loading and etc. However, my site will not be
+  AMP-compliant or validated for Google AMP cache. This URL itself seems to be
+  part of the spec, see
+  https://github.com/ampproject/amphtml/blob/master/spec/amp-html-format.md -->
+  <script async src="/assets/ampproject/cdn.ampproject.org-v0.js"></script>
+  
+</head>
+
+  <body>
+    <header>
+</header>
+
+
+<article class="post-article">
+
+  <h2 itemprop="name">
+    <a href="/post/understand-minimal-gobject-for-code-reading" itemprop="url">Understand 'Just Enough' GObject For Code Reading</a>
+  </h2>
+
+  <div class="post-meta">
+    <time datetime="18 October 2016">
+      18 October 2016
+    </time>
+    
+    • <i>Updated at </i>
+    <time datetime="21 October 2016">
+      21 October 2016
+    </time>
+    
+  </div>
+
+  <section>
+    <p>Without referring to <code class="highlighter-rouge">GObject</code> documentation or any online posts <span id="sn-doc" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">For the record, I can not claim I have never been exposed to <code class="highlighter-rouge">GObject</code> materials. The best I can say is that I haven’t <em>systematically</em> learnt <code class="highlighter-rouge">GObject</code>.</span>, understand <em>just enough</em> knowledge about <code class="highlighter-rouge">GObject</code> for the
+purpose of reading related code. The process is question-driven and
+code-inspired.</p>
+
+<p>Reading code is essentially an activity in which readers trace the control flow
+(i.e. function calls), state transitions (i.e. variable values) from <em>interested
+points</em> <span id="sn-interested-points" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">Say the point where an error in the log is printed. Or <code class="highlighter-rouge">main</code> function, public API entries and etc.</span> to a point where readers
+claim <em>sufficient</em> understanding is attained <span id="sn-sufficient-understanding" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">Say points where a bug has been identified or mis-configured environment has been confirmed.</span>.</p>
+
+<p>To understand <code class="highlighter-rouge">GObject</code> for reading code is to be able to trace method calls,
+property changes. This is a problem for <code class="highlighter-rouge">GObject</code> because some C tricks (most
+are intricate macros) are employed to implement some OOP features and they are
+not at all obvious. Further, for the purpose of reading <code class="highlighter-rouge">GObject</code> code, I do not
+need to understand how the macro magic work.</p>
+
+<h1 id="for-the-impatience">For the Impatience</h1>
+
+<p><span class="marginnote">This section was added after the main body was finished. The whole argument
+below is quite lengthy and murky. Maybe it’s better to summarize what I’ve
+learnt through the process beforehand.</span></p>
+
+<p>The procedure I would form with this <em>just enough</em> <code class="highlighter-rouge">GObject</code> knowledge is as
+follows:</p>
+
+<p>Look for class hierarchical info through file dependencies (includes), and
+<code class="highlighter-rouge">parent_XXX</code> members. Locate the exact method used in the polymorphism by
+looking at explicit reference of the <em>real</em> class type, usually this happens in
+the abstract, parent class. As instantiation is poorly comprehended, state
+changes (updates to variable member) can be hard to track. Pay special attention
+to naming, signals and callbacks. Overall, with the <code class="highlighter-rouge">OOP</code> experience from other
+languages as direction, naming as hints, take bold <code class="highlighter-rouge">jumps of faith</code> to form a
+<em>useful</em> understanding.</p>
+
+<h1 id="explain-the-terms">Explain the Terms</h1>
+
+<h2 id="question-driven">Question Driven</h2>
+
+<p><em>question-driven</em> is to start with questions about <code class="highlighter-rouge">GObject</code>. Being an <code class="highlighter-rouge">OO</code>
+implementation for C, basically we’re asking about how Object-Oriented features
+are achieved in <code class="highlighter-rouge">GObject</code>:</p>
+
+<ol>
+  <li>Where&amp;How a class is defined?</li>
+  <li>How the class inheritance is defined?</li>
+  <li>What are the common implicit members?</li>
+  <li>How an instance is <code class="highlighter-rouge">new</code>-ed?</li>
+  <li>How <code class="highlighter-rouge">polymorphism</code> is implemented? (or how <code class="highlighter-rouge">this</code> pointer is understood.)</li>
+  <li>What are those <code class="highlighter-rouge">signals</code>?</li>
+</ol>
+
+<h2 id="code-inspired">Code Inspired</h2>
+
+<p>Read <code class="highlighter-rouge">GObject</code> code directly and use the code snippet to figure out answers to
+above questions.</p>
+
+<p>In the following, I’m using code from <code class="highlighter-rouge">gnome-session-3.20.2</code> as example.</p>
+
+<h1 id="just-enough-gobject">Just Enough <code class="highlighter-rouge">GObject</code></h1>
+
+<h2 id="wherehow-a-class-is-defined">Where&amp;How a class is defined?</h2>
+
+<p><em>Where</em> is relatively simple as Class is meant for reuse and thus the
+declaration must be some headers.</p>
+
+<p><span class="marginnote">Technically, we should be looking at the block between <code class="highlighter-rouge">G_BEGIN_DECLS</code> and
+<code class="highlighter-rouge">G_END_DECLS</code>. However these two are not helpful in identifying the class we’re
+interested in. Together with boilerplates like <code class="highlighter-rouge">GSM_TYPE_APP</code>, <code class="highlighter-rouge">GSM_APP_CLASS</code>
+and etc., these are intuitively understood as the <code class="highlighter-rouge">GObject</code> <em>magic</em> and should
+be skimmed over when reading the code.</span></p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="cm">/**
+ * SP2_GNOME_SESSION:/gnome-session/gsm-app.h
+ */</span>
+<span class="k">typedef</span> <span class="k">struct</span> <span class="n">_GsmApp</span>        <span class="n">GsmApp</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="k">struct</span> <span class="n">_GsmAppClass</span>   <span class="n">GsmAppClass</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="k">struct</span> <span class="n">_GsmAppPrivate</span> <span class="n">GsmAppPrivate</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<p>Even from above, the verbosity of <code class="highlighter-rouge">Object</code> in C is obvious. <code class="highlighter-rouge">Class</code> and its
+<code class="highlighter-rouge">Instance</code> have their separate types. <code class="highlighter-rouge">Data Hiding</code> is achieved by <em>explicitly</em>
+putting internal details into a <code class="highlighter-rouge">XXXPrivate</code> type.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="cm">/**
+ * SP2_GNOME_SESSION:/gnome-session/gsm-app.h
+ */</span>
+<span class="k">struct</span> <span class="n">_GsmApp</span>
+<span class="p">{</span>
+        <span class="n">GObject</span>        <span class="n">parent</span><span class="p">;</span>
+        <span class="n">GsmAppPrivate</span> <span class="o">*</span><span class="n">priv</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="n">_GsmAppClass</span>
+<span class="p">{</span>
+        <span class="n">GObjectClass</span> <span class="n">parent_class</span><span class="p">;</span>
+
+        <span class="cm">/* signals */</span>
+        <span class="kt">void</span>        <span class="p">(</span><span class="o">*</span><span class="n">exited</span><span class="p">)</span>       <span class="p">(</span><span class="n">GsmApp</span> <span class="o">*</span><span class="n">app</span><span class="p">,</span>
+                                     <span class="n">guchar</span>  <span class="n">exit_code</span><span class="p">);</span>
+        <span class="c1">// ... more
+</span>
+        <span class="cm">/* virtual methods */</span>
+        <span class="n">gboolean</span>    <span class="p">(</span><span class="o">*</span><span class="n">impl_start</span><span class="p">)</span>                     <span class="p">(</span><span class="n">GsmApp</span>     <span class="o">*</span><span class="n">app</span><span class="p">,</span>
+                                                       <span class="n">GError</span>    <span class="o">**</span><span class="n">error</span><span class="p">);</span>
+        <span class="c1">// ... many more
+</span>        <span class="n">gboolean</span>    <span class="p">(</span><span class="o">*</span><span class="n">impl_is_conditionally_disabled</span><span class="p">)</span> <span class="p">(</span><span class="n">GsmApp</span>     <span class="o">*</span><span class="n">app</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="c1">// ...
+</span><span class="n">gboolean</span>         <span class="n">gsm_app_start</span>                          <span class="p">(</span><span class="n">GsmApp</span>     <span class="o">*</span><span class="n">app</span><span class="p">,</span>
+                                                         <span class="n">GError</span>    <span class="o">**</span><span class="n">error</span><span class="p">);</span>
+<span class="c1">// ...
+</span><span class="n">gboolean</span>         <span class="n">gsm_app_peek_is_conditionally_disabled</span> <span class="p">(</span><span class="n">GsmApp</span>     <span class="o">*</span><span class="n">app</span><span class="p">);</span>
+<span class="c1">// ...
+</span></code></pre>
+</div>
+
+<p>As <code class="highlighter-rouge">priv</code> of type <code class="highlighter-rouge">GsmAppPrivate *</code> is only a member of <code class="highlighter-rouge">_GsmApp</code>, <code class="highlighter-rouge">XXXPrivate</code>
+must be a collection of state variables for instances. The naming <code class="highlighter-rouge">parent_class</code>
+and <code class="highlighter-rouge">parent</code> member has suggested that they are what <em>marks</em> the inheritance
+relationship.</p>
+
+<p>Two things are of more considerations: the “virtual methods” comment and
+consistent naming of functions following the <code class="highlighter-rouge">_GsmAppClass</code> declaration.
+Intuitively, I thought methods of an object are pointers to functions. Later,
+we’ll see it turns out that methods are mere functions with the first argument
+being the object itself. <span id="sn-method-function" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">Maybe this is a way to avoid duplications. Or more importantly, it’s so because of the lack of auto <code class="highlighter-rouge">this</code> pointer for methods in C. Indeed, <code class="highlighter-rouge">obj-&gt;method(obj, arg1, arg2)</code> feels more verbose and confusing than <code class="highlighter-rouge">type_method(obj, arg1, arg2)</code> as in the former the term <code class="highlighter-rouge">obj</code> shows up twice.</span></p>
+
+<h2 id="how-is-the-class-inheritance-defined">How is the class inheritance defined?</h2>
+
+<p>As seen above, the <code class="highlighter-rouge">parent</code> and <code class="highlighter-rouge">parent_class</code> are what define the inheritance
+relationship among classes. Since the <code class="highlighter-rouge">C</code> has no awareness of class and
+objects, there is no easy <code class="highlighter-rouge">UML</code> diagram to be drawn. However, by inspecting the
+dependencies (include/includeby) within the source, we can still easily see
+this relationship in graph as
+<a href="/images/understand-minimal-gobject-for-code-reading/ArchInternalDependencies-gsm-app-client.png">this diagram</a>
+show. <span id="sn-dep-diagram" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">Another interesting point revealed in the diagram is the <em>empty</em> dependency from <code class="highlighter-rouge">gsm-app</code> to <code class="highlighter-rouge">gsm-client</code>, i.e. <code class="highlighter-rouge">gsm-client.h</code> is included in <code class="highlighter-rouge">gsm-app.h</code> but nothing is used from <code class="highlighter-rouge">gsm-client.h</code>. Though this might be a mere historical residual, it suggests some connection between <code class="highlighter-rouge">client</code> and <code class="highlighter-rouge">app</code>. Indeed, <code class="highlighter-rouge">app</code> once started is a <code class="highlighter-rouge">client</code>. (And there can be more interconnections.)</span></p>
+
+<p>From the dependency graph, we see clearly that <code class="highlighter-rouge">gsm-autostart-app</code> is a
+subclass of <code class="highlighter-rouge">gsm-app</code>, which is also shown in the code:</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="cm">/**
+ * SP2_GNOME_SESSION:/gnome-session/gsm-autostart-app.h
+ */</span>
+<span class="k">struct</span> <span class="n">_GsmAutostartApp</span>
+<span class="p">{</span>
+        <span class="n">GsmApp</span> <span class="n">parent</span><span class="p">;</span>
+
+        <span class="n">GsmAutostartAppPrivate</span> <span class="o">*</span><span class="n">priv</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="n">_GsmAutostartAppClass</span>
+<span class="p">{</span>
+        <span class="n">GsmAppClass</span> <span class="n">parent_class</span><span class="p">;</span>
+
+        <span class="cm">/* signals */</span>
+        <span class="kt">void</span>     <span class="p">(</span><span class="o">*</span><span class="n">condition_changed</span><span class="p">)</span>  <span class="p">(</span><span class="n">GsmApp</span>  <span class="o">*</span><span class="n">app</span><span class="p">,</span>
+                                        <span class="n">gboolean</span> <span class="n">condition</span><span class="p">);</span>
+<span class="p">};</span>
+</code></pre>
+</div>
+
+<h2 id="what-are-the-common-implicit-members">What are the common implicit members?</h2>
+
+<p>By <code class="highlighter-rouge">implicit</code>, I mean members and methods created, used by the <code class="highlighter-rouge">GObject</code> macro
+magic. They show up naturally when we trace some <code class="highlighter-rouge">GObject</code> functions and find
+their declarations/usages are nowhere within the source tree. <code class="highlighter-rouge">XXX_init</code>,
+<code class="highlighter-rouge">XXX_contructor</code>, <code class="highlighter-rouge">XXX_dispose</code> are most noticed ones. Though it’s relatively
+easy to pick these <em>magic elements</em> out, it proved to be hard to see the exact
+interconnections between them.</p>
+
+<h2 id="how-an-instance-is-new-ed">How an instance is <code class="highlighter-rouge">new</code>-ed?</h2>
+
+<p><span class="marginnote">The arguments made in this section is much less plausible than others. It turned
+out to be quite hard to formalize <em>the guesswork</em> done during the analysis.
+Nevertheless, to complete the project of this post, I proceeded to write out my
+thoughts, with <em>best efforts</em>.</span></p>
+
+<p>The instantiation of objects turns out to be a hard procedure to get to the
+exact details. Much of the difficulty stems from the mystical interactions among
+implicit members. However, with some <em>jumps</em> (hypothesis), we might still be
+able to to understand the code.</p>
+
+<p><strong>First</strong>, we notice many methods <code class="highlighter-rouge">impl_XXX</code> of <code class="highlighter-rouge">gsm-app</code> is set to <code class="highlighter-rouge">NULL</code>. With the
+lack of <code class="highlighter-rouge">new</code>-ish functions, let’s assume <code class="highlighter-rouge">gsm-app</code> is <em>abstract</em> and can not
+have any instances.</p>
+
+<p><strong>Second</strong>, let’s turn to <code class="highlighter-rouge">gsm-autostart-app</code>. There is <code class="highlighter-rouge">gsm_autostart_app_new</code>,
+which seems to be the only generator of <code class="highlighter-rouge">gsm-autostart-app</code> externally.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="cm">/**
+ * SP2_GNOME_SESSION:/gnome-session/gsm-manager.c
+ */</span>
+<span class="k">static</span> <span class="n">gboolean</span>
+<span class="nf">add_autostart_app_internal</span> <span class="p">(</span><span class="n">GsmManager</span> <span class="o">*</span><span class="n">manager</span><span class="p">,</span>
+                            <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">path</span><span class="p">,</span>
+                            <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">provides</span><span class="p">,</span>
+                            <span class="n">gboolean</span>    <span class="n">is_required</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="n">GsmApp</span>  <span class="o">*</span><span class="n">app</span><span class="p">;</span>
+        <span class="c1">// ...
+</span>
+        <span class="n">app</span> <span class="o">=</span> <span class="n">gsm_autostart_app_new</span> <span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">error</span><span class="p">);</span>
+        <span class="c1">// ...
+</span><span class="p">}</span>
+</code></pre>
+</div>
+
+<p><strong>Third</strong>, the implementation of <code class="highlighter-rouge">gsm_autostart_app_new</code> looks bizarre for our
+<em>untrained</em> eyes.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="cm">/**
+ * SP2_GNOME_SESSION:/gnome-session/gsm-autostart-app.c
+ */</span>
+<span class="n">GsmApp</span> <span class="o">*</span>
+<span class="nf">gsm_autostart_app_new</span> <span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">desktop_file</span><span class="p">,</span>
+                       <span class="n">GError</span>    <span class="o">**</span><span class="n">error</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">GsmApp</span><span class="o">*</span><span class="p">)</span> <span class="n">g_initable_new</span> <span class="p">(</span><span class="n">GSM_TYPE_AUTOSTART_APP</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span>
+                                         <span class="s">"desktop-filename"</span><span class="p">,</span> <span class="n">desktop_file</span><span class="p">,</span>
+                                         <span class="nb">NULL</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>The doc on <code class="highlighter-rouge">g_initable_new</code> says something about
+<a href="https://developer.gnome.org/gio/stable/GInitable.html#g-initable-new">“failable object initialization”</a>.
+The declaration of the function itself looks like:</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="cm">/**
+ * https://developer.gnome.org/gio/stable/GInitable.html#g-initable-new
+ */</span>
+<span class="n">gpointer</span>
+<span class="n">g_initable_new</span> <span class="p">(</span><span class="n">GType</span> <span class="n">object_type</span><span class="p">,</span>
+                <span class="n">GCancellable</span> <span class="o">*</span><span class="n">cancellable</span><span class="p">,</span>
+                <span class="n">GError</span> <span class="o">**</span><span class="n">error</span><span class="p">,</span>
+                <span class="k">const</span> <span class="n">gchar</span> <span class="o">*</span><span class="n">first_property_name</span><span class="p">,</span>
+                <span class="p">...);</span>
+                
+<span class="c1">// The '...' means that the value if the first property, followed by and other
+// property value pairs, and ended by NULL. 
+</span></code></pre>
+</div>
+
+<p>The ending <code class="highlighter-rouge">varargs</code> of key-value pairs are of particular interests. The
+following <code class="highlighter-rouge">gsm_autostart_app_initable_init</code> has already started to use
+<code class="highlighter-rouge">desktop-filename</code> property.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="cm">/**
+ * SP2_GNOME_SESSION:/gnome-session/gsm-autostart-app.c
+ */</span>
+<span class="k">static</span> <span class="n">gboolean</span>
+<span class="nf">gsm_autostart_app_initable_init</span> <span class="p">(</span><span class="n">GInitable</span> <span class="o">*</span><span class="n">initable</span><span class="p">,</span>
+                                 <span class="n">GCancellable</span> <span class="o">*</span><span class="n">cancellable</span><span class="p">,</span>
+                                 <span class="n">GError</span>  <span class="o">**</span><span class="n">error</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="n">GsmAutostartApp</span> <span class="o">*</span><span class="n">app</span> <span class="o">=</span> <span class="n">GSM_AUTOSTART_APP</span> <span class="p">(</span><span class="n">initable</span><span class="p">);</span>
+
+        <span class="n">g_assert</span> <span class="p">(</span><span class="n">app</span><span class="o">-&gt;</span><span class="n">priv</span><span class="o">-&gt;</span><span class="n">desktop_filename</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">);</span>
+        <span class="n">app</span><span class="o">-&gt;</span><span class="n">priv</span><span class="o">-&gt;</span><span class="n">app_info</span> <span class="o">=</span> <span class="n">g_desktop_app_info_new_from_filename</span> <span class="p">(</span><span class="n">app</span><span class="o">-&gt;</span><span class="n">priv</span><span class="o">-&gt;</span><span class="n">desktop_filename</span><span class="p">);</span>
+        <span class="c1">// ...
+</span><span class="p">}</span>
+</code></pre>
+</div>
+
+<p>Where the property <code class="highlighter-rouge">desktop-filename</code> is installed:</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="n">gsm_autostart_app_class_init</span> <span class="p">(</span><span class="n">GsmAutostartAppClass</span> <span class="o">*</span><span class="n">klass</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="n">GObjectClass</span> <span class="o">*</span><span class="n">object_class</span> <span class="o">=</span> <span class="n">G_OBJECT_CLASS</span> <span class="p">(</span><span class="n">klass</span><span class="p">);</span>
+        <span class="c1">// ...
+</span>
+        <span class="n">g_object_class_install_property</span> <span class="p">(</span><span class="n">object_class</span><span class="p">,</span>
+                                         <span class="n">PROP_DESKTOP_FILENAME</span><span class="p">,</span>
+                                         <span class="n">g_param_spec_string</span> <span class="p">(</span><span class="s">"desktop-filename"</span><span class="p">,</span>
+                                                              <span class="s">"Desktop filename"</span><span class="p">,</span>
+                                                              <span class="s">"Freedesktop .desktop file"</span><span class="p">,</span>
+                                                              <span class="nb">NULL</span><span class="p">,</span>
+                                                              <span class="n">G_PARAM_READWRITE</span> <span class="o">|</span> <span class="n">G_PARAM_CONSTRUCT</span><span class="p">));</span>
+        <span class="c1">// ...
+</span><span class="p">}</span> 
+</code></pre>
+</div>
+
+<p>I’ve assumed <code class="highlighter-rouge">desktop-filename</code> is the same as <code class="highlighter-rouge">app-&gt;priv-&gt;desktop_filename</code>.
+From these, it’s reasonable to say <code class="highlighter-rouge">g_initable_new</code> call above is the very call
+that instantializes an object.</p>
+
+<p><strong>Finally</strong>, Similar arguments can also be made about other parts of the
+instantiation process. From the various function names and comparison with
+similar functions in <code class="highlighter-rouge">gsm-app</code>, the <em>educated guess</em> we can have about the
+instantiation process is as follows:</p>
+
+<ol>
+  <li><code class="highlighter-rouge">XXX_new</code> is the method to <em>start</em> instantializing an object. It’s likely
+there are other types of <code class="highlighter-rouge">new</code> offered by <code class="highlighter-rouge">GObject</code> other than
+<code class="highlighter-rouge">g_initable_new</code>.</li>
+  <li><code class="highlighter-rouge">XXX_class_init</code> will get called if the <em>class data</em> have not
+initialized. This may happen only once as all instance share the same <em>class
+data</em>.</li>
+  <li><code class="highlighter-rouge">XXX_constructor</code>, <code class="highlighter-rouge">XXX_init</code> will get called <em>after</em> <code class="highlighter-rouge">XXX_class_init</code>.</li>
+</ol>
+
+<h2 id="how-polymorphism-is-implemented">How <code class="highlighter-rouge">polymorphism</code> is implemented?</h2>
+
+<p>This is already shown in previous code snippets. In short, <code class="highlighter-rouge">polymorphism</code> is
+achieved explicitly with boilerplate code.</p>
+
+<p>Take method <code class="highlighter-rouge">impl_start</code> as example.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="cm">/**
+ * SP2_GNOME_SESSION:/gnome-session/gsm-app.h
+ */</span>
+<span class="k">struct</span> <span class="n">_GsmAppClass</span>
+<span class="p">{</span>
+        <span class="c1">// ...
+</span>
+        <span class="cm">/* virtual methods */</span>
+        <span class="n">gboolean</span>    <span class="p">(</span><span class="o">*</span><span class="n">impl_start</span><span class="p">)</span>                     <span class="p">(</span><span class="n">GsmApp</span>     <span class="o">*</span><span class="n">app</span><span class="p">,</span>
+                                                       <span class="n">GError</span>    <span class="o">**</span><span class="n">error</span><span class="p">);</span>
+        <span class="c1">// ...
+</span><span class="p">};</span>
+
+<span class="c1">// ...
+</span><span class="n">gboolean</span>         <span class="n">gsm_app_start</span>                          <span class="p">(</span><span class="n">GsmApp</span>     <span class="o">*</span><span class="n">app</span><span class="p">,</span>
+                                                         <span class="n">GError</span>    <span class="o">**</span><span class="n">error</span><span class="p">);</span>
+<span class="c1">// ...
+</span>
+<span class="cm">/**
+ * SP2_GNOME_SESSION:/gnome-session/gsm-app.c
+ */</span>
+<span class="k">static</span> <span class="kt">void</span>
+<span class="nf">gsm_app_class_init</span> <span class="p">(</span><span class="n">GsmAppClass</span> <span class="o">*</span><span class="n">klass</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="c1">// ...
+</span>
+        <span class="n">klass</span><span class="o">-&gt;</span><span class="n">impl_start</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="c1">// ...
+</span><span class="p">}</span>
+
+<span class="n">gboolean</span>
+<span class="nf">gsm_app_start</span> <span class="p">(</span><span class="n">GsmApp</span>  <span class="o">*</span><span class="n">app</span><span class="p">,</span>
+               <span class="n">GError</span> <span class="o">**</span><span class="n">error</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="n">g_debug</span> <span class="p">(</span><span class="s">"Starting app: %s"</span><span class="p">,</span> <span class="n">app</span><span class="o">-&gt;</span><span class="n">priv</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">GSM_APP_GET_CLASS</span> <span class="p">(</span><span class="n">app</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">impl_start</span> <span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">error</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>The definition of <code class="highlighter-rouge">gsm_app_start</code> shows the explicit reference to the <em>real</em>
+class of <code class="highlighter-rouge">app</code> using <code class="highlighter-rouge">GSM_APP_GET_CLASS</code> macro. <code class="highlighter-rouge">gsm-app</code> is abstract and have
+<code class="highlighter-rouge">impl_start</code> as <code class="highlighter-rouge">NULL</code>. And for <code class="highlighter-rouge">gsm-autostart-app</code>, it indeed sets its own
+<code class="highlighter-rouge">impl_start</code> :</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="cm">/**
+ * SP2_GNOME_SESSION:/gnome-session/gsm-autostart-app.c
+ */</span>
+<span class="k">static</span> <span class="kt">void</span>
+<span class="nf">gsm_autostart_app_class_init</span> <span class="p">(</span><span class="n">GsmAutostartAppClass</span> <span class="o">*</span><span class="n">klass</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="n">GObjectClass</span> <span class="o">*</span><span class="n">object_class</span> <span class="o">=</span> <span class="n">G_OBJECT_CLASS</span> <span class="p">(</span><span class="n">klass</span><span class="p">);</span>
+        <span class="n">GsmAppClass</span>  <span class="o">*</span><span class="n">app_class</span> <span class="o">=</span> <span class="n">GSM_APP_CLASS</span> <span class="p">(</span><span class="n">klass</span><span class="p">);</span>
+
+        <span class="c1">// ...
+</span>        <span class="n">app_class</span><span class="o">-&gt;</span><span class="n">impl_start</span> <span class="o">=</span> <span class="n">gsm_autostart_app_start</span><span class="p">;</span>
+        <span class="c1">// ...
+</span><span class="p">}</span>
+</code></pre>
+</div>
+
+<p>So the public API for consumers of <code class="highlighter-rouge">gsm-XXX-app</code> is <code class="highlighter-rouge">gsm_app_start</code> and this can
+be verified by looking up its references within the source tree.</p>
+
+<h2 id="what-are-those-signals">What are those <code class="highlighter-rouge">signals</code>?</h2>
+
+<p>This is a question we can ask only after reading the code.</p>
+
+<p>From above snippets, we’ve seen a lot of <code class="highlighter-rouge">signal</code> declaration, which is not
+typical among other <code class="highlighter-rouge">OOP</code> languages. For the purpose of understanding, most of
+time they are no different than other event-driven pattern, and can be handled
+as such safely. We only need to pay attention to property names, callbacks and etc,
+just like the above <code class="highlighter-rouge">desktop-filename</code>.</p>
+
+<h1 id="after-thoughts">After Thoughts</h1>
+
+<p>While writing down the above process, I frequently doubted the usefulness of
+doing them at all. Whatever the little understanding I <em>claim</em> to achieve above
+is abysmal compared to what I would have <em>gained</em> in, say 2 hours of, reading
+<code class="highlighter-rouge">GObject</code> documentation. However, I still completed the post for two reasons:</p>
+
+<ol>
+  <li>The <em>guesswork</em> process, inaccurate as it is, is very typical for code
+reading. And we’re usually not that fortunate to have a well-polished
+documentation as that of <code class="highlighter-rouge">GObject</code>. Forming the <em>gut feelings</em> in the <em>guess</em>
+has proved to be arduous but fruitful.</li>
+  <li>The possible enlightenment I’ll have when I learn <code class="highlighter-rouge">GObject</code> systematically.
+The reward might be some great revelation about the <code class="highlighter-rouge">guesswork</code> process that
+can improve my code reading skill a lot.</li>
+</ol>
+
+    <p class="article-tombstone"><br>∎</p>
+  </section>
+
+  <div class="article-footer">
+    <div class="post-tags">
+      <b> Tags </b>
+      
+      • <a href="/tags/gobject"><span>gobject</span></a>
+      
+      • <a href="/tags/code-reading"><span>code-reading</span></a>
+      
+      • <a href="/tags/question-driven"><span>question-driven</span></a>
+      
+      • <a href="/tags/gnome-session"><span>gnome-session</span></a>
+      
+    </div>
+    <div class="post-comment-link">
+      <b>Comment</b>:
+      <a href="https://github.com/carltonf/carltonf.github.io/issues/new" target="_blank">Github Issue</a>
+    </div>
+  </div>
+
+</article>
+
+<footer class="site-footer">
+  <hr>
+
+  <section class="navigation-links">
+    <!-- NOTE: Manually arrange pages as 'site.pages' are not sorted. -->
+    <a class="page-link" href="/">Home</a>
+    • <a class="page-link" href="/posts">Blog</a>
+    • <a class="page-link" href="/wiki">Wiki</a>
+    • <a class="page-link" href="/contact">Contact Me</a>
+    • <a class="page-link" href="/search">Search</a>
+  </section>
+  <section class="copyright">
+    All content copyright <a href="/contact">Carl Xiong</a> &copy; 2016
+    &bull; All rights reserved.
+  </section>
+</footer>
+
+
+  </body>
+</html>

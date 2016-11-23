@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://carltonf.github.io/post/understand-minimal-gobject-for-code-reading</loc>
+<lastmod>2016-10-21T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://carltonf.github.io/post/code-reading-the-racing-of-two-agents</loc>
+<lastmod>2016-11-23T00:00:00+00:00</lastmod>
+</url>
+<url>
 <loc>http://carltonf.github.io/post/writing-habit-and-tools</loc>
 <lastmod>2016-08-30T00:00:00+00:00</lastmod>
 </url>
@@ -10,7 +18,7 @@
 </url>
 <url>
 <loc>http://carltonf.github.io/post/a-learning-guide-gnome-shell-bug-fixing</loc>
-<lastmod>2016-08-18T00:00:00+00:00</lastmod>
+<lastmod>2016-11-01T00:00:00+00:00</lastmod>
 </url>
 <url>
 <loc>http://carltonf.github.io/post/revisiting-todo-of-this-site</loc>
@@ -217,6 +225,21 @@
 </url>
 <url>
 <loc>http://carltonf.github.io/tags/tool/</loc>
+</url>
+<url>
+<loc>http://carltonf.github.io/tags/code-reading/</loc>
+</url>
+<url>
+<loc>http://carltonf.github.io/tags/sle/</loc>
+</url>
+<url>
+<loc>http://carltonf.github.io/tags/gobject/</loc>
+</url>
+<url>
+<loc>http://carltonf.github.io/tags/question-driven/</loc>
+</url>
+<url>
+<loc>http://carltonf.github.io/tags/gnome-session/</loc>
 </url>
 <url>
 <loc>http://carltonf.github.io/wiki/linux-system-configuration-general.html</loc>

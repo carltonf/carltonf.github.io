@@ -38,6 +38,22 @@
 
     
     {
+        "value": "Understand 'Just Enough' GObject For Code Reading",
+        "data": "http://carltonf.github.io/post/understand-minimal-gobject-for-code-reading"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Code-Reading: The Racing Of Two Agents",
+        "data": "http://carltonf.github.io/post/code-reading-the-racing-of-two-agents"
+    }
+    
+    
+
+    
+    ,{
         "value": "Writing habit and tools",
         "data": "http://carltonf.github.io/post/writing-habit-and-tools"
     }
@@ -574,6 +590,46 @@
 
     
     ,{
+        "value": "Tag: code-reading",
+        "data": "http://carltonf.github.io/tags/code-reading/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: sle",
+        "data": "http://carltonf.github.io/tags/sle/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: gobject",
+        "data": "http://carltonf.github.io/tags/gobject/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: question-driven",
+        "data": "http://carltonf.github.io/tags/question-driven/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: gnome-session",
+        "data": "http://carltonf.github.io/tags/gnome-session/"
+    }
+    
+    
+
+    
+    ,{
         "value": "Blog",
         "data": "http://carltonf.github.io/posts/page2/"
     }
@@ -584,6 +640,14 @@
     ,{
         "value": "Blog",
         "data": "http://carltonf.github.io/posts/page3/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Blog",
+        "data": "http://carltonf.github.io/posts/page4/"
     }
     
     

@@ -565,7 +565,7 @@ h1 code, h2 code, h3 code {
   font-size: 1rem; }
 
 @media screen and (max-width: 760px) {
-  pre.code {
+  pre code {
     width: 87.5%; } }
 pre code {
   width: 52.5%;
@@ -614,6 +614,20 @@ li p {
   .post-article .article-footer .post-comment-link {
     float: right; }
 
+/** Tweak code block style */
+pre.highlight {
+  /* NOTE: 'auto' to adjust to the existence of sidenote block */
+  width: auto;
+  /* NOTE: add a gap between sidenote block and code block */
+  padding-right: 2.5%;
+  /* NOTE: not too long when there is no sidenote block */
+  margin-right: 10%; }
+  pre.highlight code {
+    width: auto;
+    display: block;
+    box-shadow: -5px 0 10px #9c9c9c;
+    font-size: inherit; }
+
 /* TODO bad style, 35% is in line with <hr>'s 65% width, factor these styles using SCSS vars  */
 
   </style>
@@ -648,8 +662,8 @@ li p {
     </time>
     
     • <i>Updated at </i>
-    <time datetime="18 August 2016">
-      18 August 2016
+    <time datetime="01 November 2016">
+      01 November 2016
     </time>
     
   </div>
@@ -657,6 +671,10 @@ li p {
   <section>
     <p>A curated list of learning materials, references for GNOME Shell (bug-fixing)
 developers – <em>very</em> pragmatic.</p>
+
+<p><strong>DISCLAIM:</strong> Even at the time of writing, I was not following GNOME development
+as I used to be. So much of the claims on the states GNOME 3 might be
+out-righteously outdated.</p>
 
 <p>The other day, my team leader asked me to give some guide for new colleagues in
 the team. I came up with a list of learning materials, references <em>with strong
@@ -667,7 +685,7 @@ here is the guideline list plus my review.</p>
 
 <p><strong>Some Conventions</strong>: different materials have different importance. I didn’t
 bother going into fine grades of proficiency level. <span id="sn-proficiency-level" class="margin-toggle sidenote-number"></span>
-      <span class="sidenote">This recalls the memory about the college entry exam, when every student was supposed to know the required proficiency level of every knowledge.</span> Only two levels are used: <strong>Master</strong> and <strong>General</strong>.</p>
+      <span class="sidenote">This brings up the memory about the college entry exam, when every student was supposed to know the required proficiency level of each subject.</span> Only two levels are used: <strong>Master</strong> and <strong>General</strong>.</p>
 
 <h1 id="materials">Materials</h1>
 
@@ -683,7 +701,7 @@ still need to know it well for its ubiquity in gnome.</p>
 <p><span class="marginnote"><code class="highlighter-rouge">DBus</code> would have been much more important if the
 kernel module <a href="https://www.freedesktop.org/wiki/Software/systemd/kdbus/">kdbus</a>
 had been merged into kernel. The farthest progress it made was into
-<code class="highlighter-rouge">kernel-next</code>. I’ve read some articles at at
+<code class="highlighter-rouge">kernel-next</code>. I’ve read some articles at
 <a href="http://www.phoronix.com/scan.php?page=search&amp;q=KDBUS">phoronix</a> talking about
 the main obstacle was about the security. As a mere side looker, I’ll not say
 more.</span></p>
@@ -728,7 +746,7 @@ ones: <span id="sn-gnome-wiki" class="margin-toggle sidenote-number"></span>
 <ul>
   <li>General Information:  <em>Master</em>, helpful for debugging</li>
   <li>Technology: <em>General</em>, you need to know the capacity of each component.</li>
-  <li>Looking Glass：<em>Master</em>. Not as useful as it claims to be but this is only
+  <li>Looking Glass：<em>Master</em>. Not as useful as it claims to be but this is the only
 built-in tool we have.</li>
   <li>Development guide for GNOME Shell：<em>General</em>, this is more about feature
 development and upstream involvement.</li>
@@ -747,8 +765,9 @@ almost written completely in JavaScript, we all need to know it well.</p>
 out there). The <code class="highlighter-rouge">JavaScript</code> engine used by GNOME Shell is
 <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey">SpiderMonkey</a>,
 version 24 <span id="sn-spidermonkey-version" class="margin-toggle sidenote-number"></span>
-    <span class="sidenote">Previous SP1, i.e. GNOME 3.10.x is shipped with version 17.</span>, a relatively recent JS engine. However, GNOME has
-only utilized a small set of JS features in a C-like way.</p>
+    <span class="sidenote">Previous SP1, i.e. GNOME 3.10.x is shipped with <code class="highlighter-rouge">SpiderMonkey</code> version 17.</span>, a relatively recent JS engine.
+However, GNOME has only utilized a small set of JS features in a C-like
+fashion.</p>
   </li>
   <li>
     <p><a href="https://www.amazon.com/JavaScript-Definitive-Guide-Activate-Guides-ebook/dp/B004XQX4K0">JavaScript: the Definitive Guide</a>.</p>

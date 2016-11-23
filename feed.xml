@@ -6,9 +6,707 @@
 </description>
     <link>http://carltonf.github.io/</link>
     <atom:link href="http://carltonf.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 30 Aug 2016 13:26:29 +0000</pubDate>
-    <lastBuildDate>Tue, 30 Aug 2016 13:26:29 +0000</lastBuildDate>
+    <pubDate>Wed, 23 Nov 2016 05:58:20 +0000</pubDate>
+    <lastBuildDate>Wed, 23 Nov 2016 05:58:20 +0000</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
+    
+      <item>
+        <title>Understand 'Just Enough' GObject For Code Reading</title>
+        <description>&lt;p&gt;Without referring to &lt;code class=&quot;highlighter-rouge&quot;&gt;GObject&lt;/code&gt; documentation or any online posts &lt;span id=&quot;sn-doc&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;For the record, I can not claim I have never been exposed to &lt;code class=&quot;highlighter-rouge&quot;&gt;GObject&lt;/code&gt; materials. The best I can say is that I haven’t &lt;em&gt;systematically&lt;/em&gt; learnt &lt;code class=&quot;highlighter-rouge&quot;&gt;GObject&lt;/code&gt;.&lt;/span&gt;, understand &lt;em&gt;just enough&lt;/em&gt; knowledge about &lt;code class=&quot;highlighter-rouge&quot;&gt;GObject&lt;/code&gt; for the
+purpose of reading related code. The process is question-driven and
+code-inspired.&lt;/p&gt;
+
+&lt;p&gt;Reading code is essentially an activity in which readers trace the control flow
+(i.e. function calls), state transitions (i.e. variable values) from &lt;em&gt;interested
+points&lt;/em&gt; &lt;span id=&quot;sn-interested-points&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;Say the point where an error in the log is printed. Or &lt;code class=&quot;highlighter-rouge&quot;&gt;main&lt;/code&gt; function, public API entries and etc.&lt;/span&gt; to a point where readers
+claim &lt;em&gt;sufficient&lt;/em&gt; understanding is attained &lt;span id=&quot;sn-sufficient-understanding&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;Say points where a bug has been identified or mis-configured environment has been confirmed.&lt;/span&gt;.&lt;/p&gt;
+
+&lt;p&gt;To understand &lt;code class=&quot;highlighter-rouge&quot;&gt;GObject&lt;/code&gt; for reading code is to be able to trace method calls,
+property changes. This is a problem for &lt;code class=&quot;highlighter-rouge&quot;&gt;GObject&lt;/code&gt; because some C tricks (most
+are intricate macros) are employed to implement some OOP features and they are
+not at all obvious. Further, for the purpose of reading &lt;code class=&quot;highlighter-rouge&quot;&gt;GObject&lt;/code&gt; code, I do not
+need to understand how the macro magic work.&lt;/p&gt;
+
+&lt;h1 id=&quot;for-the-impatience&quot;&gt;For the Impatience&lt;/h1&gt;
+
+&lt;p&gt;&lt;span class=&quot;marginnote&quot;&gt;This section was added after the main body was finished. The whole argument
+below is quite lengthy and murky. Maybe it’s better to summarize what I’ve
+learnt through the process beforehand.&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;The procedure I would form with this &lt;em&gt;just enough&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;GObject&lt;/code&gt; knowledge is as
+follows:&lt;/p&gt;
+
+&lt;p&gt;Look for class hierarchical info through file dependencies (includes), and
+&lt;code class=&quot;highlighter-rouge&quot;&gt;parent_XXX&lt;/code&gt; members. Locate the exact method used in the polymorphism by
+looking at explicit reference of the &lt;em&gt;real&lt;/em&gt; class type, usually this happens in
+the abstract, parent class. As instantiation is poorly comprehended, state
+changes (updates to variable member) can be hard to track. Pay special attention
+to naming, signals and callbacks. Overall, with the &lt;code class=&quot;highlighter-rouge&quot;&gt;OOP&lt;/code&gt; experience from other
+languages as direction, naming as hints, take bold &lt;code class=&quot;highlighter-rouge&quot;&gt;jumps of faith&lt;/code&gt; to form a
+&lt;em&gt;useful&lt;/em&gt; understanding.&lt;/p&gt;
+
+&lt;h1 id=&quot;explain-the-terms&quot;&gt;Explain the Terms&lt;/h1&gt;
+
+&lt;h2 id=&quot;question-driven&quot;&gt;Question Driven&lt;/h2&gt;
+
+&lt;p&gt;&lt;em&gt;question-driven&lt;/em&gt; is to start with questions about &lt;code class=&quot;highlighter-rouge&quot;&gt;GObject&lt;/code&gt;. Being an &lt;code class=&quot;highlighter-rouge&quot;&gt;OO&lt;/code&gt;
+implementation for C, basically we’re asking about how Object-Oriented features
+are achieved in &lt;code class=&quot;highlighter-rouge&quot;&gt;GObject&lt;/code&gt;:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Where&amp;amp;How a class is defined?&lt;/li&gt;
+  &lt;li&gt;How the class inheritance is defined?&lt;/li&gt;
+  &lt;li&gt;What are the common implicit members?&lt;/li&gt;
+  &lt;li&gt;How an instance is &lt;code class=&quot;highlighter-rouge&quot;&gt;new&lt;/code&gt;-ed?&lt;/li&gt;
+  &lt;li&gt;How &lt;code class=&quot;highlighter-rouge&quot;&gt;polymorphism&lt;/code&gt; is implemented? (or how &lt;code class=&quot;highlighter-rouge&quot;&gt;this&lt;/code&gt; pointer is understood.)&lt;/li&gt;
+  &lt;li&gt;What are those &lt;code class=&quot;highlighter-rouge&quot;&gt;signals&lt;/code&gt;?&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;code-inspired&quot;&gt;Code Inspired&lt;/h2&gt;
+
+&lt;p&gt;Read &lt;code class=&quot;highlighter-rouge&quot;&gt;GObject&lt;/code&gt; code directly and use the code snippet to figure out answers to
+above questions.&lt;/p&gt;
+
+&lt;p&gt;In the following, I’m using code from &lt;code class=&quot;highlighter-rouge&quot;&gt;gnome-session-3.20.2&lt;/code&gt; as example.&lt;/p&gt;
+
+&lt;h1 id=&quot;just-enough-gobject&quot;&gt;Just Enough &lt;code class=&quot;highlighter-rouge&quot;&gt;GObject&lt;/code&gt;&lt;/h1&gt;
+
+&lt;h2 id=&quot;wherehow-a-class-is-defined&quot;&gt;Where&amp;amp;How a class is defined?&lt;/h2&gt;
+
+&lt;p&gt;&lt;em&gt;Where&lt;/em&gt; is relatively simple as Class is meant for reuse and thus the
+declaration must be some headers.&lt;/p&gt;
+
+&lt;p&gt;&lt;span class=&quot;marginnote&quot;&gt;Technically, we should be looking at the block between &lt;code class=&quot;highlighter-rouge&quot;&gt;G_BEGIN_DECLS&lt;/code&gt; and
+&lt;code class=&quot;highlighter-rouge&quot;&gt;G_END_DECLS&lt;/code&gt;. However these two are not helpful in identifying the class we’re
+interested in. Together with boilerplates like &lt;code class=&quot;highlighter-rouge&quot;&gt;GSM_TYPE_APP&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;GSM_APP_CLASS&lt;/code&gt;
+and etc., these are intuitively understood as the &lt;code class=&quot;highlighter-rouge&quot;&gt;GObject&lt;/code&gt; &lt;em&gt;magic&lt;/em&gt; and should
+be skimmed over when reading the code.&lt;/span&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cm&quot;&gt;/**
+ * SP2_GNOME_SESSION:/gnome-session/gsm-app.h
+ */&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;typedef&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_GsmApp&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;GsmApp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;typedef&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_GsmAppClass&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;GsmAppClass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;typedef&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_GsmAppPrivate&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GsmAppPrivate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Even from above, the verbosity of &lt;code class=&quot;highlighter-rouge&quot;&gt;Object&lt;/code&gt; in C is obvious. &lt;code class=&quot;highlighter-rouge&quot;&gt;Class&lt;/code&gt; and its
+&lt;code class=&quot;highlighter-rouge&quot;&gt;Instance&lt;/code&gt; have their separate types. &lt;code class=&quot;highlighter-rouge&quot;&gt;Data Hiding&lt;/code&gt; is achieved by &lt;em&gt;explicitly&lt;/em&gt;
+putting internal details into a &lt;code class=&quot;highlighter-rouge&quot;&gt;XXXPrivate&lt;/code&gt; type.&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cm&quot;&gt;/**
+ * SP2_GNOME_SESSION:/gnome-session/gsm-app.h
+ */&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_GsmApp&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;GObject&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;parent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;GsmAppPrivate&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;priv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_GsmAppClass&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;GObjectClass&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;parent_class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+        &lt;span class=&quot;cm&quot;&gt;/* signals */&lt;/span&gt;
+        &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;        &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;exited&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;       &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GsmApp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                                     &lt;span class=&quot;n&quot;&gt;guchar&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;exit_code&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// ... more
+&lt;/span&gt;
+        &lt;span class=&quot;cm&quot;&gt;/* virtual methods */&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;gboolean&lt;/span&gt;    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;impl_start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;                     &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GsmApp&lt;/span&gt;     &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                                                       &lt;span class=&quot;n&quot;&gt;GError&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// ... many more
+&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;gboolean&lt;/span&gt;    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;impl_is_conditionally_disabled&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GsmApp&lt;/span&gt;     &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// ...
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gboolean&lt;/span&gt;         &lt;span class=&quot;n&quot;&gt;gsm_app_start&lt;/span&gt;                          &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GsmApp&lt;/span&gt;     &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                                                         &lt;span class=&quot;n&quot;&gt;GError&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// ...
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gboolean&lt;/span&gt;         &lt;span class=&quot;n&quot;&gt;gsm_app_peek_is_conditionally_disabled&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GsmApp&lt;/span&gt;     &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// ...
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;As &lt;code class=&quot;highlighter-rouge&quot;&gt;priv&lt;/code&gt; of type &lt;code class=&quot;highlighter-rouge&quot;&gt;GsmAppPrivate *&lt;/code&gt; is only a member of &lt;code class=&quot;highlighter-rouge&quot;&gt;_GsmApp&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;XXXPrivate&lt;/code&gt;
+must be a collection of state variables for instances. The naming &lt;code class=&quot;highlighter-rouge&quot;&gt;parent_class&lt;/code&gt;
+and &lt;code class=&quot;highlighter-rouge&quot;&gt;parent&lt;/code&gt; member has suggested that they are what &lt;em&gt;marks&lt;/em&gt; the inheritance
+relationship.&lt;/p&gt;
+
+&lt;p&gt;Two things are of more considerations: the “virtual methods” comment and
+consistent naming of functions following the &lt;code class=&quot;highlighter-rouge&quot;&gt;_GsmAppClass&lt;/code&gt; declaration.
+Intuitively, I thought methods of an object are pointers to functions. Later,
+we’ll see it turns out that methods are mere functions with the first argument
+being the object itself. &lt;span id=&quot;sn-method-function&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;Maybe this is a way to avoid duplications. Or more importantly, it’s so because of the lack of auto &lt;code class=&quot;highlighter-rouge&quot;&gt;this&lt;/code&gt; pointer for methods in C. Indeed, &lt;code class=&quot;highlighter-rouge&quot;&gt;obj-&amp;gt;method(obj, arg1, arg2)&lt;/code&gt; feels more verbose and confusing than &lt;code class=&quot;highlighter-rouge&quot;&gt;type_method(obj, arg1, arg2)&lt;/code&gt; as in the former the term &lt;code class=&quot;highlighter-rouge&quot;&gt;obj&lt;/code&gt; shows up twice.&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;how-is-the-class-inheritance-defined&quot;&gt;How is the class inheritance defined?&lt;/h2&gt;
+
+&lt;p&gt;As seen above, the &lt;code class=&quot;highlighter-rouge&quot;&gt;parent&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;parent_class&lt;/code&gt; are what define the inheritance
+relationship among classes. Since the &lt;code class=&quot;highlighter-rouge&quot;&gt;C&lt;/code&gt; has no awareness of class and
+objects, there is no easy &lt;code class=&quot;highlighter-rouge&quot;&gt;UML&lt;/code&gt; diagram to be drawn. However, by inspecting the
+dependencies (include/includeby) within the source, we can still easily see
+this relationship in graph as
+&lt;a href=&quot;/images/understand-minimal-gobject-for-code-reading/ArchInternalDependencies-gsm-app-client.png&quot;&gt;this diagram&lt;/a&gt;
+show. &lt;span id=&quot;sn-dep-diagram&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;Another interesting point revealed in the diagram is the &lt;em&gt;empty&lt;/em&gt; dependency from &lt;code class=&quot;highlighter-rouge&quot;&gt;gsm-app&lt;/code&gt; to &lt;code class=&quot;highlighter-rouge&quot;&gt;gsm-client&lt;/code&gt;, i.e. &lt;code class=&quot;highlighter-rouge&quot;&gt;gsm-client.h&lt;/code&gt; is included in &lt;code class=&quot;highlighter-rouge&quot;&gt;gsm-app.h&lt;/code&gt; but nothing is used from &lt;code class=&quot;highlighter-rouge&quot;&gt;gsm-client.h&lt;/code&gt;. Though this might be a mere historical residual, it suggests some connection between &lt;code class=&quot;highlighter-rouge&quot;&gt;client&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;app&lt;/code&gt;. Indeed, &lt;code class=&quot;highlighter-rouge&quot;&gt;app&lt;/code&gt; once started is a &lt;code class=&quot;highlighter-rouge&quot;&gt;client&lt;/code&gt;. (And there can be more interconnections.)&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;From the dependency graph, we see clearly that &lt;code class=&quot;highlighter-rouge&quot;&gt;gsm-autostart-app&lt;/code&gt; is a
+subclass of &lt;code class=&quot;highlighter-rouge&quot;&gt;gsm-app&lt;/code&gt;, which is also shown in the code:&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cm&quot;&gt;/**
+ * SP2_GNOME_SESSION:/gnome-session/gsm-autostart-app.h
+ */&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_GsmAutostartApp&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;GsmApp&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;parent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;GsmAutostartAppPrivate&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;priv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_GsmAutostartAppClass&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;GsmAppClass&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;parent_class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+        &lt;span class=&quot;cm&quot;&gt;/* signals */&lt;/span&gt;
+        &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;     &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;condition_changed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GsmApp&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                                        &lt;span class=&quot;n&quot;&gt;gboolean&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;condition&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;what-are-the-common-implicit-members&quot;&gt;What are the common implicit members?&lt;/h2&gt;
+
+&lt;p&gt;By &lt;code class=&quot;highlighter-rouge&quot;&gt;implicit&lt;/code&gt;, I mean members and methods created, used by the &lt;code class=&quot;highlighter-rouge&quot;&gt;GObject&lt;/code&gt; macro
+magic. They show up naturally when we trace some &lt;code class=&quot;highlighter-rouge&quot;&gt;GObject&lt;/code&gt; functions and find
+their declarations/usages are nowhere within the source tree. &lt;code class=&quot;highlighter-rouge&quot;&gt;XXX_init&lt;/code&gt;,
+&lt;code class=&quot;highlighter-rouge&quot;&gt;XXX_contructor&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;XXX_dispose&lt;/code&gt; are most noticed ones. Though it’s relatively
+easy to pick these &lt;em&gt;magic elements&lt;/em&gt; out, it proved to be hard to see the exact
+interconnections between them.&lt;/p&gt;
+
+&lt;h2 id=&quot;how-an-instance-is-new-ed&quot;&gt;How an instance is &lt;code class=&quot;highlighter-rouge&quot;&gt;new&lt;/code&gt;-ed?&lt;/h2&gt;
+
+&lt;p&gt;&lt;span class=&quot;marginnote&quot;&gt;The arguments made in this section is much less plausible than others. It turned
+out to be quite hard to formalize &lt;em&gt;the guesswork&lt;/em&gt; done during the analysis.
+Nevertheless, to complete the project of this post, I proceeded to write out my
+thoughts, with &lt;em&gt;best efforts&lt;/em&gt;.&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;The instantiation of objects turns out to be a hard procedure to get to the
+exact details. Much of the difficulty stems from the mystical interactions among
+implicit members. However, with some &lt;em&gt;jumps&lt;/em&gt; (hypothesis), we might still be
+able to to understand the code.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;First&lt;/strong&gt;, we notice many methods &lt;code class=&quot;highlighter-rouge&quot;&gt;impl_XXX&lt;/code&gt; of &lt;code class=&quot;highlighter-rouge&quot;&gt;gsm-app&lt;/code&gt; is set to &lt;code class=&quot;highlighter-rouge&quot;&gt;NULL&lt;/code&gt;. With the
+lack of &lt;code class=&quot;highlighter-rouge&quot;&gt;new&lt;/code&gt;-ish functions, let’s assume &lt;code class=&quot;highlighter-rouge&quot;&gt;gsm-app&lt;/code&gt; is &lt;em&gt;abstract&lt;/em&gt; and can not
+have any instances.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Second&lt;/strong&gt;, let’s turn to &lt;code class=&quot;highlighter-rouge&quot;&gt;gsm-autostart-app&lt;/code&gt;. There is &lt;code class=&quot;highlighter-rouge&quot;&gt;gsm_autostart_app_new&lt;/code&gt;,
+which seems to be the only generator of &lt;code class=&quot;highlighter-rouge&quot;&gt;gsm-autostart-app&lt;/code&gt; externally.&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cm&quot;&gt;/**
+ * SP2_GNOME_SESSION:/gnome-session/gsm-manager.c
+ */&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gboolean&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;add_autostart_app_internal&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GsmManager&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;manager&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                            &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                            &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;provides&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                            &lt;span class=&quot;n&quot;&gt;gboolean&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;is_required&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;GsmApp&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// ...
+&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;app&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gsm_autostart_app_new&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// ...
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Third&lt;/strong&gt;, the implementation of &lt;code class=&quot;highlighter-rouge&quot;&gt;gsm_autostart_app_new&lt;/code&gt; looks bizarre for our
+&lt;em&gt;untrained&lt;/em&gt; eyes.&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cm&quot;&gt;/**
+ * SP2_GNOME_SESSION:/gnome-session/gsm-autostart-app.c
+ */&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;GsmApp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;gsm_autostart_app_new&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;desktop_file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                       &lt;span class=&quot;n&quot;&gt;GError&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GsmApp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g_initable_new&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GSM_TYPE_AUTOSTART_APP&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                                         &lt;span class=&quot;s&quot;&gt;&quot;desktop-filename&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;desktop_file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                                         &lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The doc on &lt;code class=&quot;highlighter-rouge&quot;&gt;g_initable_new&lt;/code&gt; says something about
+&lt;a href=&quot;https://developer.gnome.org/gio/stable/GInitable.html#g-initable-new&quot;&gt;“failable object initialization”&lt;/a&gt;.
+The declaration of the function itself looks like:&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cm&quot;&gt;/**
+ * https://developer.gnome.org/gio/stable/GInitable.html#g-initable-new
+ */&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;gpointer&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;g_initable_new&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GType&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;object_type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;GCancellable&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cancellable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;GError&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gchar&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;first_property_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;...);&lt;/span&gt;
+                
+&lt;span class=&quot;c1&quot;&gt;// The '...' means that the value if the first property, followed by and other
+// property value pairs, and ended by NULL. 
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The ending &lt;code class=&quot;highlighter-rouge&quot;&gt;varargs&lt;/code&gt; of key-value pairs are of particular interests. The
+following &lt;code class=&quot;highlighter-rouge&quot;&gt;gsm_autostart_app_initable_init&lt;/code&gt; has already started to use
+&lt;code class=&quot;highlighter-rouge&quot;&gt;desktop-filename&lt;/code&gt; property.&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cm&quot;&gt;/**
+ * SP2_GNOME_SESSION:/gnome-session/gsm-autostart-app.c
+ */&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gboolean&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;gsm_autostart_app_initable_init&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GInitable&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;initable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                                 &lt;span class=&quot;n&quot;&gt;GCancellable&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cancellable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                                 &lt;span class=&quot;n&quot;&gt;GError&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;GsmAutostartApp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;app&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GSM_AUTOSTART_APP&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;initable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;g_assert&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;priv&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;desktop_filename&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;priv&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;app_info&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g_desktop_app_info_new_from_filename&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;priv&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;desktop_filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// ...
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Where the property &lt;code class=&quot;highlighter-rouge&quot;&gt;desktop-filename&lt;/code&gt; is installed:&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;gsm_autostart_app_class_init&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GsmAutostartAppClass&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;klass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;GObjectClass&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;object_class&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;G_OBJECT_CLASS&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;klass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// ...
+&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;g_object_class_install_property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;object_class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                                         &lt;span class=&quot;n&quot;&gt;PROP_DESKTOP_FILENAME&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                                         &lt;span class=&quot;n&quot;&gt;g_param_spec_string&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;desktop-filename&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                                                              &lt;span class=&quot;s&quot;&gt;&quot;Desktop filename&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                                                              &lt;span class=&quot;s&quot;&gt;&quot;Freedesktop .desktop file&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                                                              &lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                                                              &lt;span class=&quot;n&quot;&gt;G_PARAM_READWRITE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;G_PARAM_CONSTRUCT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// ...
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;I’ve assumed &lt;code class=&quot;highlighter-rouge&quot;&gt;desktop-filename&lt;/code&gt; is the same as &lt;code class=&quot;highlighter-rouge&quot;&gt;app-&amp;gt;priv-&amp;gt;desktop_filename&lt;/code&gt;.
+From these, it’s reasonable to say &lt;code class=&quot;highlighter-rouge&quot;&gt;g_initable_new&lt;/code&gt; call above is the very call
+that instantializes an object.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Finally&lt;/strong&gt;, Similar arguments can also be made about other parts of the
+instantiation process. From the various function names and comparison with
+similar functions in &lt;code class=&quot;highlighter-rouge&quot;&gt;gsm-app&lt;/code&gt;, the &lt;em&gt;educated guess&lt;/em&gt; we can have about the
+instantiation process is as follows:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;XXX_new&lt;/code&gt; is the method to &lt;em&gt;start&lt;/em&gt; instantializing an object. It’s likely
+there are other types of &lt;code class=&quot;highlighter-rouge&quot;&gt;new&lt;/code&gt; offered by &lt;code class=&quot;highlighter-rouge&quot;&gt;GObject&lt;/code&gt; other than
+&lt;code class=&quot;highlighter-rouge&quot;&gt;g_initable_new&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;XXX_class_init&lt;/code&gt; will get called if the &lt;em&gt;class data&lt;/em&gt; have not
+initialized. This may happen only once as all instance share the same &lt;em&gt;class
+data&lt;/em&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;XXX_constructor&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;XXX_init&lt;/code&gt; will get called &lt;em&gt;after&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;XXX_class_init&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;how-polymorphism-is-implemented&quot;&gt;How &lt;code class=&quot;highlighter-rouge&quot;&gt;polymorphism&lt;/code&gt; is implemented?&lt;/h2&gt;
+
+&lt;p&gt;This is already shown in previous code snippets. In short, &lt;code class=&quot;highlighter-rouge&quot;&gt;polymorphism&lt;/code&gt; is
+achieved explicitly with boilerplate code.&lt;/p&gt;
+
+&lt;p&gt;Take method &lt;code class=&quot;highlighter-rouge&quot;&gt;impl_start&lt;/code&gt; as example.&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cm&quot;&gt;/**
+ * SP2_GNOME_SESSION:/gnome-session/gsm-app.h
+ */&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_GsmAppClass&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// ...
+&lt;/span&gt;
+        &lt;span class=&quot;cm&quot;&gt;/* virtual methods */&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;gboolean&lt;/span&gt;    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;impl_start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;                     &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GsmApp&lt;/span&gt;     &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                                                       &lt;span class=&quot;n&quot;&gt;GError&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// ...
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// ...
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gboolean&lt;/span&gt;         &lt;span class=&quot;n&quot;&gt;gsm_app_start&lt;/span&gt;                          &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GsmApp&lt;/span&gt;     &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                                                         &lt;span class=&quot;n&quot;&gt;GError&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// ...
+&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;/**
+ * SP2_GNOME_SESSION:/gnome-session/gsm-app.c
+ */&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;gsm_app_class_init&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GsmAppClass&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;klass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// ...
+&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;klass&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;impl_start&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// ...
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;gboolean&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;gsm_app_start&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GsmApp&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+               &lt;span class=&quot;n&quot;&gt;GError&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;g_debug&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Starting app: %s&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;priv&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GSM_APP_GET_CLASS&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;impl_start&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The definition of &lt;code class=&quot;highlighter-rouge&quot;&gt;gsm_app_start&lt;/code&gt; shows the explicit reference to the &lt;em&gt;real&lt;/em&gt;
+class of &lt;code class=&quot;highlighter-rouge&quot;&gt;app&lt;/code&gt; using &lt;code class=&quot;highlighter-rouge&quot;&gt;GSM_APP_GET_CLASS&lt;/code&gt; macro. &lt;code class=&quot;highlighter-rouge&quot;&gt;gsm-app&lt;/code&gt; is abstract and have
+&lt;code class=&quot;highlighter-rouge&quot;&gt;impl_start&lt;/code&gt; as &lt;code class=&quot;highlighter-rouge&quot;&gt;NULL&lt;/code&gt;. And for &lt;code class=&quot;highlighter-rouge&quot;&gt;gsm-autostart-app&lt;/code&gt;, it indeed sets its own
+&lt;code class=&quot;highlighter-rouge&quot;&gt;impl_start&lt;/code&gt; :&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cm&quot;&gt;/**
+ * SP2_GNOME_SESSION:/gnome-session/gsm-autostart-app.c
+ */&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;gsm_autostart_app_class_init&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GsmAutostartAppClass&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;klass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;GObjectClass&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;object_class&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;G_OBJECT_CLASS&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;klass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;GsmAppClass&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;app_class&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GSM_APP_CLASS&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;klass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+        &lt;span class=&quot;c1&quot;&gt;// ...
+&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;app_class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;impl_start&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gsm_autostart_app_start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// ...
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;So the public API for consumers of &lt;code class=&quot;highlighter-rouge&quot;&gt;gsm-XXX-app&lt;/code&gt; is &lt;code class=&quot;highlighter-rouge&quot;&gt;gsm_app_start&lt;/code&gt; and this can
+be verified by looking up its references within the source tree.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-are-those-signals&quot;&gt;What are those &lt;code class=&quot;highlighter-rouge&quot;&gt;signals&lt;/code&gt;?&lt;/h2&gt;
+
+&lt;p&gt;This is a question we can ask only after reading the code.&lt;/p&gt;
+
+&lt;p&gt;From above snippets, we’ve seen a lot of &lt;code class=&quot;highlighter-rouge&quot;&gt;signal&lt;/code&gt; declaration, which is not
+typical among other &lt;code class=&quot;highlighter-rouge&quot;&gt;OOP&lt;/code&gt; languages. For the purpose of understanding, most of
+time they are no different than other event-driven pattern, and can be handled
+as such safely. We only need to pay attention to property names, callbacks and etc,
+just like the above &lt;code class=&quot;highlighter-rouge&quot;&gt;desktop-filename&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h1 id=&quot;after-thoughts&quot;&gt;After Thoughts&lt;/h1&gt;
+
+&lt;p&gt;While writing down the above process, I frequently doubted the usefulness of
+doing them at all. Whatever the little understanding I &lt;em&gt;claim&lt;/em&gt; to achieve above
+is abysmal compared to what I would have &lt;em&gt;gained&lt;/em&gt; in, say 2 hours of, reading
+&lt;code class=&quot;highlighter-rouge&quot;&gt;GObject&lt;/code&gt; documentation. However, I still completed the post for two reasons:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;The &lt;em&gt;guesswork&lt;/em&gt; process, inaccurate as it is, is very typical for code
+reading. And we’re usually not that fortunate to have a well-polished
+documentation as that of &lt;code class=&quot;highlighter-rouge&quot;&gt;GObject&lt;/code&gt;. Forming the &lt;em&gt;gut feelings&lt;/em&gt; in the &lt;em&gt;guess&lt;/em&gt;
+has proved to be arduous but fruitful.&lt;/li&gt;
+  &lt;li&gt;The possible enlightenment I’ll have when I learn &lt;code class=&quot;highlighter-rouge&quot;&gt;GObject&lt;/code&gt; systematically.
+The reward might be some great revelation about the &lt;code class=&quot;highlighter-rouge&quot;&gt;guesswork&lt;/code&gt; process that
+can improve my code reading skill a lot.&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        <pubDate>Tue, 18 Oct 2016 00:00:00 +0000</pubDate>
+        <link>http://carltonf.github.io/post/understand-minimal-gobject-for-code-reading</link>
+        <guid isPermaLink="true">http://carltonf.github.io/post/understand-minimal-gobject-for-code-reading</guid>
+        
+        <category>gobject</category>
+        
+        <category>code-reading</category>
+        
+        <category>question-driven</category>
+        
+        <category>gnome-session</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Code-Reading: The Racing Of Two Agents</title>
+        <description>&lt;p&gt;From a bug due to a race condition between two polkit agents, this post explain
+the handling of the startup components and autostart apps within &lt;code class=&quot;highlighter-rouge&quot;&gt;gnome-session&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h1 id=&quot;components&quot;&gt;Components&lt;/h1&gt;
+
+&lt;h2 id=&quot;gnome-session&quot;&gt;GNOME Session&lt;/h2&gt;
+
+&lt;p&gt;Other than the X server, &lt;code class=&quot;highlighter-rouge&quot;&gt;gnome-session&lt;/code&gt;&lt;span id=&quot;sn-gs-name&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;In SP2, the &lt;code class=&quot;highlighter-rouge&quot;&gt;comm&lt;/code&gt; is actually called &lt;code class=&quot;highlighter-rouge&quot;&gt;gnome-session-binary&lt;/code&gt; which is &lt;code class=&quot;highlighter-rouge&quot;&gt;exec&lt;/code&gt;-ed from a shell script called &lt;code class=&quot;highlighter-rouge&quot;&gt;gnome-session&lt;/code&gt;. This indirection is meant to solve a environment passing bug. A very interesting problem worth a separate post.&lt;/span&gt; is the daemon managing
+all the &lt;em&gt;interesting&lt;/em&gt; stuff within a &lt;em&gt;session&lt;/em&gt;. For our purpose, the startup
+sequence is of most interest to us.&lt;span id=&quot;sn-endsession&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;There is a &lt;a href=&quot;#&quot;&gt;Code-Reading(PLANNED)&lt;/a&gt; post covering the end session part as well.&lt;/span&gt; Other
+components talk back to &lt;code class=&quot;highlighter-rouge&quot;&gt;gnome-session&lt;/code&gt; through the exported DBus service
+&lt;code class=&quot;highlighter-rouge&quot;&gt;org.gnome.SessionManager&lt;/code&gt;. The term &lt;code class=&quot;highlighter-rouge&quot;&gt;SessionManager&lt;/code&gt; is used interchangable
+with &lt;code class=&quot;highlighter-rouge&quot;&gt;gnome-session&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;gnome-session&lt;/code&gt; does have some documentations oneline. However, they all seem to
+be outdated (compared the info I got from the code.). Nevertheless, they still
+provide some insights and you can find the &lt;a href=&quot;https://wiki.gnome.org/Projects/SessionManagement/GnomeSession&quot;&gt;longer version&lt;/a&gt;
+and &lt;a href=&quot;https://wiki.gnome.org/Projects/SessionManagement/NewGnomeSession&quot;&gt;the newer, shorter version&lt;/a&gt; here.&lt;/p&gt;
+
+&lt;h3 id=&quot;saved-session&quot;&gt;Saved Session&lt;/h3&gt;
+
+&lt;p&gt;The concept of &lt;em&gt;a saved session&lt;/em&gt; is also important for our discussion. Bascially
+the session will try to save all the open apps and their &lt;em&gt;states&lt;/em&gt; upon logout
+and restores these saved apps at the next login. There seems to be a
+protocol(part of &lt;a href=&quot;https://www.x.org/releases/X11R7.6/doc/libSM/xsmp.html&quot;&gt;XSMP&lt;/a&gt;) on this saving behavior, however it doesn’t seem to be
+well supported among apps, not even within GNOME. &lt;span id=&quot;sn-xsmp&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;Much earlier there was a bug about saved sessions. The previous investigation convinced me that this feature is deprecated and not maintained in the upstream.&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Without delving into details about &lt;code class=&quot;highlighter-rouge&quot;&gt;XSMP&lt;/code&gt;, it’s sufficient to show saved
+session’s desktop files here:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;TODO&lt;/strong&gt; normal app desktop, shell desktop files&lt;/p&gt;
+
+&lt;h2 id=&quot;gnome-shell&quot;&gt;GNOME Shell&lt;/h2&gt;
+
+&lt;p&gt;Normally the agent &lt;a href=&quot;https://github.com/GNOME/gnome-shell/tree/3.20.4/js/ui/components/polkitAgent.js&quot;&gt;built into&lt;/a&gt; the Shell is what users use. As
+Shell is the &lt;em&gt;required app&lt;/em&gt; (and thus an &lt;em&gt;autostart app&lt;/em&gt;) for &lt;code class=&quot;highlighter-rouge&quot;&gt;gnome-session&lt;/code&gt;,
+it’s handled slightly different from other &lt;em&gt;clients&lt;/em&gt;, i.e. &lt;code class=&quot;highlighter-rouge&quot;&gt;gnome-session&lt;/code&gt; will
+try to restart these apps if they die and end the current session if a required
+component fails too often. &lt;span id=&quot;sn-required-app&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;Q: Is this really the specialty for &lt;em&gt;required app&lt;/em&gt;? Further, I’m puzzled by the line &lt;code class=&quot;highlighter-rouge&quot;&gt;X-GNOME-AutoRestart=false&lt;/code&gt;.&lt;/span&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Required apps are defined in &lt;a href=&quot;https://github.com/GNOME/gnome-session/tree/eba0460033804d2d5ce60953c76fd75f396cc43e/data/gnome.session.desktop.in.in&quot;&gt;session key file&lt;/a&gt; by
+&lt;a href=&quot;https://github.com/GNOME/gnome-session/tree/eba0460033804d2d5ce60953c76fd75f396cc43e/gnome-session/gsm-session-fill.c#L206&quot;&gt;searching predefined locations&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;On failure, required apps are restarted automatically. Until a limit is
+reached, the whole session ends with failure.&lt;/li&gt;
+  &lt;li&gt;The naming for &lt;code class=&quot;highlighter-rouge&quot;&gt;GNOME Shell&lt;/code&gt; as a component is &lt;a href=&quot;https://github.com/GNOME/gnome-shell/tree/3.20.4/data/org.gnome.Shell.desktop.in.in&quot;&gt;org.gnome.Shell&lt;/a&gt;. However,
+it’s worth citing the desktop file here:&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[Desktop Entry]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;Type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Application&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;_Name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;GNOME Shell&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;_Comment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Window management and application launching&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;Exec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@bindir@/gnome-shell&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# ...
+&lt;/span&gt;&lt;span class=&quot;py&quot;&gt;NoDisplay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;true&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;X-GNOME-Autostart-Phase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;DisplayServer&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;X-GNOME-Provides&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;panel;windowmanager;&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;X-GNOME-Autostart-Notify&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;true&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;X-GNOME-AutoRestart&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;false&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;polkit-gnome&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;polkit-gnome&lt;/code&gt;&lt;/h2&gt;
+
+&lt;p&gt;A separate, independent polkit agent that can work outside GNOME ecosystem. The
+executable, named &lt;code class=&quot;highlighter-rouge&quot;&gt;polkit-gnome-authentication-agent-1&lt;/code&gt;, installed under
+&lt;code class=&quot;highlighter-rouge&quot;&gt;@LIBDIR&lt;/code&gt; (usually &lt;code class=&quot;highlighter-rouge&quot;&gt;/usr/share/lib/&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;The current distribution still ships an autostart desktop file. &lt;span id=&quot;sn-pkgnome-desktop&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;The earliest entry in the changelog on this desktop file is &lt;em&gt;“Add as a source a .desktop file to start polkit agent: it was removed from tarball, but we still need it.”&lt;/em&gt; &lt;a href=&quot;https://github.com/GNOME/PolicyKit-gnome/commit/47ca445decf21b8de13d804b870d6ce171bad306&quot;&gt;Here&lt;/a&gt; seems to be the upstream commit that removed this file.&lt;/span&gt; Much of the problem is caused by this file and
+its content is worthy full citation here:&lt;/p&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# polkit-gnome-authentication-agent-1.desktop.in
+&lt;/span&gt;&lt;span class=&quot;nn&quot;&gt;[Desktop Entry]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;PolicyKit Authentication Agent&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# ...
+&lt;/span&gt;&lt;span class=&quot;py&quot;&gt;Comment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;PolicyKit Authentication Agent&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# ...
+&lt;/span&gt;&lt;span class=&quot;py&quot;&gt;Exec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@LIBDIR@/polkit-gnome-authentication-agent-1&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;Terminal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;false&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;Type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Application&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;Categories&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;NoDisplay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;true&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;NotShowIn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;KDE;&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;AutostartCondition&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;GNOME3 unless-session gnome&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;AutostartCondition&lt;/code&gt; doesn’t seem to be well documented, but it means that
+this agent should be automatically started on login if the session &lt;em&gt;is of&lt;/em&gt;
+‘&lt;code class=&quot;highlighter-rouge&quot;&gt;GNOME3&lt;/code&gt; but not &lt;code class=&quot;highlighter-rouge&quot;&gt;gnome&lt;/code&gt;‘&lt;span id=&quot;sn-GNOME3-not-gnome&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;I was going to say &lt;code class=&quot;highlighter-rouge&quot;&gt;gnome-fallback&lt;/code&gt;, which was &lt;em&gt;discontinued&lt;/em&gt; around the time &lt;code class=&quot;highlighter-rouge&quot;&gt;GNOME&lt;/code&gt; 3.10 was released, and thus coincides with the dev&amp;amp;release of &lt;code class=&quot;highlighter-rouge&quot;&gt;SLE-12&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;REHL 7&lt;/code&gt; and etc. However, a little search has surprised me that &lt;code class=&quot;highlighter-rouge&quot;&gt;gnome-fallback&lt;/code&gt; was alive as &lt;a href=&quot;https://wiki.gnome.org/Projects/GnomeFlashback&quot;&gt;gnome-flashback&lt;/a&gt; for quite a while (it’s &lt;a href=&quot;https://git.gnome.org/browse/gnome-flashback/&quot;&gt;official&lt;/a&gt;)! The history about &lt;code class=&quot;highlighter-rouge&quot;&gt;GNOME 3&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;fallback&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;classic&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;flashback&lt;/code&gt; is convoluting, and I found &lt;a href=&quot;https://ubuntuforums.org/showthread.php?t=2185161&quot;&gt;this post&lt;/a&gt; more or less match what I know. Now I’m starting to wonder whether &lt;code class=&quot;highlighter-rouge&quot;&gt;flashback&lt;/code&gt; will make a &lt;em&gt;comeback&lt;/em&gt;! ;P&lt;/span&gt;.&lt;/p&gt;
+
+&lt;h1 id=&quot;sequence&quot;&gt;Sequence&lt;/h1&gt;
+
+&lt;p&gt;Before describing each sequence in details, we explain the symptom as seen in the
+bug. The &lt;em&gt;default&lt;/em&gt; theming of &lt;code class=&quot;highlighter-rouge&quot;&gt;shell-agent&lt;/code&gt; authentication diaglog is &lt;strong&gt;black&lt;/strong&gt;,
+while the diaglog from &lt;code class=&quot;highlighter-rouge&quot;&gt;polkit-gnome&lt;/code&gt; is &lt;strong&gt;white&lt;/strong&gt;. This makes the issue
+ostentatious, easily catched by &lt;a href=&quot;https://openqa.opensuse.org/&quot;&gt;openQA&lt;/a&gt;: the
+usual black dialogue is not found instead the white dialog is shown.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-normal-sequence&quot;&gt;The normal sequence&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;SessionManager&lt;/code&gt; has internal &lt;a href=&quot;https://github.com/GNOME/gnome-session/tree/eba0460033804d2d5ce60953c76fd75f396cc43e/gnome-session/gsm-manager.h#L54&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;phases&lt;/code&gt;&lt;/a&gt;, which follows a
+&lt;em&gt;nearly&lt;/em&gt; &lt;a href=&quot;https://github.com/GNOME/gnome-session/tree/eba0460033804d2d5ce60953c76fd75f396cc43e/gnome-session/gsm-manager.c#L497&quot;&gt;linear style&lt;/a&gt; of state transitions. &lt;span id=&quot;sn-linear-state&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;A notable exception is during ending session (logout/reboot/shutdown),&lt;code class=&quot;highlighter-rouge&quot;&gt;GSM_MANAGER_PHASE_QUERY_END_SESSION&lt;/code&gt; can transition back to &lt;code class=&quot;highlighter-rouge&quot;&gt;GSM_MANAGER_PHASE_RUNNING&lt;/code&gt; in case of failures. Covered in another &lt;a href=&quot;#&quot;&gt;post&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;As shown above &lt;code class=&quot;highlighter-rouge&quot;&gt;Shell&lt;/code&gt; starts at &lt;code class=&quot;highlighter-rouge&quot;&gt;DisplayServer&lt;/code&gt; phase,
+(&lt;code class=&quot;highlighter-rouge&quot;&gt;X-GNOME-Autostart-Phase=DisplayServer&lt;/code&gt;), much earlier than the
+&lt;a href=&quot;https://github.com/GNOME/gnome-session/tree/eba0460033804d2d5ce60953c76fd75f396cc43e/gnome-session/gsm-autostart-app.c#L614&quot;&gt;default&lt;/a&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;Application&lt;/code&gt; phase. &lt;code class=&quot;highlighter-rouge&quot;&gt;polkit-gnome&lt;/code&gt; was started at
+this default phase as it has no explicit phase setting. So usually, &lt;code class=&quot;highlighter-rouge&quot;&gt;Shell&lt;/code&gt;
+starts and registers itself as agent before &lt;code class=&quot;highlighter-rouge&quot;&gt;polkit-gnome&lt;/code&gt; can do &lt;em&gt;anything&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;The autostart condition &lt;code class=&quot;highlighter-rouge&quot;&gt;GNOME3 unless-session gnome&lt;/code&gt; will be &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt; under
+&lt;code class=&quot;highlighter-rouge&quot;&gt;gnome-classic&lt;/code&gt; and thus &lt;code class=&quot;highlighter-rouge&quot;&gt;polkit-gnome&lt;/code&gt; will start. However, since there is only
+one allowed polkit agent, &lt;code class=&quot;highlighter-rouge&quot;&gt;polkit-gnome&lt;/code&gt; will fail and exit.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-if-there-is-an-saved-session&quot;&gt;What if there is an saved session&lt;/h2&gt;
+
+&lt;p&gt;In a &lt;code class=&quot;highlighter-rouge&quot;&gt;saved session&lt;/code&gt; situation, &lt;code class=&quot;highlighter-rouge&quot;&gt;gnome-session&lt;/code&gt; will detect the relevant
+settings and saved session files under user home directory. It will load saved
+&lt;code class=&quot;highlighter-rouge&quot;&gt;apps&lt;/code&gt; from saved session files &lt;strong&gt;first&lt;/strong&gt;, before the normal loading of
+&lt;code class=&quot;highlighter-rouge&quot;&gt;required&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;autostart&lt;/code&gt; apps. &lt;span id=&quot;sn-loading-order&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;The latter desktop files would not override earlier desktop files. &lt;code class=&quot;highlighter-rouge&quot;&gt;gnome-session&lt;/code&gt; use the &lt;code class=&quot;highlighter-rouge&quot;&gt;provides&lt;/code&gt; field to decide whether a later loaded desktop file is effective.&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;org.gnome.Shell&lt;/code&gt;, as saved session file, the desktop entry file does &lt;strong&gt;NOT&lt;/strong&gt;
+have the autostart phase set to &lt;code class=&quot;highlighter-rouge&quot;&gt;DisplayServer&lt;/code&gt;, actually, not set at all. So
+it’s started at &lt;code class=&quot;highlighter-rouge&quot;&gt;Application&lt;/code&gt; phase, together with &lt;code class=&quot;highlighter-rouge&quot;&gt;polkit-gnome&lt;/code&gt;.
+&lt;code class=&quot;highlighter-rouge&quot;&gt;polkit-gnome&lt;/code&gt; is a much simpler program and might register itself as &lt;code class=&quot;highlighter-rouge&quot;&gt;polkit
+agent&lt;/code&gt;, while &lt;code class=&quot;highlighter-rouge&quot;&gt;shell&lt;/code&gt; is still running to get to its &lt;code class=&quot;highlighter-rouge&quot;&gt;JS&lt;/code&gt; part.&lt;/p&gt;
+
+&lt;p&gt;In observation, with a &lt;code class=&quot;highlighter-rouge&quot;&gt;saved session&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;polkit-gnome&lt;/code&gt; almost always win as the
+real agent.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-if-shell-died&quot;&gt;What if Shell died&lt;/h2&gt;
+
+&lt;p&gt;When &lt;code class=&quot;highlighter-rouge&quot;&gt;Shell&lt;/code&gt; dies, it gets restarted by &lt;code class=&quot;highlighter-rouge&quot;&gt;gnome-session&lt;/code&gt;. &lt;span id=&quot;sn-shell-restart&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;This is not to be confused with the built-in restart as &lt;code class=&quot;highlighter-rouge&quot;&gt;Alt-F2, r&lt;/code&gt; would offter, in which the process itself remains the same.&lt;/span&gt; The
+timing can be unfortunate for it can coincidences with the starting of
+&lt;code class=&quot;highlighter-rouge&quot;&gt;polkit-gnome&lt;/code&gt;, and be outrun by it in registering as polkit agent.&lt;/p&gt;
+
+&lt;h1 id=&quot;debugging&quot;&gt;Debugging&lt;/h1&gt;
+
+&lt;p&gt;In this section, I will show important questions I asked during debugging and
+some useful tips to prove points mentioned in the &lt;a href=&quot;#sequence&quot;&gt;Sequence&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;polkit-gnome-starts-under-gnome-classic&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;polkit-gnome&lt;/code&gt; starts under &lt;code class=&quot;highlighter-rouge&quot;&gt;gnome-classic&lt;/code&gt;&lt;/h2&gt;
+
+&lt;p&gt;To prove this point, two approaches can be taken:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Use &lt;a href=&quot;https://www.suse.com/documentation/sles11/singlehtml/audit_quickstart/audit_quickstart.html&quot;&gt;Linux Audit&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;Manual Injection&lt;/em&gt;. Change the destktop entry file or the executable itself.
+In our case, capture the stdin/stderr are sufficient.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;It’s usually better to use &lt;code class=&quot;highlighter-rouge&quot;&gt;Audit&lt;/code&gt; first and then empoly &lt;code class=&quot;highlighter-rouge&quot;&gt;Injection&lt;/code&gt; to get more
+details.&lt;/p&gt;
+
+&lt;h3 id=&quot;linux-auditing&quot;&gt;Linux Auditing&lt;/h3&gt;
+
+&lt;p&gt;This seems to be the only non-intrusive approach. At the cost of complexity,
+&lt;code class=&quot;highlighter-rouge&quot;&gt;Audit&lt;/code&gt; is very powerful and capable of much more. &lt;span id=&quot;sn-dtrace&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;At the time of writing, I’ve read some news on a &lt;a href=&quot;http://www.brendangregg.com/blog/2016-10-27/dtrace-for-linux-2016.html&quot;&gt;Dtrace-like functionality for kernel&lt;/a&gt;. Looks very interesting and promising, though I’m not knowledged enough, yet, to comment on the usefulness for debugging problems like this post’s.&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Make sure all prerequiresites are met &lt;span id=&quot;sn-audit-post&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;(Yelling!) I have been working on another post for more detials. Plainning…&lt;/span&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;## Precaution: all commands are executed under root prviliages.&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# setup rules, you can optionally add more filter fields, uid might be a good addition.&lt;/span&gt;
+auditctl -a &lt;span class=&quot;nb&quot;&gt;exit&lt;/span&gt;,always -F &lt;span class=&quot;nv&quot;&gt;arch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;b64 -S all -F &lt;span class=&quot;nv&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/lib/polkit-gnome-authentication-agent-1
+
+&lt;span class=&quot;c&quot;&gt;# verify the above is the only rule, not necessary but helpful in inspecting the log.&lt;/span&gt;
+auditctl -l
+
+&lt;span class=&quot;c&quot;&gt;# Logout and Login back again, in a new terminal, the -ts since time is the time&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# *just* before you login. Not necessary but helpful in reducting output size.&lt;/span&gt;
+ausearch -i -ts 16:10
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;You should see something like:&lt;/p&gt;
+
+&lt;div class=&quot;language-text highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;----
+type=UNKNOWN[1327] msg=audit(10/27/16 16:03:10.518:106) : proctitle=&quot;/usr/lib/polkit-gnome-authentication-agent-1&quot; 
+type=PATH msg=audit(10/27/16 16:03:10.518:106) : item=1 name=/lib64/ld-linux-x86-64.so.2 inode=38532 dev=00:26 mode=file,755 ouid=root ogid=root rdev=00:00 nametype=NORMAL 
+type=PATH msg=audit(10/27/16 16:03:10.518:106) : item=0 name=/usr/lib/polkit-gnome-authentication-agent-1 inode=160885 dev=00:26 mode=file,755 ouid=root ogid=root rdev=00:00 nametype=NORMAL 
+type=CWD msg=audit(10/27/16 16:03:10.518:106) :  cwd=/home/vagrant 
+type=EXECVE msg=audit(10/27/16 16:03:10.518:106) : argc=1 a0=/usr/lib/polkit-gnome-authentication-agent-1 
+type=SYSCALL msg=audit(10/27/16 16:03:10.518:106) : arch=x86_64 syscall=execve success=yes exit=0 a0=0x11be100 a1=0x11be0a0 a2=0x11be150 a3=0xfc2c9fc5 items=2 ppid=1726 pid=1968 auid=vagrant uid=vagrant gid=users euid=
+vagrant suid=vagrant fsuid=vagrant egid=users sgid=users fsgid=users tty=(none) ses=91 comm=polkit-gnome-au exe=/usr/lib/polkit-gnome-authentication-agent-1 key=(null) 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;From the log we can deduce: &lt;code class=&quot;highlighter-rouge&quot;&gt;ppid=1726&lt;/code&gt; (&lt;code class=&quot;highlighter-rouge&quot;&gt;ps -up 1726&lt;/code&gt; shows that it’s
+&lt;code class=&quot;highlighter-rouge&quot;&gt;gnome-session-binary&lt;/code&gt;) calls &lt;code class=&quot;highlighter-rouge&quot;&gt;execve&lt;/code&gt; with
+&lt;code class=&quot;highlighter-rouge&quot;&gt;/usr/lib/polkit-gnome-authentication-agent-1&lt;/code&gt; as the sole argument. In other
+words, &lt;code class=&quot;highlighter-rouge&quot;&gt;gnome-session&lt;/code&gt; started &lt;code class=&quot;highlighter-rouge&quot;&gt;polkit-gnome&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;manual-injection&quot;&gt;Manual Injection&lt;/h3&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Linux Auditing&lt;/code&gt; is clean and quick, great for verifying unintend execution.
+However, it doesn’t capture possible output from processes. For this we would
+have to inject extra code into the start sequence. Surely, we can replace
+&lt;code class=&quot;highlighter-rouge&quot;&gt;polkit-gnome-authentication-agent-1&lt;/code&gt; with a custom script, which calls the real
+executable only with io rediction to some custom files. However, I’d like to
+introduce &lt;a href=&quot;https://www.freedesktop.org/software/systemd/man/systemd-cat.html&quot;&gt;systemd-cat&lt;/a&gt; to take full advantage of &lt;code class=&quot;highlighter-rouge&quot;&gt;journald&lt;/code&gt;. &lt;span id=&quot;sn-systemd-cat&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;And avoids the hassles of managing log files. &lt;code class=&quot;highlighter-rouge&quot;&gt;systemd-cat&lt;/code&gt; can be really useful to debug &lt;code class=&quot;highlighter-rouge&quot;&gt;gnome-shell&lt;/code&gt; by piping JS logs into &lt;code class=&quot;highlighter-rouge&quot;&gt;journald&lt;/code&gt;. With advanced options offered by &lt;code class=&quot;highlighter-rouge&quot;&gt;journalctl&lt;/code&gt;, this way is much sweeter than weeding through log files or terminal output, particularly so for &lt;code class=&quot;highlighter-rouge&quot;&gt;gdm&lt;/code&gt; shell.&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;First change the &lt;code class=&quot;highlighter-rouge&quot;&gt;Exec&lt;/code&gt;&lt;span id=&quot;sn-exec-line&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Exec&lt;/code&gt; line has specific format requirement, in doubt consult the &lt;a href=&quot;https://specifications.freedesktop.org/desktop-entry-spec/latest/ar01s06.html&quot;&gt;documentation&lt;/a&gt;&lt;/span&gt; line to something
+like:&lt;/p&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# /etc/xdg/autostart/polkit-gnome-authentication-agent-1.desktop
+&lt;/span&gt;&lt;span class=&quot;py&quot;&gt;Exec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;systemd-cat -t PK-G /usr/lib/polkit-gnome-authentication-agent-1&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Then use &lt;code class=&quot;highlighter-rouge&quot;&gt;journalctl -t PK-G&lt;/code&gt; to pick log from &lt;code class=&quot;highlighter-rouge&quot;&gt;polkit-gnome&lt;/code&gt; out specifically.
+&lt;span id=&quot;sn-journctl-since&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;As with &lt;code class=&quot;highlighter-rouge&quot;&gt;ausearch&lt;/code&gt;, a since-time can be passed with &lt;code class=&quot;highlighter-rouge&quot;&gt;-S,--since=&lt;/code&gt;. Notably &lt;code class=&quot;highlighter-rouge&quot;&gt;journctl&lt;/code&gt; features far richer time formats as documented in &lt;code class=&quot;highlighter-rouge&quot;&gt;man systemd.time&lt;/code&gt;. You can use relative time setting like &lt;code class=&quot;highlighter-rouge&quot;&gt;journalctl -S -1min&lt;/code&gt;. &lt;code class=&quot;highlighter-rouge&quot;&gt;ausearch&lt;/code&gt; doesn’t seem to support advanced time format. However, we can always use &lt;code class=&quot;highlighter-rouge&quot;&gt;date&lt;/code&gt; to achieve similar result. For example, to get audit logs since 90 sec ago, we can use &lt;code class=&quot;highlighter-rouge&quot;&gt;ausearch -i -ts $(date +'%H:%M:%S' -d '-300sec')&lt;/code&gt;.&lt;/span&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-text highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;-- Logs begin at Wed 2016-10-26 18:35:03 CST, end at Thu 2016-10-27 16:36:48 CST. --
+Oct 27 16:36:44 linux-rblp.suse PK-G[2704]: ** (polkit-gnome-authentication-agent-1:2704): WARNING **: Unable to register authentication agent: GDBus.Error:org.freedesktop.PolicyKit1.Error.Failed: An authentication age
+Oct 27 16:36:44 linux-rblp.suse PK-G[2704]: Cannot register authentication agent: GDBus.Error:org.freedesktop.PolicyKit1.Error.Failed: An authentication agent already exists for the given subject
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;why-polkit-gnome-started&quot;&gt;Why &lt;code class=&quot;highlighter-rouge&quot;&gt;polkit-gnome&lt;/code&gt; started?&lt;/h2&gt;
+
+&lt;p&gt;The culprit is the condition line &lt;code class=&quot;highlighter-rouge&quot;&gt;GNOME3 unless-session gnome&lt;/code&gt;. The current
+session name referred in this condition can be looked up by introspecting
+&lt;code class=&quot;highlighter-rouge&quot;&gt;org.gnome.SessionManager&lt;/code&gt; object.&lt;/p&gt;
+
+&lt;p&gt;&lt;span class=&quot;marginnote&quot;&gt;Since the naming is not the same for this &lt;code class=&quot;highlighter-rouge&quot;&gt;session-name&lt;/code&gt;, there were some
+confusion at the beginning, as some believed it refering to a &lt;code class=&quot;highlighter-rouge&quot;&gt;dconf&lt;/code&gt; setting.
+It turns out this setting is the &lt;em&gt;default&lt;/em&gt; if no session type is specified on
+the &lt;code class=&quot;highlighter-rouge&quot;&gt;gnome-session&lt;/code&gt; command line.&lt;/span&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gdbus introspect --session --dest org.gnome.SessionManager &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    --object-path /org/gnome/SessionManager | grep -i session
+    
+&lt;span class=&quot;c&quot;&gt;## Output&amp;gt;    readonly s SessionName = 'gnome-classic'&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# alternatively you can get to the desired property value directly, though much&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# more complicated and not recommended. (And you're going to introspect first&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# anyway ;P)&lt;/span&gt;
+gdbus call --session --dest org.gnome.SessionManager &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    --object-path /org/gnome/SessionManager &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    --method org.freedesktop.DBus.Properties.Get &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    org.gnome.SessionManager SessionName
+
+&lt;span class=&quot;c&quot;&gt;## Output&amp;gt; (&amp;lt;'gnome-classic'&amp;gt;,)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Mon, 17 Oct 2016 00:00:00 +0000</pubDate>
+        <link>http://carltonf.github.io/post/code-reading-the-racing-of-two-agents</link>
+        <guid isPermaLink="true">http://carltonf.github.io/post/code-reading-the-racing-of-two-agents</guid>
+        
+        <category>code-reading</category>
+        
+        <category>sle</category>
+        
+        
+      </item>
     
       <item>
         <title>Writing habit and tools</title>
@@ -248,6 +946,10 @@ there are people can benefit from &lt;code class=&quot;highlighter-rouge&quot;&g
         <description>&lt;p&gt;A curated list of learning materials, references for GNOME Shell (bug-fixing)
 developers – &lt;em&gt;very&lt;/em&gt; pragmatic.&lt;/p&gt;
 
+&lt;p&gt;&lt;strong&gt;DISCLAIM:&lt;/strong&gt; Even at the time of writing, I was not following GNOME development
+as I used to be. So much of the claims on the states GNOME 3 might be
+out-righteously outdated.&lt;/p&gt;
+
 &lt;p&gt;The other day, my team leader asked me to give some guide for new colleagues in
 the team. I came up with a list of learning materials, references &lt;em&gt;with strong
 personal opinions&lt;/em&gt; &lt;span id=&quot;sn-strong-opined&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
@@ -257,7 +959,7 @@ here is the guideline list plus my review.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Some Conventions&lt;/strong&gt;: different materials have different importance. I didn’t
 bother going into fine grades of proficiency level. &lt;span id=&quot;sn-proficiency-level&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
-      &lt;span class=&quot;sidenote&quot;&gt;This recalls the memory about the college entry exam, when every student was supposed to know the required proficiency level of every knowledge.&lt;/span&gt; Only two levels are used: &lt;strong&gt;Master&lt;/strong&gt; and &lt;strong&gt;General&lt;/strong&gt;.&lt;/p&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;This brings up the memory about the college entry exam, when every student was supposed to know the required proficiency level of each subject.&lt;/span&gt; Only two levels are used: &lt;strong&gt;Master&lt;/strong&gt; and &lt;strong&gt;General&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;h1 id=&quot;materials&quot;&gt;Materials&lt;/h1&gt;
 
@@ -273,7 +975,7 @@ still need to know it well for its ubiquity in gnome.&lt;/p&gt;
 &lt;p&gt;&lt;span class=&quot;marginnote&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;DBus&lt;/code&gt; would have been much more important if the
 kernel module &lt;a href=&quot;https://www.freedesktop.org/wiki/Software/systemd/kdbus/&quot;&gt;kdbus&lt;/a&gt;
 had been merged into kernel. The farthest progress it made was into
-&lt;code class=&quot;highlighter-rouge&quot;&gt;kernel-next&lt;/code&gt;. I’ve read some articles at at
+&lt;code class=&quot;highlighter-rouge&quot;&gt;kernel-next&lt;/code&gt;. I’ve read some articles at
 &lt;a href=&quot;http://www.phoronix.com/scan.php?page=search&amp;amp;q=KDBUS&quot;&gt;phoronix&lt;/a&gt; talking about
 the main obstacle was about the security. As a mere side looker, I’ll not say
 more.&lt;/span&gt;&lt;/p&gt;
@@ -318,7 +1020,7 @@ ones: &lt;span id=&quot;sn-gnome-wiki&quot; class=&quot;margin-toggle sidenote-n
 &lt;ul&gt;
   &lt;li&gt;General Information:  &lt;em&gt;Master&lt;/em&gt;, helpful for debugging&lt;/li&gt;
   &lt;li&gt;Technology: &lt;em&gt;General&lt;/em&gt;, you need to know the capacity of each component.&lt;/li&gt;
-  &lt;li&gt;Looking Glass：&lt;em&gt;Master&lt;/em&gt;. Not as useful as it claims to be but this is only
+  &lt;li&gt;Looking Glass：&lt;em&gt;Master&lt;/em&gt;. Not as useful as it claims to be but this is the only
 built-in tool we have.&lt;/li&gt;
   &lt;li&gt;Development guide for GNOME Shell：&lt;em&gt;General&lt;/em&gt;, this is more about feature
 development and upstream involvement.&lt;/li&gt;
@@ -337,8 +1039,9 @@ almost written completely in JavaScript, we all need to know it well.&lt;/p&gt;
 out there). The &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; engine used by GNOME Shell is
 &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey&quot;&gt;SpiderMonkey&lt;/a&gt;,
 version 24 &lt;span id=&quot;sn-spidermonkey-version&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
-    &lt;span class=&quot;sidenote&quot;&gt;Previous SP1, i.e. GNOME 3.10.x is shipped with version 17.&lt;/span&gt;, a relatively recent JS engine. However, GNOME has
-only utilized a small set of JS features in a C-like way.&lt;/p&gt;
+    &lt;span class=&quot;sidenote&quot;&gt;Previous SP1, i.e. GNOME 3.10.x is shipped with &lt;code class=&quot;highlighter-rouge&quot;&gt;SpiderMonkey&lt;/code&gt; version 17.&lt;/span&gt;, a relatively recent JS engine.
+However, GNOME has only utilized a small set of JS features in a C-like
+fashion.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;a href=&quot;https://www.amazon.com/JavaScript-Definitive-Guide-Activate-Guides-ebook/dp/B004XQX4K0&quot;&gt;JavaScript: the Definitive Guide&lt;/a&gt;.&lt;/p&gt;
@@ -929,258 +1632,6 @@ update-help
         
         <category>philosophy</category>
         
-        
-      </item>
-    
-      <item>
-        <title>Installing SLED 12 with PXE using libvirt</title>
-        <description>&lt;p&gt;
-Recently I get a task to fix a bug related to SLED in KVM. Since there is a
-local PXE server for easy installation, I've planned to install SLED in KVM
-through PXE. Here is the struggle I've been through.
-&lt;/p&gt;
-
-&lt;p&gt;
-To get PXE installation work, I need to have a working bridge that will place VM
-in the subnet with PXE server.
-&lt;/p&gt;
-
-&lt;div id=&quot;outline-container-sec-1&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;sec-1&quot;&gt;With &lt;code&gt;NetworkManager&lt;/code&gt;&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-1&quot;&gt;
-&lt;p&gt;
-&lt;code&gt;NetworkManager&lt;/code&gt; is buggy. Despite the fact you can use a GUI to set up a
-bridge, you'll encounter various issues that make your life hard: 
-&lt;/p&gt;
-
-&lt;ul class=&quot;org-ul&quot;&gt;
-&lt;li&gt;The status indicator in the dialog is incorrect
-
-&lt;p&gt;
-A bridge is always on regardless.
-&lt;/p&gt;
-&lt;/li&gt;
-
-&lt;li&gt;Turning-off/Removal of an existing bridge is problematic.
-
-&lt;p&gt;
-Turning off doesn't seem to work. Remove a bridge in the dialog and yet this
-bridge still exists.(verified using &lt;code&gt;nmcli con list&lt;/code&gt; or &lt;code&gt;btrctl show&lt;/code&gt;)
-&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-1-1&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;sec-1-1&quot;&gt;Possible solution&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-1-1&quot;&gt;
-&lt;p&gt;
-The following procedure can be used to create a &lt;i&gt;useful&lt;/i&gt; bridge interface.
-&lt;/p&gt;
-
-&lt;p&gt;
-Refer to &lt;a href=&quot;https://www.happyassassin.net/2014/07/23/bridged-networking-for-libvirt-with-networkmanager-2014-fedora-21/&quot;&gt;this article&lt;/a&gt; for detailed tips, basically:
-&lt;/p&gt;
-
-&lt;ul class=&quot;org-ul&quot;&gt;
-&lt;li&gt;Clean up existing profiles (as a safety measure).
-&lt;/li&gt;
-&lt;li&gt;Use the GUI only to create a bridge, set up slave interface and etc, but &lt;b&gt;NOT&lt;/b&gt;
-  for anything else.
-&lt;/li&gt;
-&lt;li&gt;Use &lt;code&gt;nmcli&lt;/code&gt; to bring up the bridge.
-
-&lt;p&gt;
-&lt;b&gt;NOTE:&lt;/b&gt; up until &lt;code&gt;0.9.8&lt;/code&gt;, there is no feedback after &lt;code&gt;nmcli con up &amp;lt;args&amp;gt;&lt;/code&gt; and
-even with some feedback in later versions, it's something like &quot;command sent
-(DBus-activated successfully)&quot;. &lt;code&gt;DBus&lt;/code&gt; remote call guarantees no timing, you
-need to &lt;b&gt;wait&lt;/b&gt; for a little while for things to settle down.
-&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-
-&lt;ul class=&quot;org-ul&quot;&gt;&lt;li&gt;&lt;a id=&quot;sec-1-1-1&quot; name=&quot;sec-1-1-1&quot;&gt;&lt;/a&gt;Remove a bridge connection&lt;br  /&gt;&lt;div class=&quot;outline-text-4&quot; id=&quot;text-1-1-1&quot;&gt;
-&lt;p&gt;
-As mentioned above this part is buggy:
-&lt;/p&gt;
-
-&lt;ul class=&quot;org-ul&quot;&gt;
-&lt;li&gt;Remove the bridge connection in the &lt;code&gt;NM&lt;/code&gt; GUI interface.
-
-&lt;p&gt;
-Of course this does &lt;span class=&quot;underline&quot;&gt;NOT&lt;/span&gt; really do anything, but if you don't do it the
-bridge will persists even after you have removed it with rest steps, which is
-just more confusing.
-&lt;/p&gt;
-&lt;/li&gt;
-
-&lt;li&gt;Bring the bridge interface down.
-
-&lt;p&gt;
-Use &lt;code&gt;ip link set bridge0 down&lt;/code&gt;, instead of &lt;code&gt;ifdown&lt;/code&gt;, &lt;code&gt;btrctl&lt;/code&gt; or &lt;code&gt;nmcli con&lt;/code&gt;,
-all of which will be obstructed by &lt;code&gt;NM&lt;/code&gt;. I think &lt;code&gt;ip link&lt;/code&gt; works at kernel
-level directly.
-&lt;/p&gt;
-&lt;/li&gt;
-
-&lt;li&gt;Remove the bridge.
-
-&lt;p&gt;
-&lt;code&gt;btrctl delbr bridge0&lt;/code&gt; should pull the trick.
-&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;/li&gt;&lt;/ul&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-2&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;sec-2&quot;&gt;The old good &lt;code&gt;CLI&lt;/code&gt; approach.&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-2&quot;&gt;
-&lt;p&gt;
-&lt;code&gt;systemctl disable network&lt;/code&gt; to turn off the &lt;code&gt;NetworkManager&lt;/code&gt;. All standard
-procedures using &lt;code&gt;btrctl&lt;/code&gt; should work.
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-3&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;sec-3&quot;&gt;Final tweak: STP.&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-3&quot;&gt;
-&lt;p&gt;
-The bridge interface created above will work &lt;b&gt;normally&lt;/b&gt;, but might &lt;b&gt;NOT&lt;/b&gt; with
-&lt;code&gt;PXE&lt;/code&gt;. The problem here is with the &lt;code&gt;STP&lt;/code&gt;: &lt;a href=&quot;https://en.wikipedia.org/wiki/Spanning_Tree_Protocol&quot;&gt;Spanning Tree Protocol (wikipedia)&lt;/a&gt;.
-&lt;/p&gt;
-
-&lt;p&gt;
-It's a protocol to avoid &lt;a href=&quot;https://en.wikipedia.org/wiki/Switching_loop&quot;&gt;Layer 2 switching loop&lt;/a&gt;, (&lt;a href=&quot;http://www.omnisecu.com/cisco-certified-network-associate-ccna/what-is-layer-2-switching-loop.php&quot;&gt;another article with
-illustration&lt;/a&gt;) by creating a spanning tree in the network topology. In the
-algorithm, there is a &lt;code&gt;blocking&lt;/code&gt; phase to listen on the coming/going packets to
-gather information before any packets are forwarded. This delay would result in
-a timeout error in &lt;code&gt;PXE&lt;/code&gt; connection.
-&lt;/p&gt;
-
-&lt;p&gt;
-It's not recommended to disable &lt;code&gt;STP&lt;/code&gt;, but instead set &lt;code&gt;forward-delay&lt;/code&gt; to 0 as
-instructed in &lt;a href=&quot;http://wiki.libvirt.org/page/PXE_boot_(or_dhcp)_on_guest_failed&quot;&gt;libvirt's FAQ about bridge&lt;/a&gt;. The &lt;code&gt;NetworkManager&lt;/code&gt; approach creates
-bridges with 15 seconds delay as default, and the &lt;code&gt;CLI&lt;/code&gt; would create bridges
-without &lt;code&gt;STP&lt;/code&gt;.
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-</description>
-        <pubDate>Wed, 26 Aug 2015 00:00:00 +0000</pubDate>
-        <link>http://carltonf.github.io/post/installing-sled-12-with-pxe-using-libvirt</link>
-        <guid isPermaLink="true">http://carltonf.github.io/post/installing-sled-12-with-pxe-using-libvirt</guid>
-        
-        <category>libvirt</category>
-        
-        <category>sled</category>
-        
-        <category>bridge</category>
-        
-        <category>stp</category>
-        
-        
-        <category></category>
-        
-        <category></category>
-        
-      </item>
-    
-      <item>
-        <title>TODO (old page before 201608)</title>
-        <description>&lt;i&gt;DISCLAIM: This post is the old TODO page. Archived as a psot for reference.&lt;/i&gt;
-&lt;p&gt;
-We list some long-term TODO entries here. For now only entries related to this
-blog site are included.
-&lt;/p&gt;
-
-&lt;div id=&quot;outline-container-sec-1&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;sec-1&quot;&gt;Blog Roadmap&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-1&quot;&gt;
-&lt;/div&gt;&lt;div id=&quot;outline-container-sec-1-1&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;sec-1-1&quot;&gt;&lt;span class=&quot;todo TODO&quot;&gt;TODO&lt;/span&gt; Populate Wiki.&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-1-1&quot;&gt;
-&lt;p&gt;
-For quite a long time, we've built a &lt;code&gt;Git&lt;/code&gt; repo (locally called &lt;code&gt;ICWiki&lt;/code&gt; ;) that
-collects bits of knowledge for personal use. This task is about itemize it and
-put online under the &lt;code&gt;Wiki&lt;/code&gt; page.
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-1-2&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;sec-1-2&quot;&gt;&lt;span class=&quot;todo TODO&quot;&gt;TODO&lt;/span&gt; Post-navigation sidebar&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-1-2&quot;&gt;
-&lt;p&gt;
-Other than the current site-wide navigation, an article-wide navigation would
-also be nice.
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-1-3&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;sec-1-3&quot;&gt;&lt;span class=&quot;todo TODO&quot;&gt;TODO&lt;/span&gt; Wiki Style Improvements &lt;code&gt;[0/2]&lt;/code&gt;&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-1-3&quot;&gt;
-&lt;/div&gt;&lt;ul class=&quot;org-ul&quot;&gt;&lt;li&gt;&lt;a id=&quot;sec-1-3-1&quot; name=&quot;sec-1-3-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;todo TODO&quot;&gt;TODO&lt;/span&gt; Sidebar Recent listing includes &lt;code&gt;Wiki&lt;/code&gt;&lt;br  /&gt;&lt;div class=&quot;outline-text-4&quot; id=&quot;text-1-3-1&quot;&gt;
-&lt;p&gt;
-Further include posts from all collections.
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;/li&gt;
-
-&lt;li&gt;&lt;a id=&quot;sec-1-3-2&quot; name=&quot;sec-1-3-2&quot;&gt;&lt;/a&gt;&lt;span class=&quot;todo TODO&quot;&gt;TODO&lt;/span&gt; Alphabetical Listing&lt;br  /&gt;&lt;div class=&quot;outline-text-4&quot; id=&quot;text-1-3-2&quot;&gt;
-&lt;p&gt;
-&lt;b&gt;Waiting for at least &amp;gt;50 entries to justify this task&lt;/b&gt;
-&lt;/p&gt;
-
-&lt;p&gt;
-List &lt;code&gt;Wiki&lt;/code&gt; entries alphabetically with each alphabet as a panel (would be a
-good use case for &lt;code&gt;Bootstrap&lt;/code&gt; collapse panels).
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;/li&gt;&lt;/ul&gt;
-&lt;/div&gt;
-
-&lt;div id=&quot;outline-container-sec-1-4&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;sec-1-4&quot;&gt;&lt;span class=&quot;todo TODO&quot;&gt;TODO&lt;/span&gt; Philosophy Collection&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-1-4&quot;&gt;
-&lt;p&gt;
-I'm not a philosopher by trade, but a philosophical man (self-titled :P). Over
-the years, I have pondered on many different problems, aggregated some
-&quot;interesting&quot; ideas. I've been through the stages: 
-&lt;/p&gt;
-
-&lt;pre class=&quot;example&quot;&gt;
-&quot;delusion of knowing all&quot; -&amp;gt; &quot;disillusion and break-down&quot; -&amp;gt; &quot;rebuilding&quot;
-&lt;/pre&gt;
-
-&lt;p&gt;
-The years since the sophomore year in the college have not been good to me.
-Though being accused of thinking too much, I start to find out it's the
-opposite: I've known too little and I was too ignorant. And thus I need to
-collect my thoughts, trace the roots, systematize the scattered ideas and learn
-more.
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-</description>
-        <pubDate>Mon, 03 Aug 2015 00:00:00 +0000</pubDate>
-        <link>http://carltonf.github.io/post/old-todo-page</link>
-        <guid isPermaLink="true">http://carltonf.github.io/post/old-todo-page</guid>
-        
-        <category>todo</category>
-        
-        <category>admin</category>
-        
-        
-        <category></category>
-        
-        <category></category>
         
       </item>
     
