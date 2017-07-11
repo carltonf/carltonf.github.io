@@ -38,6 +38,14 @@
 
     
     {
+        "value": "Still Emacs, still Tufte",
+        "data": "http://carltonf.github.io/post/still-emacs-still-tufte"
+    }
+    
+    
+
+    
+    ,{
         "value": "Understand 'Just Enough' GObject For Code Reading",
         "data": "http://carltonf.github.io/post/understand-minimal-gobject-for-code-reading"
     }
@@ -226,20 +234,20 @@
 
     
     ,{
+        "value": "Blog",
+        "data": "http://carltonf.github.io/posts/"
+    }
+    
+    
+
+    
+    ,{
         "value": "Tags",
         "data": "http://carltonf.github.io/tags/"
     }
     
     
 
-    
-
-    
-    ,{
-        "value": "Blog",
-        "data": "http://carltonf.github.io/posts/"
-    }
-    
     
 
     
@@ -624,6 +632,22 @@
     ,{
         "value": "Tag: gnome-session",
         "data": "http://carltonf.github.io/tags/gnome-session/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: markdown",
+        "data": "http://carltonf.github.io/tags/markdown/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: tufte",
+        "data": "http://carltonf.github.io/tags/tufte/"
     }
     
     

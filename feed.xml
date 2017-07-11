@@ -6,9 +6,124 @@
 </description>
     <link>http://carltonf.github.io/</link>
     <atom:link href="http://carltonf.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 23 Nov 2016 05:58:20 +0000</pubDate>
-    <lastBuildDate>Wed, 23 Nov 2016 05:58:20 +0000</lastBuildDate>
+    <pubDate>Tue, 11 Jul 2017 05:53:30 +0000</pubDate>
+    <lastBuildDate>Tue, 11 Jul 2017 05:53:30 +0000</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
+    
+      <item>
+        <title>Still Emacs, still Tufte</title>
+        <description>&lt;p&gt;Quite long ago, I started to use &lt;code class=&quot;highlighter-rouge&quot;&gt;Tufte&lt;/code&gt; style for my blog posts. The liquid
+tags used is from &lt;code class=&quot;highlighter-rouge&quot;&gt;Immaculate&lt;/code&gt;. As with all plain-text formatting, these tags
+eventually get in the way.&lt;span id=&quot;sn-tufte-tags&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;From Word-like WISIWIG to plain-text formats like the venerated &lt;code class=&quot;highlighter-rouge&quot;&gt;Tex&lt;/code&gt; or much simpler ones &lt;code class=&quot;highlighter-rouge&quot;&gt;Markdown&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;Org-mode&lt;/code&gt;, the key differences are &lt;strong&gt;whether&lt;/strong&gt; the formatting tags are seen and &lt;strong&gt;how demanding&lt;/strong&gt; the formatting requirement is. The formatting requirement of &lt;code class=&quot;highlighter-rouge&quot;&gt;Tufte&lt;/code&gt; style is more demanding than conventional markdown documents and thus the tags feel more cluttering.&lt;/span&gt; As a weekend project, I hacked a
+&lt;code class=&quot;highlighter-rouge&quot;&gt;markdown-tufte&lt;/code&gt; extension for &lt;code class=&quot;highlighter-rouge&quot;&gt;Emacs&lt;/code&gt;. It help me cope with the
+sidenote/marginnote &lt;em&gt;mess&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/still-emacs-still-tufte/markdown-tufte-screenshot.png&quot; alt=&quot;screenshot&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The above is the screenshot for the extension. You can find the code at
+&lt;a href=&quot;#&quot;&gt;markdown-tufte&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;And the rest of this post are some thoughts (murmuring).&lt;/p&gt;
+
+&lt;h1 id=&quot;the-question-of-writing-too-little&quot;&gt;The question of writing too little&lt;/h1&gt;
+
+&lt;p&gt;Often as it is, my thoughts upon why I’ve written so little did myself no good.
+Nevertheless, this is still what I did in the last weekend.&lt;/p&gt;
+
+&lt;p&gt;I thought that I was busy, that I was learning too many things in the meantime,
+that I did not really write nothing as there are some unfinished drafts laying
+around, that I was lazy and undisciplined, that the tool chain was too
+complicated.&lt;/p&gt;
+
+&lt;p&gt;All these &lt;em&gt;excuses&lt;/em&gt; have some truth in it. And I started with the tool chain -
+the concrete one. &lt;span id=&quot;sn-excuses&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;Yes, more disciplines about writing have been written down and I shall carry them out by the words! Well, at least so I claimed ;P&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;the-quest-for-better-tool&quot;&gt;The quest for better tool.&lt;/h2&gt;
+
+&lt;p&gt;The old &lt;code class=&quot;highlighter-rouge&quot;&gt;habit&lt;/code&gt; tool was over-engineered and are being converted to simple bash
+script. But for the weekend, I looked at the editor and the environment with/under
+which I author and publish.&lt;/p&gt;
+
+&lt;p&gt;Here are the requirements for the editor:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;vim-like keybinding: unrivalled for smooth &lt;em&gt;English&lt;/em&gt; post editing. &lt;span id=&quot;sn-english-editing&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+    &lt;span class=&quot;sidenote&quot;&gt;Maybe all alphabetical languages share similar features. Emacs are not that good at Chinese as word-level navigation is useless for Chinese.&lt;/span&gt;&lt;/li&gt;
+  &lt;li&gt;Support Tufte style.&lt;/li&gt;
+  &lt;li&gt;Almost all platform, at least &lt;code class=&quot;highlighter-rouge&quot;&gt;Windows&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;Linux&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Markdown, better with live preview. &lt;span id=&quot;sn-live-preview&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+    &lt;span class=&quot;sidenote&quot;&gt;I have doubts over the usefulness of live preview: they seem to be only useful, when one is new to the syntax of &lt;code class=&quot;highlighter-rouge&quot;&gt;Markdown&lt;/code&gt;, and it’s a great source of distraction.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;visual-studio-code&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Visual Studio Code&lt;/code&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;span class=&quot;marginnote&quot;&gt;Behind the scene &lt;code class=&quot;highlighter-rouge&quot;&gt;VSCode&lt;/code&gt; uses the same technology as &lt;code class=&quot;highlighter-rouge&quot;&gt;Atom&lt;/code&gt; editor, and I like
+Web technology pioneered by &lt;code class=&quot;highlighter-rouge&quot;&gt;HTML5&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;ES6_&lt;/code&gt;. To me, &lt;code class=&quot;highlighter-rouge&quot;&gt;VSCode&lt;/code&gt; is the best
+offer from &lt;code class=&quot;highlighter-rouge&quot;&gt;Microsoft&lt;/code&gt; to the open source community (other than &lt;code class=&quot;highlighter-rouge&quot;&gt;WLS&lt;/code&gt;, Windows
+Linux Subsystem, maybe, if &lt;code class=&quot;highlighter-rouge&quot;&gt;WLS&lt;/code&gt; is more stable and has less edge corners.)&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Well, if some day I do not use &lt;code class=&quot;highlighter-rouge&quot;&gt;Emacs&lt;/code&gt; any more, this would be my number 1
+choice. Other than &lt;code class=&quot;highlighter-rouge&quot;&gt;Tufte&lt;/code&gt; support, it has everything I want. And it might just
+take a few days hacking to put together an extension to add support for &lt;code class=&quot;highlighter-rouge&quot;&gt;Tufte&lt;/code&gt;
+anyway.&lt;/p&gt;
+
+&lt;p&gt;The problem is, for post writing, it doesn’t beat &lt;code class=&quot;highlighter-rouge&quot;&gt;Emacs&lt;/code&gt; and I know one thing
+or two about how to write &lt;code class=&quot;highlighter-rouge&quot;&gt;ELisp&lt;/code&gt;, a plus for Emacs. If I need to do
+some Web hacking, particularly in &lt;code class=&quot;highlighter-rouge&quot;&gt;TypeScript&lt;/code&gt;/&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt;, it would be my
+choice.&lt;/p&gt;
+
+&lt;h3 id=&quot;rmarkdown&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;RMarkdown&lt;/code&gt;&lt;/h3&gt;
+
+&lt;p&gt;A flavour of &lt;code class=&quot;highlighter-rouge&quot;&gt;Markdown&lt;/code&gt; from &lt;code class=&quot;highlighter-rouge&quot;&gt;RStudio&lt;/code&gt;. Among all other features, this one
+supports &lt;code class=&quot;highlighter-rouge&quot;&gt;Tufte&lt;/code&gt; style.&lt;/p&gt;
+
+&lt;p&gt;It’s just that &lt;code class=&quot;highlighter-rouge&quot;&gt;RStudio&lt;/code&gt; is a beast and I am not doing any data science, yet.
+Also I only used &lt;code class=&quot;highlighter-rouge&quot;&gt;RStudio&lt;/code&gt; once before to learn some basics about &lt;code class=&quot;highlighter-rouge&quot;&gt;R&lt;/code&gt; and it was
+quite a while ago. The learning cost would be too high just for the posts.&lt;/p&gt;
+
+&lt;h2 id=&quot;about-habit-and-discipline&quot;&gt;About Habit and Discipline&lt;/h2&gt;
+
+&lt;p&gt;My previous English teacher Alex &lt;span id=&quot;sn-alex&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;Just two weeks ago, we had the last class. He is a funny guy. His class makes you feel like a group of young folks chitchatting together, sharing childhood stories and small, funny quarrels with his Chinese girlfriend.&lt;/span&gt; said he forced himself to write
+something in the early morning to form a habit of writing. Anything, anything
+will do, even lines like &lt;em&gt;“I do not know why I am sitting here, I do not have
+anything to write, and I just forced myself to do so. Oh, I just finish brushing
+my teech and blabla”&lt;/em&gt;. And by this method, as he claimed, he manages to finish
+writing a book about his 4-year stay in China.&lt;/p&gt;
+
+&lt;p&gt;I should learn something from this.&lt;/p&gt;
+
+&lt;h2 id=&quot;less-discipline&quot;&gt;Less Discipline&lt;/h2&gt;
+
+&lt;p&gt;While writing this post, I noticed what a bliss it is not to try to get
+reference for everything. I &lt;a href=&quot;/writing-habit-and-tools#fledging&quot;&gt;wrote once&lt;/a&gt; before that references are
+important. I still believe so, but the extra work for references might as well
+cost my writing productivity. As thus the benefits do not justify the cost.
+&lt;strong&gt;Let’s only make important references for important posts&lt;/strong&gt;. And along this
+line we should relax some of the rules I laid before about writing to encourage
+writing more.&lt;/p&gt;
+
+&lt;h1 id=&quot;ending&quot;&gt;Ending&lt;/h1&gt;
+
+&lt;p&gt;Well, this post also serves as a test ground for the &lt;code class=&quot;highlighter-rouge&quot;&gt;markdown-tufte&lt;/code&gt; extension,
+so far so good. Happy posting now ;)&lt;/p&gt;
+</description>
+        <pubDate>Mon, 10 Jul 2017 00:00:00 +0000</pubDate>
+        <link>http://carltonf.github.io/post/still-emacs-still-tufte</link>
+        <guid isPermaLink="true">http://carltonf.github.io/post/still-emacs-still-tufte</guid>
+        
+        <category>markdown</category>
+        
+        <category>tufte</category>
+        
+        <category>emacs</category>
+        
+        <category>writing</category>
+        
+        
+      </item>
     
       <item>
         <title>Understand 'Just Enough' GObject For Code Reading</title>
@@ -1181,7 +1296,7 @@ and now this site is undergoing a second redesign. &lt;span id=&quot;sn-history&
 
 &lt;h1 id=&quot;review&quot;&gt;Review&lt;/h1&gt;
 
-&lt;p&gt;The old &lt;em&gt;TODO&lt;/em&gt; page was published almost exactly one year ago. &lt;span id=&quot;last-TODO&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+&lt;p&gt;The old &lt;em&gt;TODO&lt;/em&gt; page was published almost exactly one year ago. &lt;span id=&quot;sn-last-TODO&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
       &lt;span class=&quot;sidenote&quot;&gt;The last &lt;a href=&quot;http://carltonf.github.io/post/old-todo-page&quot;&gt;todo note&lt;/a&gt; is taken at 03 August 2015.&lt;/span&gt; The timing is a pleasant coincidence.&lt;/p&gt;
 
 &lt;h2 id=&quot;populate-wiki&quot;&gt;Populate Wiki&lt;/h2&gt;
@@ -1553,84 +1668,6 @@ update-help
         <pubDate>Mon, 29 Feb 2016 00:00:00 +0000</pubDate>
         <link>http://carltonf.github.io/post/reflections-on-content-management</link>
         <guid isPermaLink="true">http://carltonf.github.io/post/reflections-on-content-management</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>Adapt other than Configure</title>
-        <description>&lt;p&gt;After many years of unscrutinized way of &lt;em&gt;configuring&lt;/em&gt; – try to make things “the right way”, I’ve realized that in many cases adaption is better. It offers the most smooth entry into new fields, more productivity from the very start and it’s also pedagogically the best way to learn from others. Configuring still matters but only when it really matters. Stay focused, unscrutinized configuring is essentially premature optimization.&lt;/p&gt;
-
-&lt;p&gt;This serves as the first article written in &lt;code class=&quot;highlighter-rouge&quot;&gt;Markdown&lt;/code&gt; directly. Previously most of my blog articles are written in &lt;code class=&quot;highlighter-rouge&quot;&gt;org&lt;/code&gt;. I’ve been a long-time &lt;code class=&quot;highlighter-rouge&quot;&gt;org-mode&lt;/code&gt; user and have done quite a bit on how to author blogs with &lt;code class=&quot;highlighter-rouge&quot;&gt;org&lt;/code&gt;. However recently, after several attempts to fix my old configurations, I finally realized that all these struggles yield little return.&lt;/p&gt;
-
-&lt;h1 id=&quot;configure&quot;&gt;Configure&lt;/h1&gt;
-&lt;p&gt;Ever since I started playing with Linux back at my sophomore year in college, I’ve been juggling with all kinds of configurations: configure bash, configure the wifi, configure graphical cards, the audio cards, the CPU, the fan speed, and the editor – Emacs. I have been hooked up with the power of configuration: a lot of choices, your way, no lock-in, true understanding and etc. It used to be sweet.&lt;/p&gt;
-
-&lt;p&gt;However, with the time passing by, things have changed: I’m getting old; Linux desktop is just a dream; mobile computation is the future; cloud computation creates closed circles with higher and higher walls; open source is becoming a super successful &lt;strong&gt;business&lt;/strong&gt; model; &lt;em&gt;Free Software&lt;/em&gt; feels outdated and not exciting at all.&lt;/p&gt;
-
-&lt;p&gt;It came to my revelation that continuing the configuration path will only lead to isolation: if you prefer to install Linux only, you’ll miss all the new exciting hardware that just doesn’t ship with Linux driver support and you’ll miss all the discounts as Linux-only devices is a niche market that doesn’t enjoy the scale effect of popular consumer products. Even for the rare cases, you can theoretically get a new device to play nice with Linux, the setup can constantly get broken with updates or edge case usage and then you have to go through the search-try-and-error drill again and again. All these only for an inferior user experience that barely &lt;strong&gt;works&lt;/strong&gt;. What’s worse, the knowledge you gain by doing the chores receives diminishing return: new software and hardware are developing too fast for you to have time for deep understanding, you get to only know new terms and how to do specific stuff. Throw mobile and cloud into the mess, all become unwieldy.&lt;/p&gt;
-
-&lt;p&gt;Enough is enough.&lt;/p&gt;
-
-&lt;h1 id=&quot;adapt&quot;&gt;Adapt&lt;/h1&gt;
-&lt;p&gt;All the talk on &lt;strong&gt;adapting&lt;/strong&gt; is truly about &lt;strong&gt;focus&lt;/strong&gt;. Maybe genius would be different, but for me, the world has become more and more complicated and time seems to be less and less. By yielding some controls, I can focus on what I can do best, a much more economical approach.&lt;/p&gt;
-
-&lt;h2 id=&quot;follow-the-herd&quot;&gt;Follow the herd&lt;/h2&gt;
-&lt;p&gt;The following is what I’ve been doing recently (not an exhaustive list by any measure):&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Bought a new-model laptop preinstalled with &lt;code class=&quot;highlighter-rouge&quot;&gt;Windows 10&lt;/code&gt;: arguably 10 sucks and is virtually a spyware, but it’s getting better fast, really &lt;em&gt;fast&lt;/em&gt; and I’m not really using it for things too sensitive.&lt;/li&gt;
-  &lt;li&gt;Bought a non-Nexus cellphone of domestic brand (Meizu) bundled with private UI and applicatioins: it’s one of the best sale and thus really a bargain.&lt;/li&gt;
-  &lt;li&gt;Install bloatware/spyware like &lt;code class=&quot;highlighter-rouge&quot;&gt;Weixin&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;QQ&lt;/code&gt; and etc: no more preaching the merits of free protocols to my non-IT friends the next time they say: “talk to you on &lt;code class=&quot;highlighter-rouge&quot;&gt;Weixin&lt;/code&gt;”.&lt;/li&gt;
-  &lt;li&gt;Use Windows/Android app for mails: goodbye &lt;code class=&quot;highlighter-rouge&quot;&gt;mu4e&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;offlineimap&lt;/code&gt; and their friends. It’s been good time together.&lt;/li&gt;
-  &lt;li&gt;Use Chrome with &lt;code class=&quot;highlighter-rouge&quot;&gt;vimum&lt;/code&gt;, less keyboard-ish but better browsing experience: goodbye &lt;code class=&quot;highlighter-rouge&quot;&gt;firefox&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;palemoon&lt;/code&gt;, and &lt;code class=&quot;highlighter-rouge&quot;&gt;conkeror&lt;/code&gt;(really sad to see &lt;code class=&quot;highlighter-rouge&quot;&gt;conkeror&lt;/code&gt; go, I like it &lt;strong&gt;a lot&lt;/strong&gt;.)&lt;/li&gt;
-  &lt;li&gt;Learn &lt;code class=&quot;highlighter-rouge&quot;&gt;Powershell&lt;/code&gt; to automate things on Windows: “No, thanks” for &lt;code class=&quot;highlighter-rouge&quot;&gt;Cygwin&lt;/code&gt;, been there, tried that. And &lt;em&gt;object&lt;/em&gt; shell is not that bad ;P&lt;/li&gt;
-  &lt;li&gt;Use &lt;code class=&quot;highlighter-rouge&quot;&gt;hexchat&lt;/code&gt; on Windows instead of &lt;code class=&quot;highlighter-rouge&quot;&gt;ERC&lt;/code&gt;: well, &lt;code class=&quot;highlighter-rouge&quot;&gt;hexchat&lt;/code&gt; is still a nerdy thing, but we’re talking about &lt;code class=&quot;highlighter-rouge&quot;&gt;IRC&lt;/code&gt; here ;P (PS: not that I have any complaints about &lt;code class=&quot;highlighter-rouge&quot;&gt;ERC&lt;/code&gt;, it’s just that I’m using &lt;code class=&quot;highlighter-rouge&quot;&gt;Emacs&lt;/code&gt; within a Virtualbox VM exclusively and being a VM it constantly gets paused, saved/restored, making it less suitable for a long-going background app)&lt;/li&gt;
-  &lt;li&gt;Linux in a VM only. This is true both for my build machine on the server and my personal working environment. It’s just easier: the device driver support for Windows is almost zero-configured. With enough RAM, running a VM for coding is a valid option. I’ve been using this combination for half a year now. It’s super. (PS: this is where I think Linux really shines: as service runner and a developer tool.)&lt;/li&gt;
-  &lt;li&gt;Use proprietary tools like &lt;code class=&quot;highlighter-rouge&quot;&gt;WebStorm&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;VS Code&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;Sublime Text&lt;/code&gt; instead of venerable Emacs for web development: less customization, more out-of-box integration.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Many changes happen within one or two months. I basically change half of my tools and workflow. You might think these changes would be very hard: &lt;strong&gt;NO&lt;/strong&gt;, it’s actually much easier and greatly improves my overall experience. By following the herd, I actually use mainstream tools developed&amp;amp;maintained by well-paid engineers and battle-tested by thousands of users. Most of the time, they just work out of the box. All I need to do is to adapt: give up some controls, learn their ways first and then see what changes we need to make, and usually you’ll find their way is actually better. Yes, it’s just simple like that.&lt;/p&gt;
-
-&lt;h2 id=&quot;spacemacs&quot;&gt;Spacemacs&lt;/h2&gt;
-&lt;p&gt;Weird maybe, I’ll use &lt;code class=&quot;highlighter-rouge&quot;&gt;Spacemacs&lt;/code&gt; as an example. &lt;code class=&quot;highlighter-rouge&quot;&gt;Spacemacs&lt;/code&gt; is&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;A community-driven Emacs distribution - The best editor is neither Emacs nor Vim, it’s Emacs &lt;em&gt;and&lt;/em&gt; Vim!&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Well, the four merits it touted on its website bear more meanings:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Four core pillars: Mnemonic, Discoverable, Consistent and “Crowd-Configured”.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;And I think &lt;code class=&quot;highlighter-rouge&quot;&gt;Crowd-Configured&lt;/code&gt; is the jewelry on the crown. After all, you can arguably say the vanilla Emacs is also “Mnemonic, Discoverable, Consistent”. Well, to be fair, I think the vanilla Emacs has too much historical baggage and far less “Mnemonic, Discoverable, Consistent” than &lt;code class=&quot;highlighter-rouge&quot;&gt;Spacemacs&lt;/code&gt;. I’ve long known this starter kit and heard a lot of good things about it, but not until my recent &lt;em&gt;adapt&lt;/em&gt; conviction I was too scared to use it. I’ve used Emacs for almost 7 years now and has accumulated my fair share of customization. Despite my inclination towards VIM’s modal editing style, I’ve backed off from change multiple times. “How can I throw away years of hard-earned muscle memory and carefully crafted personal configurations?! What’s the gain? Just to be VIM-like? Stupid!”&lt;/p&gt;
-
-&lt;p&gt;Encouraged by my other &lt;em&gt;adapt&lt;/em&gt; successes, I started to try &lt;code class=&quot;highlighter-rouge&quot;&gt;Spacemacs&lt;/code&gt; for a third time (yes, a third time…). “Just let it go.” I told myself. “Do not think how can I do what I used to do. Think how Spacemacs handles these use cases. Learn like a newbie with an empty mind.” I have my first success with &lt;code class=&quot;highlighter-rouge&quot;&gt;org-mode&lt;/code&gt;, the killer application of Emacs IMO. I was trying to review my multi-megabytles agenda files, and navigating, state-changing, archiving, tree-manipulation are just &lt;strong&gt;so&lt;/strong&gt; easy with &lt;code class=&quot;highlighter-rouge&quot;&gt;evil-org&lt;/code&gt;: no more &lt;code class=&quot;highlighter-rouge&quot;&gt;C-M-x C-S-?&lt;/code&gt; stuff which requires my fingers spread&amp;amp;shift like a spider’s dancing. I then started to configure &lt;code class=&quot;highlighter-rouge&quot;&gt;mu4e&lt;/code&gt;(deprecated later), &lt;code class=&quot;highlighter-rouge&quot;&gt;org-agenda&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;Emacs lisp&lt;/code&gt;. Lisp editing proved to be the hard one: the &lt;code class=&quot;highlighter-rouge&quot;&gt;lisp-state&lt;/code&gt; requires more modal-thinking than I’m comfortable with. However, after going through the early stage, I really start to appreciate the well-configured, discoverable functionalities: they are just there. This reminds me of my old MS Word experience: there must be a way to do this, you just need to look around and then the “Wow” moment. From this aspect, &lt;code class=&quot;highlighter-rouge&quot;&gt;Spacemacs&lt;/code&gt; is just great. Now I can reach near previous efficiency with lisp editing now and it’s just a week in &lt;code class=&quot;highlighter-rouge&quot;&gt;Spacemacs&lt;/code&gt;. The experience has been so nice, I have switched default to &lt;code class=&quot;highlighter-rouge&quot;&gt;Spacemacs&lt;/code&gt; before writing this article.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
-&lt;p&gt;I’ll still &lt;em&gt;configure&lt;/em&gt;, just not for everything. Only the area I focused on deserves much configuration. Other things I need? Go with mainstream, it helps.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Use the best tool for the task.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;A well-known saying, but what many &lt;em&gt;free&lt;/em&gt;-minded developers do is often:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;If you have a hammer, you tend to see every problem as a nail.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;This is particularly true for &lt;em&gt;open source&lt;/em&gt; tools: hey, just read the source and happy hacking :), isn’t? Now, I would say nope, there are better things to focus on.&lt;/p&gt;
-</description>
-        <pubDate>Sat, 06 Feb 2016 00:00:00 +0000</pubDate>
-        <link>http://carltonf.github.io/post/adapt-vs-configure</link>
-        <guid isPermaLink="true">http://carltonf.github.io/post/adapt-vs-configure</guid>
-        
-        <category>methodology</category>
-        
-        <category>philosophy</category>
         
         
       </item>

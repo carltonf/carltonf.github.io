@@ -6,11 +6,10 @@
   <!-- NOTE `content` setting is required to ensure GPU rasterization is enabled. -->
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 
-  <title>Tag: org</title>
-  <meta name="description" content="See further, but how far is far?
-">
+  <title>Still Emacs, still Tufte</title>
+  <meta name="description" content="Quite long ago, I started to use Tufte style for my blog posts. The liquidtags used is from Immaculate. As with all plain-text formatting, these tagseventual...">
 
-  <link rel="canonical" href="http://carltonf.github.io/tags/org/">
+  <link rel="canonical" href="http://carltonf.github.io/post/still-emacs-still-tufte">
   <link rel="alternate" type="application/rss+xml" title="Crystal Sight" href="http://carltonf.github.io/feed.xml">
 
   <script type="application/ld+json">
@@ -18,12 +17,11 @@
 {
   "@context": "http://schema.org",
   "@type": "NewsArticle",
-  "mainEntityOfPage": "http://carltonf.github.io/tags/org/",
-  "headline": "Tag: org",
-  "datePublished": "2017-07-11T05:53:30+00:00",
-  "dateModified": "2017-07-11T05:53:30+00:00",
-  "description": "See further, but how far is far?
-",
+  "mainEntityOfPage": "http://carltonf.github.io/post/still-emacs-still-tufte",
+  "headline": "Still Emacs, still Tufte",
+  "datePublished": "2017-07-10T00:00:00+00:00",
+  "dateModified": "2017-07-10T00:00:00+00:00",
+  "description": "Quite long ago, I started to use Tufte style for my blog posts. The liquidtags used is from Immaculate. As with all plain-text formatting, these tagseventual...",
   "author": {
     "@type": "Person",
     "name": ""
@@ -652,115 +650,144 @@ pre.highlight {
 </header>
 
 
-<article class="post">
+<article class="post-article">
+
+  <h2 itemprop="name">
+    <a href="/post/still-emacs-still-tufte" itemprop="url">Still Emacs, still Tufte</a>
+  </h2>
 
   <div class="post-meta">
-    <h1 class="post-title">Tag: org</h1>
+    <time datetime="10 July 2017">
+      10 July 2017
+    </time>
+    
+    • <i>Updated at </i>
+    <time datetime="10 July 2017">
+      10 July 2017
+    </time>
+    
   </div>
 
   <section>
-    <div class="post-list">
-  
-  <!-- Generating tag page -->
-    
-      <!-- NOTE snippet requiring variable `post` defined -->
-<div class="post-list-entry">
+    <p>Quite long ago, I started to use <code class="highlighter-rouge">Tufte</code> style for my blog posts. The liquid
+tags used is from <code class="highlighter-rouge">Immaculate</code>. As with all plain-text formatting, these tags
+eventually get in the way.<span id="sn-tufte-tags" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">From Word-like WISIWIG to plain-text formats like the venerated <code class="highlighter-rouge">Tex</code> or much simpler ones <code class="highlighter-rouge">Markdown</code> or <code class="highlighter-rouge">Org-mode</code>, the key differences are <strong>whether</strong> the formatting tags are seen and <strong>how demanding</strong> the formatting requirement is. The formatting requirement of <code class="highlighter-rouge">Tufte</code> style is more demanding than conventional markdown documents and thus the tags feel more cluttering.</span> As a weekend project, I hacked a
+<code class="highlighter-rouge">markdown-tufte</code> extension for <code class="highlighter-rouge">Emacs</code>. It help me cope with the
+sidenote/marginnote <em>mess</em>.</p>
 
-  <h2>
-    <a class="post-link" href="/post/from-octopress-to-jekyll">From Octopress to Jekyll</a>
-  </h2>
+<p><img src="/images/still-emacs-still-tufte/markdown-tufte-screenshot.png" alt="screenshot" /></p>
 
-  <p> <p>
-After 4 months' idleness, I've come back to my blog and decide to take another
-look at the blogging tools.
-</p>
+<p>The above is the screenshot for the extension. You can find the code at
+<a href="#">markdown-tufte</a>.</p>
 
- </p>
+<p>And the rest of this post are some thoughts (murmuring).</p>
 
-  <div>
-    <span> Posted at <strong>Apr 1, 2015</strong> </span>
-    
-    • <a href="/tags/jekyll"><span>jekyll</span></a>
-    
-    • <a href="/tags/octopress"><span>octopress</span></a>
-    
-    • <a href="/tags/org"><span>org</span></a>
-    
-  </div>
+<h1 id="the-question-of-writing-too-little">The question of writing too little</h1>
 
-</div>
+<p>Often as it is, my thoughts upon why I’ve written so little did myself no good.
+Nevertheless, this is still what I did in the last weekend.</p>
 
-    
-      <!-- NOTE snippet requiring variable `post` defined -->
-<div class="post-list-entry">
+<p>I thought that I was busy, that I was learning too many things in the meantime,
+that I did not really write nothing as there are some unfinished drafts laying
+around, that I was lazy and undisciplined, that the tool chain was too
+complicated.</p>
 
-  <h2>
-    <a class="post-link" href="/post/octopress-customization-easy-blog-source-link">Octopress Customization: easy blog source link</a>
-  </h2>
+<p>All these <em>excuses</em> have some truth in it. And I started with the tool chain -
+the concrete one. <span id="sn-excuses" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">Yes, more disciplines about writing have been written down and I shall carry them out by the words! Well, at least so I claimed ;P</span></p>
 
-  <p> <div id="outline-container-sec-1" class="outline-2">
-<div class="outline-text-2" id="text-1">
-<p>
-Most my posts here are programming-related and one of <code>Org</code>'s killer features is
-embedding code (used in literate programming and etc.), I thought why not give
-the reader an easier way to access my post source. Chances are that they might
-be using <code>Emacs</code> and <code>Org</code>, then they can try the code directly without
-copying/pasting or the hassle to wade through my source repo ;).
-</p>
+<h2 id="the-quest-for-better-tool">The quest for better tool.</h2>
 
- </p>
+<p>The old <code class="highlighter-rouge">habit</code> tool was over-engineered and are being converted to simple bash
+script. But for the weekend, I looked at the editor and the environment with/under
+which I author and publish.</p>
 
-  <div>
-    <span> Posted at <strong>Nov 20, 2014</strong> </span>
-    
-    • <a href="/tags/octopress"><span>octopress</span></a>
-    
-    • <a href="/tags/jekyll"><span>jekyll</span></a>
-    
-    • <a href="/tags/org"><span>org</span></a>
-    
-  </div>
+<p>Here are the requirements for the editor:</p>
 
-</div>
+<ul>
+  <li>vim-like keybinding: unrivalled for smooth <em>English</em> post editing. <span id="sn-english-editing" class="margin-toggle sidenote-number"></span>
+    <span class="sidenote">Maybe all alphabetical languages share similar features. Emacs are not that good at Chinese as word-level navigation is useless for Chinese.</span></li>
+  <li>Support Tufte style.</li>
+  <li>Almost all platform, at least <code class="highlighter-rouge">Windows</code> and <code class="highlighter-rouge">Linux</code></li>
+  <li>Markdown, better with live preview. <span id="sn-live-preview" class="margin-toggle sidenote-number"></span>
+    <span class="sidenote">I have doubts over the usefulness of live preview: they seem to be only useful, when one is new to the syntax of <code class="highlighter-rouge">Markdown</code>, and it’s a great source of distraction.</span></li>
+</ul>
 
-    
-      <!-- NOTE snippet requiring variable `post` defined -->
-<div class="post-list-entry">
+<h3 id="visual-studio-code"><code class="highlighter-rouge">Visual Studio Code</code></h3>
 
-  <h2>
-    <a class="post-link" href="/post/org-octopress-links">Org-octopress: Links</a>
-  </h2>
+<p><span class="marginnote">Behind the scene <code class="highlighter-rouge">VSCode</code> uses the same technology as <code class="highlighter-rouge">Atom</code> editor, and I like
+Web technology pioneered by <code class="highlighter-rouge">HTML5</code> and <code class="highlighter-rouge">ES6_</code>. To me, <code class="highlighter-rouge">VSCode</code> is the best
+offer from <code class="highlighter-rouge">Microsoft</code> to the open source community (other than <code class="highlighter-rouge">WLS</code>, Windows
+Linux Subsystem, maybe, if <code class="highlighter-rouge">WLS</code> is more stable and has less edge corners.)</span></p>
 
-  <p> <div id="outline-container-sec-1" class="outline-2">
-<div class="outline-text-2" id="text-1">
-<p>
-In <a href="http://www.railsonmaui.com/blog/2014/03/05/octopress-setup-with-github-and-org-mode-v2/index.html">Org-Mode Octopress Setup V2</a>, which I am still reading to complete my setup of
-<code>Org</code> with <code>Octopress</code>, the author mentions the problems with links in <b>Org-mode
-Integration</b>.
-</p>
+<p>Well, if some day I do not use <code class="highlighter-rouge">Emacs</code> any more, this would be my number 1
+choice. Other than <code class="highlighter-rouge">Tufte</code> support, it has everything I want. And it might just
+take a few days hacking to put together an extension to add support for <code class="highlighter-rouge">Tufte</code>
+anyway.</p>
 
- </p>
+<p>The problem is, for post writing, it doesn’t beat <code class="highlighter-rouge">Emacs</code> and I know one thing
+or two about how to write <code class="highlighter-rouge">ELisp</code>, a plus for Emacs. If I need to do
+some Web hacking, particularly in <code class="highlighter-rouge">TypeScript</code>/<code class="highlighter-rouge">JavaScript</code>, it would be my
+choice.</p>
 
-  <div>
-    <span> Posted at <strong>Nov 19, 2014</strong> </span>
-    
-    • <a href="/tags/org"><span>org</span></a>
-    
-    • <a href="/tags/emacs"><span>emacs</span></a>
-    
-    • <a href="/tags/octopress"><span>octopress</span></a>
-    
-    • <a href="/tags/emacs-lisp"><span>emacs-lisp</span></a>
-    
-  </div>
+<h3 id="rmarkdown"><code class="highlighter-rouge">RMarkdown</code></h3>
 
-</div>
+<p>A flavour of <code class="highlighter-rouge">Markdown</code> from <code class="highlighter-rouge">RStudio</code>. Among all other features, this one
+supports <code class="highlighter-rouge">Tufte</code> style.</p>
 
-    
-  
-</div>
+<p>It’s just that <code class="highlighter-rouge">RStudio</code> is a beast and I am not doing any data science, yet.
+Also I only used <code class="highlighter-rouge">RStudio</code> once before to learn some basics about <code class="highlighter-rouge">R</code> and it was
+quite a while ago. The learning cost would be too high just for the posts.</p>
 
+<h2 id="about-habit-and-discipline">About Habit and Discipline</h2>
+
+<p>My previous English teacher Alex <span id="sn-alex" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">Just two weeks ago, we had the last class. He is a funny guy. His class makes you feel like a group of young folks chitchatting together, sharing childhood stories and small, funny quarrels with his Chinese girlfriend.</span> said he forced himself to write
+something in the early morning to form a habit of writing. Anything, anything
+will do, even lines like <em>“I do not know why I am sitting here, I do not have
+anything to write, and I just forced myself to do so. Oh, I just finish brushing
+my teech and blabla”</em>. And by this method, as he claimed, he manages to finish
+writing a book about his 4-year stay in China.</p>
+
+<p>I should learn something from this.</p>
+
+<h2 id="less-discipline">Less Discipline</h2>
+
+<p>While writing this post, I noticed what a bliss it is not to try to get
+reference for everything. I <a href="/writing-habit-and-tools#fledging">wrote once</a> before that references are
+important. I still believe so, but the extra work for references might as well
+cost my writing productivity. As thus the benefits do not justify the cost.
+<strong>Let’s only make important references for important posts</strong>. And along this
+line we should relax some of the rules I laid before about writing to encourage
+writing more.</p>
+
+<h1 id="ending">Ending</h1>
+
+<p>Well, this post also serves as a test ground for the <code class="highlighter-rouge">markdown-tufte</code> extension,
+so far so good. Happy posting now ;)</p>
+
+    <p class="article-tombstone"><br>∎</p>
   </section>
+
+  <div class="article-footer">
+    <div class="post-tags">
+      <b> Tags </b>
+      
+      • <a href="/tags/markdown"><span>markdown</span></a>
+      
+      • <a href="/tags/tufte"><span>tufte</span></a>
+      
+      • <a href="/tags/emacs"><span>emacs</span></a>
+      
+      • <a href="/tags/writing"><span>writing</span></a>
+      
+    </div>
+    <div class="post-comment-link">
+      <b>Comment</b>:
+      <a href="https://github.com/carltonf/carltonf.github.io/issues/new" target="_blank">Github Issue</a>
+    </div>
+  </div>
 
 </article>
 
