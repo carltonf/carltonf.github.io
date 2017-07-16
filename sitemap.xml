@@ -105,10 +105,10 @@
 <loc>http://carltonf.github.io/</loc>
 </url>
 <url>
-<loc>http://carltonf.github.io/tags/hello/</loc>
+<loc>http://carltonf.github.io/tags/tech/</loc>
 </url>
 <url>
-<loc>http://carltonf.github.io/tags/self-introduction/</loc>
+<loc>http://carltonf.github.io/tags/hello/</loc>
 </url>
 <url>
 <loc>http://carltonf.github.io/tags/org/</loc>
@@ -126,7 +126,7 @@
 <loc>http://carltonf.github.io/tags/jekyll/</loc>
 </url>
 <url>
-<loc>http://carltonf.github.io/tags/arch_linux/</loc>
+<loc>http://carltonf.github.io/tags/archlinux/</loc>
 </url>
 <url>
 <loc>http://carltonf.github.io/tags/suse/</loc>
@@ -198,6 +198,12 @@
 <loc>http://carltonf.github.io/tags/philosophy/</loc>
 </url>
 <url>
+<loc>http://carltonf.github.io/tags/reflection/</loc>
+</url>
+<url>
+<loc>http://carltonf.github.io/tags/crystal/</loc>
+</url>
+<url>
 <loc>http://carltonf.github.io/tags/reading/</loc>
 </url>
 <url>
@@ -211,6 +217,9 @@
 </url>
 <url>
 <loc>http://carltonf.github.io/tags/gnome/</loc>
+</url>
+<url>
+<loc>http://carltonf.github.io/tags/bugfix/</loc>
 </url>
 <url>
 <loc>http://carltonf.github.io/tags/windows/</loc>
@@ -241,9 +250,6 @@
 </url>
 <url>
 <loc>http://carltonf.github.io/tags/question-driven/</loc>
-</url>
-<url>
-<loc>http://carltonf.github.io/tags/gnome-session/</loc>
 </url>
 <url>
 <loc>http://carltonf.github.io/tags/markdown/</loc>
@@ -310,6 +316,6 @@
 </url>
 <url>
 <loc>http://carltonf.github.io/google7bf8db770e917808.html</loc>
-<lastmod>2017-07-11T02:07:00+00:00</lastmod>
+<lastmod>2017-07-12T14:17:38+00:00</lastmod>
 </url>
 </urlset>

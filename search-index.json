@@ -262,16 +262,16 @@
 
     
     ,{
-        "value": "Tag: hello",
-        "data": "http://carltonf.github.io/tags/hello/"
+        "value": "Tag: tech",
+        "data": "http://carltonf.github.io/tags/tech/"
     }
     
     
 
     
     ,{
-        "value": "Tag: self-introduction",
-        "data": "http://carltonf.github.io/tags/self-introduction/"
+        "value": "Tag: hello",
+        "data": "http://carltonf.github.io/tags/hello/"
     }
     
     
@@ -318,8 +318,8 @@
 
     
     ,{
-        "value": "Tag: arch_linux",
-        "data": "http://carltonf.github.io/tags/arch_linux/"
+        "value": "Tag: archlinux",
+        "data": "http://carltonf.github.io/tags/archlinux/"
     }
     
     
@@ -510,6 +510,22 @@
 
     
     ,{
+        "value": "Tag: reflection",
+        "data": "http://carltonf.github.io/tags/reflection/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: crystal",
+        "data": "http://carltonf.github.io/tags/crystal/"
+    }
+    
+    
+
+    
+    ,{
         "value": "Tag: reading",
         "data": "http://carltonf.github.io/tags/reading/"
     }
@@ -544,6 +560,14 @@
     ,{
         "value": "Tag: gnome",
         "data": "http://carltonf.github.io/tags/gnome/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: bugfix",
+        "data": "http://carltonf.github.io/tags/bugfix/"
     }
     
     
@@ -624,14 +648,6 @@
     ,{
         "value": "Tag: question-driven",
         "data": "http://carltonf.github.io/tags/question-driven/"
-    }
-    
-    
-
-    
-    ,{
-        "value": "Tag: gnome-session",
-        "data": "http://carltonf.github.io/tags/gnome-session/"
     }
     
     

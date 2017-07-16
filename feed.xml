@@ -6,8 +6,8 @@
 </description>
     <link>http://carltonf.github.io/</link>
     <atom:link href="http://carltonf.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 11 Jul 2017 05:53:30 +0000</pubDate>
-    <lastBuildDate>Tue, 11 Jul 2017 05:53:30 +0000</lastBuildDate>
+    <pubDate>Sun, 16 Jul 2017 06:20:27 +0000</pubDate>
+    <lastBuildDate>Sun, 16 Jul 2017 06:20:27 +0000</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
     
       <item>
@@ -113,6 +113,8 @@ so far so good. Happy posting now ;)&lt;/p&gt;
         <pubDate>Mon, 10 Jul 2017 00:00:00 +0000</pubDate>
         <link>http://carltonf.github.io/post/still-emacs-still-tufte</link>
         <guid isPermaLink="true">http://carltonf.github.io/post/still-emacs-still-tufte</guid>
+        
+        <category>tech</category>
         
         <category>markdown</category>
         
@@ -537,13 +539,15 @@ can improve my code reading skill a lot.&lt;/li&gt;
         <link>http://carltonf.github.io/post/understand-minimal-gobject-for-code-reading</link>
         <guid isPermaLink="true">http://carltonf.github.io/post/understand-minimal-gobject-for-code-reading</guid>
         
+        <category>tech</category>
+        
         <category>gobject</category>
         
         <category>code-reading</category>
         
         <category>question-driven</category>
         
-        <category>gnome-session</category>
+        <category>gnome</category>
         
         
       </item>
@@ -816,6 +820,8 @@ gdbus call --session --dest org.gnome.SessionManager &lt;span class=&quot;se&quo
         <link>http://carltonf.github.io/post/code-reading-the-racing-of-two-agents</link>
         <guid isPermaLink="true">http://carltonf.github.io/post/code-reading-the-racing-of-two-agents</guid>
         
+        <category>tech</category>
+        
         <category>code-reading</category>
         
         <category>sle</category>
@@ -942,6 +948,8 @@ for us than rely on forgetting human mind.&lt;/p&gt;
         <link>http://carltonf.github.io/post/writing-habit-and-tools</link>
         <guid isPermaLink="true">http://carltonf.github.io/post/writing-habit-and-tools</guid>
         
+        <category>tech</category>
+        
         <category>writing</category>
         
         <category>habit</category>
@@ -1046,6 +1054,8 @@ there are people can benefit from &lt;code class=&quot;highlighter-rouge&quot;&g
         <pubDate>Sat, 27 Aug 2016 00:00:00 +0000</pubDate>
         <link>http://carltonf.github.io/post/try-out-bash-on-unbuntu-on-windows</link>
         <guid isPermaLink="true">http://carltonf.github.io/post/try-out-bash-on-unbuntu-on-windows</guid>
+        
+        <category>tech</category>
         
         <category>windows</category>
         
@@ -1277,9 +1287,11 @@ you are warned. &lt;span id=&quot;sn-warned&quot; class=&quot;margin-toggle side
         <link>http://carltonf.github.io/post/a-learning-guide-gnome-shell-bug-fixing</link>
         <guid isPermaLink="true">http://carltonf.github.io/post/a-learning-guide-gnome-shell-bug-fixing</guid>
         
+        <category>tech</category>
+        
         <category>gnome</category>
         
-        <category>bug-fix</category>
+        <category>bugfix</category>
         
         
       </item>
@@ -1447,6 +1459,8 @@ words&lt;/em&gt; only. &lt;span id=&quot;sn-big-words&quot; class=&quot;margin-t
         <link>http://carltonf.github.io/post/revisiting-todo-of-this-site</link>
         <guid isPermaLink="true">http://carltonf.github.io/post/revisiting-todo-of-this-site</guid>
         
+        <category>tech</category>
+        
         <category>todo</category>
         
         <category>admin</category>
@@ -1509,6 +1523,8 @@ update-help
         <pubDate>Mon, 07 Mar 2016 00:00:00 +0000</pubDate>
         <link>http://carltonf.github.io/post/powershell-tips-notes</link>
         <guid isPermaLink="true">http://carltonf.github.io/post/powershell-tips-notes</guid>
+        
+        <category>tech</category>
         
         <category>powershell</category>
         
@@ -1634,6 +1650,8 @@ update-help
         <link>http://carltonf.github.io/post/reading-code-breakers</link>
         <guid isPermaLink="true">http://carltonf.github.io/post/reading-code-breakers</guid>
         
+        <category>crystal</category>
+        
         <category>reading</category>
         
         <category>notes</category>
@@ -1668,6 +1686,10 @@ update-help
         <pubDate>Mon, 29 Feb 2016 00:00:00 +0000</pubDate>
         <link>http://carltonf.github.io/post/reflections-on-content-management</link>
         <guid isPermaLink="true">http://carltonf.github.io/post/reflections-on-content-management</guid>
+        
+        <category>tech</category>
+        
+        <category>reflection</category>
         
         
       </item>
