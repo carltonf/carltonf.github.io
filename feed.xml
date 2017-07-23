@@ -6,9 +6,224 @@
 </description>
     <link>http://carltonf.github.io/</link>
     <atom:link href="http://carltonf.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 23 Jul 2017 10:52:13 +0000</pubDate>
-    <lastBuildDate>Sun, 23 Jul 2017 10:52:13 +0000</lastBuildDate>
+    <pubDate>Sun, 23 Jul 2017 12:27:39 +0000</pubDate>
+    <lastBuildDate>Sun, 23 Jul 2017 12:27:39 +0000</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
+    
+      <item>
+        <title>How to deal with Patch Rejection</title>
+        <description>&lt;p&gt;When use the old good tool &lt;code class=&quot;highlighter-rouge&quot;&gt;patch&lt;/code&gt;, rejections are commonly seen. AFAIK, the
+only way to handle it properly is manual fixing. However if you are not
+intimately familiar with the code base and if the difference is subtle, this
+approach can become frustratingly tedious. This post explores one experiment to
+try to get computer to help, i.e. scripts to identify the difference.&lt;/p&gt;
+
+&lt;p&gt;Despite the proliferation of &lt;code class=&quot;highlighter-rouge&quot;&gt;Git&lt;/code&gt;, there are still occasional use of the old,
+good &lt;code class=&quot;highlighter-rouge&quot;&gt;patch&lt;/code&gt;, particularly if you need to package some software.&lt;span id=&quot;sn-Git-conflicts&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;Rejections in &lt;code class=&quot;highlighter-rouge&quot;&gt;patch&lt;/code&gt; are conflicts in &lt;code class=&quot;highlighter-rouge&quot;&gt;git rebase&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;git merge&lt;/code&gt; and etc.. The reason that conflicts in &lt;code class=&quot;highlighter-rouge&quot;&gt;Git&lt;/code&gt; does not feel very scary to me is that &lt;code class=&quot;highlighter-rouge&quot;&gt;Git&lt;/code&gt; would mark the conflict in a finer, smaller chunk. &lt;code class=&quot;highlighter-rouge&quot;&gt;patch&lt;/code&gt; marks the whole hunk as stated in the patch as &lt;code class=&quot;highlighter-rouge&quot;&gt;rej&lt;/code&gt; and sometimes it’s too large to be useful.&lt;/span&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;the-situation&quot;&gt;The Situation&lt;/h1&gt;
+
+&lt;p&gt;One day I was rebasing patches of some package to a new version &lt;span id=&quot;sn-id&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;Though irrelevant for the topic at hand, for the curious, the package in question is &lt;a href=&quot;https://www.openattic.org/&quot;&gt;openattic&lt;/a&gt;, an open source storage management tool. The patch in question is fixing a bug related to erroneous disk usage reporting when &lt;code class=&quot;highlighter-rouge&quot;&gt;ceph&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;RBD&lt;/code&gt; has &lt;code class=&quot;highlighter-rouge&quot;&gt;fast-diff&lt;/code&gt; feature enabled.&lt;/span&gt;, the
+following rejection occured:&lt;/p&gt;
+
+&lt;div class=&quot;language-diff highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gd&quot;&gt;--- backend/ceph/models.py
+&lt;/span&gt;&lt;span class=&quot;gi&quot;&gt;+++ backend/ceph/models.py
+&lt;/span&gt;&lt;span class=&quot;gu&quot;&gt;@@ -809,30 +809,34 @@ class CephRbd(NodbModel, RadosMixin):  # aka RADOS block device
+&lt;/span&gt;
+     @bulk_attribute_setter(['used_size'])
+     def set_disk_usage(self, objects, field_names):
+&lt;span class=&quot;gd&quot;&gt;-        fsid = self.pool.cluster.fsid
+-        pool_name = self.pool.name
+&lt;/span&gt;&lt;span class=&quot;gi&quot;&gt;+        self.used_size = None
+&lt;/span&gt;
+&lt;span class=&quot;gd&quot;&gt;-        if len(TaskQueue.filter_by_definition_and_status(
+-                ceph.tasks.get_rbd_performance_data(fsid, pool_name, self.name),
+-                [TaskQueue.STATUS_NOT_STARTED, TaskQueue.STATUS_RUNNING])) == 0:
+-            ceph.tasks.get_rbd_performance_data.delay(fsid, pool_name, self.name)
+&lt;/span&gt;&lt;span class=&quot;gi&quot;&gt;+        if 'fast-diff' in self.features:
++            fsid = self.pool.cluster.fsid
++            pool_name = self.pool.name
++
++            if len(TaskQueue.filter_by_definition_and_status(
++                    ceph.tasks.get_rbd_performance_data(fsid, pool_name, self.name),
++                    [TaskQueue.STATUS_NOT_STARTED, TaskQueue.STATUS_RUNNING])) == 0:
++                ceph.tasks.get_rbd_performance_data.delay(fsid, pool_name, self.name)
+&lt;/span&gt;
+&lt;span class=&quot;gd&quot;&gt;-        tasks = TaskQueue.filter_by_definition_and_status(
+-            ceph.tasks.get_rbd_performance_data(fsid, pool_name, self.name),
+-            [TaskQueue.STATUS_FINISHED, TaskQueue.STATUS_EXCEPTION, TaskQueue.STATUS_ABORTED])
+-        tasks = list(tasks)
+-        disk_usage = dict()
+&lt;/span&gt;&lt;span class=&quot;gi&quot;&gt;+            tasks = TaskQueue.filter_by_definition_and_status(
++                ceph.tasks.get_rbd_performance_data(fsid, pool_name, self.name),
++                [TaskQueue.STATUS_FINISHED, TaskQueue.STATUS_EXCEPTION, TaskQueue.STATUS_ABORTED])
++            tasks = list(tasks)
++            disk_usage = dict()
+&lt;/span&gt;
+&lt;span class=&quot;gd&quot;&gt;-        if len(tasks) &amp;gt; 0:
+-            latest_task = tasks.pop()
+&lt;/span&gt;&lt;span class=&quot;gi&quot;&gt;+            if len(tasks) &amp;gt; 0:
++                latest_task = tasks.pop()
+&lt;/span&gt;
+&lt;span class=&quot;gd&quot;&gt;-            for task in tasks:
+-                task.delete()
+&lt;/span&gt;&lt;span class=&quot;gi&quot;&gt;+                for task in tasks:
++                    task.delete()
+&lt;/span&gt;
+&lt;span class=&quot;gd&quot;&gt;-            if latest_task.status not in [TaskQueue.STATUS_EXCEPTION, TaskQueue.STATUS_ABORTED]:
+-                disk_usage = latest_task.json_result
+&lt;/span&gt;&lt;span class=&quot;gi&quot;&gt;+                if latest_task.status not in [TaskQueue.STATUS_EXCEPTION, TaskQueue.STATUS_ABORTED]:
++                    disk_usage = latest_task.json_result
+&lt;/span&gt;
+&lt;span class=&quot;gd&quot;&gt;-        self.used_size = disk_usage['used_size'] if 'used_size' in disk_usage else 0
+&lt;/span&gt;&lt;span class=&quot;gi&quot;&gt;+            if 'used_size' in disk_usage:
++                self.used_size = disk_usage['used_size']
+&lt;/span&gt;
+     def save(self, *args, **kwargs):
+         &quot;&quot;&quot;
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;And the relevant part of the current source is listed below:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;nd&quot;&gt;@bulk_attribute_setter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'used_size'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;set_disk_usage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;objects&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;field_names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;fsid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pool&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cluster&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fsid&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;pool_name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pool&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;
+
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TaskQueue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filter_by_definition_and_status&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;ceph&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tasks&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get_rbd_performance_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fsid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pool_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TaskQueue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;STATUS_NOT_STARTED&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TaskQueue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;STATUS_RUNNING&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;ceph&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tasks&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get_rbd_performance_data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;delay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fsid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pool_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;tasks&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TaskQueue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filter_by_definition_and_status&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;ceph&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tasks&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get_rbd_performance_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fsid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pool_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TaskQueue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;STATUS_FINISHED&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TaskQueue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;STATUS_EXCEPTION&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TaskQueue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;STATUS_ABORTED&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;tasks&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tasks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;disk_usage&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tasks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;latest_task&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tasks&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+            &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;task&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tasks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;task&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;delete&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;latest_task&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;status&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TaskQueue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;STATUS_EXCEPTION&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TaskQueue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;STATUS_ABORTED&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]:&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;disk_usage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_exec_time&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;latest_task&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;json_result&lt;/span&gt;
+
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;used_size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;disk_usage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'used_size'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'used_size'&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;disk_usage&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kwargs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;A quick scanning can tell that the patch mainly adds a &lt;code class=&quot;highlighter-rouge&quot;&gt;if&lt;/code&gt; test for &lt;code class=&quot;highlighter-rouge&quot;&gt;fast-diff&lt;/code&gt;
+feature and wraps the previous code into &lt;code class=&quot;highlighter-rouge&quot;&gt;if&lt;/code&gt; block. The meaning is relatively
+straightforward, the rejection difference is subtle though.&lt;/p&gt;
+
+&lt;h1 id=&quot;this-is-not-the-first-time&quot;&gt;This is NOT the first time.&lt;/h1&gt;
+
+&lt;p&gt;Sure, the patch is not really too long, just do some meticulous comparison and I
+shall snatch the difference out in no time. But, this is not the first time I
+come across this type of situation and the whole
+line-by-line-differencing-with-your-eyes thing is not fun at all. As the saying
+goes:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Anything done twice should be automated!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;So let’s think about the method for a while.&lt;/p&gt;
+
+&lt;h1 id=&quot;why-the-rejections&quot;&gt;Why the rejections&lt;/h1&gt;
+
+&lt;p&gt;The reason behind rejections is simple: &lt;code class=&quot;highlighter-rouge&quot;&gt;patch&lt;/code&gt; find the lines to be patched in
+the current source doesn’t match with those in the patch. These lines also
+include context lines, who serve as important anchors in a patch. And as a tool
+&lt;code class=&quot;highlighter-rouge&quot;&gt;patch&lt;/code&gt; plays safe: &lt;em&gt;in doubt, reject&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;So here what we really need to do is extract the supposedly to-be-patched lines
+and their context from the patch and do an old-fashion &lt;code class=&quot;highlighter-rouge&quot;&gt;diff&lt;/code&gt; with the part of
+the &lt;em&gt;current&lt;/em&gt; source. Easy enough, isn’t it? Here are the commands to turn these
+thoughts into action:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 1. Extract the relevant part of the source&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# NOTE in subtle-difference case, the line range in the patch is usually accurate enough&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# i.e. @@ -809,30&lt;/span&gt;
+sed -n &lt;span class=&quot;s1&quot;&gt;'809,838p'&lt;/span&gt; backend/ceph/models.py &amp;gt; cur-orig
+
+&lt;span class=&quot;c&quot;&gt;# 2. Extract the supposedly to-be-patched lines and their context from the patch.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# NOTE original lines and context are started with minus `-` and white space ` `&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# respectively, match only these lines and strip away these leading characters.&lt;/span&gt;
+sed -n -e &lt;span class=&quot;s1&quot;&gt;'/^[- ]/s/^[- ]//gp'&lt;/span&gt; backend/ceph/models.py.rej &amp;gt; rej-orig
+
+&lt;span class=&quot;c&quot;&gt;# 3. Do an old-fashioned diff&lt;/span&gt;
+diff -u cur-orig rej-orig
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;An important note about &lt;code class=&quot;highlighter-rouge&quot;&gt;-n&lt;/code&gt; option of &lt;code class=&quot;highlighter-rouge&quot;&gt;sed&lt;/code&gt;:&lt;span id=&quot;sn-id&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;&lt;em&gt;From&lt;/em&gt; the &lt;a href=&quot;https://www.gnu.org/software/sed/manual/sed.txt&quot;&gt;GNU sed manual&lt;/a&gt;.&lt;/span&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;By default ‘sed’ prints all processed input (except input that has been
+modified/deleted by commands such as ‘d’). Use ‘-n’ to suppress output, and
+the ‘p’ command to print specific lines.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;The end result is:&lt;/p&gt;
+
+&lt;div class=&quot;language-diff highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gd&quot;&gt;--- cur-orig        2017-07-21 11:33:30.000000000 +0200
+&lt;/span&gt;&lt;span class=&quot;gi&quot;&gt;+++ rej-orig 2017-07-21 11:38:22.000000000 +0200
+&lt;/span&gt;&lt;span class=&quot;gu&quot;&gt;@@ -1,3 +1,4 @@
+&lt;/span&gt;&lt;span class=&quot;gi&quot;&gt;+-- backend/ceph/models.py
+&lt;/span&gt;
+     @bulk_attribute_setter(['used_size'])
+     def set_disk_usage(self, objects, field_names):
+&lt;span class=&quot;gu&quot;&gt;@@ -22,7 +23,7 @@
+&lt;/span&gt;                 task.delete()
+
+             if latest_task.status not in [TaskQueue.STATUS_EXCEPTION, TaskQueue.STATUS_ABORTED]:
+&lt;span class=&quot;gd&quot;&gt;-                disk_usage, _exec_time = latest_task.json_result
+&lt;/span&gt;&lt;span class=&quot;gi&quot;&gt;+                disk_usage = latest_task.json_result
+&lt;/span&gt;
+         self.used_size = disk_usage['used_size'] if 'used_size' in disk_usage else 0
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Now, it’s crystal clear what &lt;em&gt;is&lt;/em&gt; the difference, the current source assigns an
+extra variable &lt;code class=&quot;highlighter-rouge&quot;&gt;__exec_time&lt;/code&gt; from the value of &lt;code class=&quot;highlighter-rouge&quot;&gt;lastest_task.json_result&lt;/code&gt;.
+Investigate the use of this new variable and change the patch accordingly. &lt;em&gt;The
+Fin&lt;/em&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;ending&quot;&gt;Ending&lt;/h1&gt;
+
+&lt;p&gt;I don’t think I’ll use this tech often, as the use of bare-bone &lt;code class=&quot;highlighter-rouge&quot;&gt;patch&lt;/code&gt; is fading
+into the history. However, I wrote this post to demonstrate what a little script
+can do. And I also want to emphasize that it’s not about how much time is saved,
+if any at all in this case, but more about the proper way of thinking: the
+solution is not necessarily the only goal, the process itself should be
+rewarding and benefit the skill development in the long run. In this light, all
+those little scripts and extra effort make perfect sense.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 23 Jul 2017 00:00:00 +0000</pubDate>
+        <link>http://carltonf.github.io/post/how-to-deal-with-patch-rejection</link>
+        <guid isPermaLink="true">http://carltonf.github.io/post/how-to-deal-with-patch-rejection</guid>
+        
+        <category>tech</category>
+        
+        <category>patch</category>
+        
+        <category>script</category>
+        
+        
+      </item>
     
       <item>
         <title>Symbolic links on Windows</title>
@@ -1697,130 +1912,6 @@ update-help
         <category>powershell</category>
         
         <category>tips</category>
-        
-        <category>notes</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Reading: Code Breakers</title>
-        <description>&lt;p&gt;Quotes and notes from book ~Colin F. Barnes~ &lt;em&gt;Code Breakers: Alpha&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;When reading on Kindle, various highlightings and notes are accreted. These “Readings: XXX” series are my note recordings. As an English learner, some notes appeal to me for their mere language values and might not be related to the content of the book ;P. &lt;span id=&quot;side1&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
-      &lt;span class=&quot;sidenote&quot;&gt;Might be better to have separate repo for these notes&lt;/span&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;alpha&quot;&gt;Alpha&lt;/h1&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;… the Dome – before City Earth.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;A pairs of brass-rimmed goggles with darkened lenses appeared in the gap. They gave the fragile girl wearing them the countenance of a nervous lemur.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;… so – the words escaped him.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;… the electric motors whined up to speed.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;“… I don’t think this Jasper is the wet-behind-ears kid you think he is. That dude’s got some serious game face. He knows what’s going down.”&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Ahead of him bright light reduced his pupils to dues specks.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;… her slow veins showed through like blue string.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Beth blushes further, turning her face away with all &lt;strong&gt;the subtle coyness of a vixen in heat&lt;/strong&gt;. &lt;strong&gt;Twirling a length of auburn hair around&lt;/strong&gt; her perfectly manicured finger, she bites her lip.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Petal smiled and shook her head. “You just like her bouncing tits.”&lt;/p&gt;
-
-  &lt;p&gt;“What? No! That’s not what I–”&lt;/p&gt;
-
-  &lt;p&gt;“Chill, Gez, I’m just &lt;strong&gt;yanking your chain&lt;/strong&gt;.”&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;“Having a heart gets ya killed, boy.”&lt;/p&gt;
-
-  &lt;p&gt;“Don’t &lt;strong&gt;boy me&lt;/strong&gt;, old man…”&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;The lights came on, blinding Gerry so that all he could see were the fine blood vessels backlit in his eyelids&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;… the laser beams – illuminated by the rakish angle of the sun and the dusty particulate in the air.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Gabe’s eyebrows knitted together with incredulity.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;“… Trust is a two-way street, and I only travel one way.”&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;“… a number of buildings appeared on the horizon: skyscrapers and many others in all kinds of sizes and shapes stood in the fog like grey fungi.”&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Sitting made &lt;strong&gt;a bright flare explode&lt;/strong&gt; in his vision.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;He stood and waited for &lt;strong&gt;his balance to re-calibrate&lt;/strong&gt;.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;… rippling with muscles beneath his dark form-fitting clothes, …&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;“… I’ll &lt;strong&gt;patch in&lt;/strong&gt;.”&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;He admonished himself for being so neglectful.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;The heat of the shot boiled the blood so that a red mist fell upon the slumped body.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;AO – augmented overlay.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Jachz blinked once and became still; so still that Gerry had a strange idea he might have perhaps crashed and was in need of a reboot.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;“I can’t answer that, as I know not what I miss. One cannot wish for something one does not know or understand.”&lt;/p&gt;
-&lt;/blockquote&gt;
-</description>
-        <pubDate>Wed, 02 Mar 2016 00:00:00 +0000</pubDate>
-        <link>http://carltonf.github.io/post/reading-code-breakers</link>
-        <guid isPermaLink="true">http://carltonf.github.io/post/reading-code-breakers</guid>
-        
-        <category>crystal</category>
-        
-        <category>reading</category>
         
         <category>notes</category>
         

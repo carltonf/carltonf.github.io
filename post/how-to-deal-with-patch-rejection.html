@@ -6,11 +6,10 @@
   <!-- NOTE `content` setting is required to ensure GPU rasterization is enabled. -->
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 
-  <title>Tag: diagram</title>
-  <meta name="description" content="See further, but how far is far?
-">
+  <title>How to deal with Patch Rejection</title>
+  <meta name="description" content="When use the old good tool patch, rejections are commonly seen. AFAIK, theonly way to handle it properly is manual fixing. However if you are notintimately f...">
 
-  <link rel="canonical" href="http://carltonf.github.io/tags/diagram/">
+  <link rel="canonical" href="http://carltonf.github.io/post/how-to-deal-with-patch-rejection">
   <link rel="alternate" type="application/rss+xml" title="Crystal Sight" href="http://carltonf.github.io/feed.xml">
 
   <script type="application/ld+json">
@@ -18,12 +17,11 @@
 {
   "@context": "http://schema.org",
   "@type": "NewsArticle",
-  "mainEntityOfPage": "http://carltonf.github.io/tags/diagram/",
-  "headline": "Tag: diagram",
-  "datePublished": "2017-07-23T12:27:39+00:00",
-  "dateModified": "2017-07-23T12:27:39+00:00",
-  "description": "See further, but how far is far?
-",
+  "mainEntityOfPage": "http://carltonf.github.io/post/how-to-deal-with-patch-rejection",
+  "headline": "How to deal with Patch Rejection",
+  "datePublished": "2017-07-23T00:00:00+00:00",
+  "dateModified": "2017-07-23T00:00:00+00:00",
+  "description": "When use the old good tool patch, rejections are commonly seen. AFAIK, theonly way to handle it properly is manual fixing. However if you are notintimately f...",
   "author": {
     "@type": "Person",
     "name": ""
@@ -659,44 +657,239 @@ pre.highlight {
 </header>
 
 
-<article class="post">
+<article class="post-article">
+
+  <h2 itemprop="name">
+    <a href="/post/how-to-deal-with-patch-rejection" itemprop="url">How to deal with Patch Rejection</a>
+  </h2>
 
   <div class="post-meta">
-    <h1 class="post-title">Tag: diagram</h1>
+    <time datetime="23 July 2017">
+      23 July 2017
+    </time>
+    
   </div>
 
   <section>
-    <div class="post-list">
-  
-  <!-- Generating tag page -->
-    
-      <!-- NOTE snippet requiring variable `post` defined -->
-<div class="post-list-entry">
+    <p>When use the old good tool <code class="highlighter-rouge">patch</code>, rejections are commonly seen. AFAIK, the
+only way to handle it properly is manual fixing. However if you are not
+intimately familiar with the code base and if the difference is subtle, this
+approach can become frustratingly tedious. This post explores one experiment to
+try to get computer to help, i.e. scripts to identify the difference.</p>
 
-  <h2>
-    <a class="post-link" href="/post/from-text-to-simple-uml-diagram-tools">From Text to simple UML diagram - Tools</a>
-  </h2>
+<p>Despite the proliferation of <code class="highlighter-rouge">Git</code>, there are still occasional use of the old,
+good <code class="highlighter-rouge">patch</code>, particularly if you need to package some software.<span id="sn-Git-conflicts" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">Rejections in <code class="highlighter-rouge">patch</code> are conflicts in <code class="highlighter-rouge">git rebase</code>, <code class="highlighter-rouge">git merge</code> and etc.. The reason that conflicts in <code class="highlighter-rouge">Git</code> does not feel very scary to me is that <code class="highlighter-rouge">Git</code> would mark the conflict in a finer, smaller chunk. <code class="highlighter-rouge">patch</code> marks the whole hunk as stated in the patch as <code class="highlighter-rouge">rej</code> and sometimes it’s too large to be useful.</span></p>
 
-  <p> My review and survey on textual uml tools </p>
+<h1 id="the-situation">The Situation</h1>
 
-  <div>
-    <span> Posted at <strong>Jun 11, 2015</strong> </span>
-    
-    • <a href="/tags/tech"><span>tech</span></a>
-    
-    • <a href="/tags/uml"><span>uml</span></a>
-    
-    • <a href="/tags/diagram"><span>diagram</span></a>
-    
-  </div>
+<p>One day I was rebasing patches of some package to a new version <span id="sn-id" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">Though irrelevant for the topic at hand, for the curious, the package in question is <a href="https://www.openattic.org/">openattic</a>, an open source storage management tool. The patch in question is fixing a bug related to erroneous disk usage reporting when <code class="highlighter-rouge">ceph</code> <code class="highlighter-rouge">RBD</code> has <code class="highlighter-rouge">fast-diff</code> feature enabled.</span>, the
+following rejection occured:</p>
 
+<div class="language-diff highlighter-rouge"><pre class="highlight"><code><span class="gd">--- backend/ceph/models.py
+</span><span class="gi">+++ backend/ceph/models.py
+</span><span class="gu">@@ -809,30 +809,34 @@ class CephRbd(NodbModel, RadosMixin):  # aka RADOS block device
+</span>
+     @bulk_attribute_setter(['used_size'])
+     def set_disk_usage(self, objects, field_names):
+<span class="gd">-        fsid = self.pool.cluster.fsid
+-        pool_name = self.pool.name
+</span><span class="gi">+        self.used_size = None
+</span>
+<span class="gd">-        if len(TaskQueue.filter_by_definition_and_status(
+-                ceph.tasks.get_rbd_performance_data(fsid, pool_name, self.name),
+-                [TaskQueue.STATUS_NOT_STARTED, TaskQueue.STATUS_RUNNING])) == 0:
+-            ceph.tasks.get_rbd_performance_data.delay(fsid, pool_name, self.name)
+</span><span class="gi">+        if 'fast-diff' in self.features:
++            fsid = self.pool.cluster.fsid
++            pool_name = self.pool.name
++
++            if len(TaskQueue.filter_by_definition_and_status(
++                    ceph.tasks.get_rbd_performance_data(fsid, pool_name, self.name),
++                    [TaskQueue.STATUS_NOT_STARTED, TaskQueue.STATUS_RUNNING])) == 0:
++                ceph.tasks.get_rbd_performance_data.delay(fsid, pool_name, self.name)
+</span>
+<span class="gd">-        tasks = TaskQueue.filter_by_definition_and_status(
+-            ceph.tasks.get_rbd_performance_data(fsid, pool_name, self.name),
+-            [TaskQueue.STATUS_FINISHED, TaskQueue.STATUS_EXCEPTION, TaskQueue.STATUS_ABORTED])
+-        tasks = list(tasks)
+-        disk_usage = dict()
+</span><span class="gi">+            tasks = TaskQueue.filter_by_definition_and_status(
++                ceph.tasks.get_rbd_performance_data(fsid, pool_name, self.name),
++                [TaskQueue.STATUS_FINISHED, TaskQueue.STATUS_EXCEPTION, TaskQueue.STATUS_ABORTED])
++            tasks = list(tasks)
++            disk_usage = dict()
+</span>
+<span class="gd">-        if len(tasks) &gt; 0:
+-            latest_task = tasks.pop()
+</span><span class="gi">+            if len(tasks) &gt; 0:
++                latest_task = tasks.pop()
+</span>
+<span class="gd">-            for task in tasks:
+-                task.delete()
+</span><span class="gi">+                for task in tasks:
++                    task.delete()
+</span>
+<span class="gd">-            if latest_task.status not in [TaskQueue.STATUS_EXCEPTION, TaskQueue.STATUS_ABORTED]:
+-                disk_usage = latest_task.json_result
+</span><span class="gi">+                if latest_task.status not in [TaskQueue.STATUS_EXCEPTION, TaskQueue.STATUS_ABORTED]:
++                    disk_usage = latest_task.json_result
+</span>
+<span class="gd">-        self.used_size = disk_usage['used_size'] if 'used_size' in disk_usage else 0
+</span><span class="gi">+            if 'used_size' in disk_usage:
++                self.used_size = disk_usage['used_size']
+</span>
+     def save(self, *args, **kwargs):
+         """
+
+</code></pre>
 </div>
 
-    
-  
+<p>And the relevant part of the current source is listed below:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code>    <span class="nd">@bulk_attribute_setter</span><span class="p">([</span><span class="s">'used_size'</span><span class="p">])</span>
+    <span class="k">def</span> <span class="nf">set_disk_usage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objects</span><span class="p">,</span> <span class="n">field_names</span><span class="p">):</span>
+        <span class="n">fsid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pool</span><span class="o">.</span><span class="n">cluster</span><span class="o">.</span><span class="n">fsid</span>
+        <span class="n">pool_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pool</span><span class="o">.</span><span class="n">name</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">TaskQueue</span><span class="o">.</span><span class="n">filter_by_definition_and_status</span><span class="p">(</span>
+                <span class="n">ceph</span><span class="o">.</span><span class="n">tasks</span><span class="o">.</span><span class="n">get_rbd_performance_data</span><span class="p">(</span><span class="n">fsid</span><span class="p">,</span> <span class="n">pool_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">),</span>
+                <span class="p">[</span><span class="n">TaskQueue</span><span class="o">.</span><span class="n">STATUS_NOT_STARTED</span><span class="p">,</span> <span class="n">TaskQueue</span><span class="o">.</span><span class="n">STATUS_RUNNING</span><span class="p">]))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">ceph</span><span class="o">.</span><span class="n">tasks</span><span class="o">.</span><span class="n">get_rbd_performance_data</span><span class="o">.</span><span class="n">delay</span><span class="p">(</span><span class="n">fsid</span><span class="p">,</span> <span class="n">pool_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="n">tasks</span> <span class="o">=</span> <span class="n">TaskQueue</span><span class="o">.</span><span class="n">filter_by_definition_and_status</span><span class="p">(</span>
+            <span class="n">ceph</span><span class="o">.</span><span class="n">tasks</span><span class="o">.</span><span class="n">get_rbd_performance_data</span><span class="p">(</span><span class="n">fsid</span><span class="p">,</span> <span class="n">pool_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">),</span>
+            <span class="p">[</span><span class="n">TaskQueue</span><span class="o">.</span><span class="n">STATUS_FINISHED</span><span class="p">,</span> <span class="n">TaskQueue</span><span class="o">.</span><span class="n">STATUS_EXCEPTION</span><span class="p">,</span> <span class="n">TaskQueue</span><span class="o">.</span><span class="n">STATUS_ABORTED</span><span class="p">])</span>
+        <span class="n">tasks</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">tasks</span><span class="p">)</span>
+        <span class="n">disk_usage</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tasks</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">latest_task</span> <span class="o">=</span> <span class="n">tasks</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+
+            <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">tasks</span><span class="p">:</span>
+                <span class="n">task</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">latest_task</span><span class="o">.</span><span class="n">status</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="n">TaskQueue</span><span class="o">.</span><span class="n">STATUS_EXCEPTION</span><span class="p">,</span> <span class="n">TaskQueue</span><span class="o">.</span><span class="n">STATUS_ABORTED</span><span class="p">]:</span>
+                <span class="n">disk_usage</span><span class="p">,</span> <span class="n">_exec_time</span> <span class="o">=</span> <span class="n">latest_task</span><span class="o">.</span><span class="n">json_result</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">used_size</span> <span class="o">=</span> <span class="n">disk_usage</span><span class="p">[</span><span class="s">'used_size'</span><span class="p">]</span> <span class="k">if</span> <span class="s">'used_size'</span> <span class="ow">in</span> <span class="n">disk_usage</span> <span class="k">else</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="s">"""
+</span></code></pre>
 </div>
 
+<p>A quick scanning can tell that the patch mainly adds a <code class="highlighter-rouge">if</code> test for <code class="highlighter-rouge">fast-diff</code>
+feature and wraps the previous code into <code class="highlighter-rouge">if</code> block. The meaning is relatively
+straightforward, the rejection difference is subtle though.</p>
+
+<h1 id="this-is-not-the-first-time">This is NOT the first time.</h1>
+
+<p>Sure, the patch is not really too long, just do some meticulous comparison and I
+shall snatch the difference out in no time. But, this is not the first time I
+come across this type of situation and the whole
+line-by-line-differencing-with-your-eyes thing is not fun at all. As the saying
+goes:</p>
+
+<blockquote>
+  <p>Anything done twice should be automated!</p>
+</blockquote>
+
+<p>So let’s think about the method for a while.</p>
+
+<h1 id="why-the-rejections">Why the rejections</h1>
+
+<p>The reason behind rejections is simple: <code class="highlighter-rouge">patch</code> find the lines to be patched in
+the current source doesn’t match with those in the patch. These lines also
+include context lines, who serve as important anchors in a patch. And as a tool
+<code class="highlighter-rouge">patch</code> plays safe: <em>in doubt, reject</em>.</p>
+
+<p>So here what we really need to do is extract the supposedly to-be-patched lines
+and their context from the patch and do an old-fashion <code class="highlighter-rouge">diff</code> with the part of
+the <em>current</em> source. Easy enough, isn’t it? Here are the commands to turn these
+thoughts into action:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c"># 1. Extract the relevant part of the source</span>
+<span class="c">#</span>
+<span class="c"># NOTE in subtle-difference case, the line range in the patch is usually accurate enough</span>
+<span class="c"># i.e. @@ -809,30</span>
+sed -n <span class="s1">'809,838p'</span> backend/ceph/models.py &gt; cur-orig
+
+<span class="c"># 2. Extract the supposedly to-be-patched lines and their context from the patch.</span>
+<span class="c"># NOTE original lines and context are started with minus `-` and white space ` `</span>
+<span class="c"># respectively, match only these lines and strip away these leading characters.</span>
+sed -n -e <span class="s1">'/^[- ]/s/^[- ]//gp'</span> backend/ceph/models.py.rej &gt; rej-orig
+
+<span class="c"># 3. Do an old-fashioned diff</span>
+diff -u cur-orig rej-orig
+</code></pre>
+</div>
+
+<p>An important note about <code class="highlighter-rouge">-n</code> option of <code class="highlighter-rouge">sed</code>:<span id="sn-id" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote"><em>From</em> the <a href="https://www.gnu.org/software/sed/manual/sed.txt">GNU sed manual</a>.</span></p>
+
+<blockquote>
+  <p>By default ‘sed’ prints all processed input (except input that has been
+modified/deleted by commands such as ‘d’). Use ‘-n’ to suppress output, and
+the ‘p’ command to print specific lines.</p>
+</blockquote>
+
+<p>The end result is:</p>
+
+<div class="language-diff highlighter-rouge"><pre class="highlight"><code><span class="gd">--- cur-orig        2017-07-21 11:33:30.000000000 +0200
+</span><span class="gi">+++ rej-orig 2017-07-21 11:38:22.000000000 +0200
+</span><span class="gu">@@ -1,3 +1,4 @@
+</span><span class="gi">+-- backend/ceph/models.py
+</span>
+     @bulk_attribute_setter(['used_size'])
+     def set_disk_usage(self, objects, field_names):
+<span class="gu">@@ -22,7 +23,7 @@
+</span>                 task.delete()
+
+             if latest_task.status not in [TaskQueue.STATUS_EXCEPTION, TaskQueue.STATUS_ABORTED]:
+<span class="gd">-                disk_usage, _exec_time = latest_task.json_result
+</span><span class="gi">+                disk_usage = latest_task.json_result
+</span>
+         self.used_size = disk_usage['used_size'] if 'used_size' in disk_usage else 0
+
+</code></pre>
+</div>
+
+<p>Now, it’s crystal clear what <em>is</em> the difference, the current source assigns an
+extra variable <code class="highlighter-rouge">__exec_time</code> from the value of <code class="highlighter-rouge">lastest_task.json_result</code>.
+Investigate the use of this new variable and change the patch accordingly. <em>The
+Fin</em></p>
+
+<h1 id="ending">Ending</h1>
+
+<p>I don’t think I’ll use this tech often, as the use of bare-bone <code class="highlighter-rouge">patch</code> is fading
+into the history. However, I wrote this post to demonstrate what a little script
+can do. And I also want to emphasize that it’s not about how much time is saved,
+if any at all in this case, but more about the proper way of thinking: the
+solution is not necessarily the only goal, the process itself should be
+rewarding and benefit the skill development in the long run. In this light, all
+those little scripts and extra effort make perfect sense.</p>
+
+    <p class="article-tombstone"><br>∎</p>
   </section>
+
+  <div class="article-footer">
+    <div class="post-tags">
+      <b> Tags </b>
+      
+      • <a href="/tags/tech"><span>tech</span></a>
+      
+      • <a href="/tags/patch"><span>patch</span></a>
+      
+      • <a href="/tags/script"><span>script</span></a>
+      
+    </div>
+    <div class="post-comment-link">
+      <b>Comment</b>:
+      <a href="https://github.com/carltonf/carltonf.github.io/issues/new" target="_blank">Github Issue</a>
+    </div>
+  </div>
 
 </article>
 
