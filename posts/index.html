@@ -616,7 +616,14 @@ li p {
   .post-article .article-footer .post-comment-link {
     float: right; }
 
-/** Tweak code block style */
+/** Tweak quotes **/
+blockquote p {
+  font-size: 1.2em;
+  box-shadow: -10px 0 10px -10px #9c9c9c;
+  padding-left: 1em;
+  margin-left: -1em; }
+
+/** Tweak code block style **/
 pre.highlight {
   /* NOTE: 'auto' to adjust to the existence of sidenote block */
   width: auto;
@@ -660,6 +667,34 @@ pre.highlight {
 
   <section>
     <div class="post-list">
+  
+    <!-- NOTE snippet requiring variable `post` defined -->
+<div class="post-list-entry">
+
+  <h2>
+    <a class="post-link" href="/post/symbolic-links-on-windows">Symbolic links on Windows</a>
+  </h2>
+
+  <p> <p>Symbolic link is a very convenient facility to organize your files. When using
+<code class="highlighter-rouge">Bash</code> on Windows, there are multiple options that simulate the native symlink
+as on Linux. This post records my experience with them and also some other
+useful tips.</p>
+
+ </p>
+
+  <div>
+    <span> Posted at <strong>Jul 16, 2017</strong> </span>
+    
+    • <a href="/tags/tech"><span>tech</span></a>
+    
+    • <a href="/tags/cygwin"><span>cygwin</span></a>
+    
+    • <a href="/tags/symlink"><span>symlink</span></a>
+    
+  </div>
+
+</div>
+
   
     <!-- NOTE snippet requiring variable `post` defined -->
 <div class="post-list-entry">
@@ -832,32 +867,6 @@ developers – <em>very</em> pragmatic.</p>
     • <a href="/tags/gnome"><span>gnome</span></a>
     
     • <a href="/tags/bugfix"><span>bugfix</span></a>
-    
-  </div>
-
-</div>
-
-  
-    <!-- NOTE snippet requiring variable `post` defined -->
-<div class="post-list-entry">
-
-  <h2>
-    <a class="post-link" href="/post/revisiting-todo-of-this-site">Revisiting TODO of this site</a>
-  </h2>
-
-  <p> <p>With a revamping done, it’s a good moment to reflect upon the old plan I had for
-this site and some ideas about it in the future.</p>
-
- </p>
-
-  <div>
-    <span> Posted at <strong>Aug 6, 2016</strong> </span>
-    
-    • <a href="/tags/tech"><span>tech</span></a>
-    
-    • <a href="/tags/todo"><span>todo</span></a>
-    
-    • <a href="/tags/admin"><span>admin</span></a>
     
   </div>
 

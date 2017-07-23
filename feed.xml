@@ -6,9 +6,169 @@
 </description>
     <link>http://carltonf.github.io/</link>
     <atom:link href="http://carltonf.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 16 Jul 2017 06:20:27 +0000</pubDate>
-    <lastBuildDate>Sun, 16 Jul 2017 06:20:27 +0000</lastBuildDate>
+    <pubDate>Sun, 23 Jul 2017 10:31:38 +0000</pubDate>
+    <lastBuildDate>Sun, 23 Jul 2017 10:31:38 +0000</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
+    
+      <item>
+        <title>Symbolic links on Windows</title>
+        <description>&lt;p&gt;Symbolic link is a very convenient facility to organize your files. When using
+&lt;code class=&quot;highlighter-rouge&quot;&gt;Bash&lt;/code&gt; on Windows, there are multiple options that simulate the native symlink
+as on Linux. This post records my experience with them and also some other
+useful tips.&lt;/p&gt;
+
+&lt;p&gt;Due to some limitations of &lt;code class=&quot;highlighter-rouge&quot;&gt;MobaXterm&lt;/code&gt; &lt;span id=&quot;sn-id&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;MobaXterm&lt;/code&gt; notably lacks proper &lt;code class=&quot;highlighter-rouge&quot;&gt;tty&lt;/code&gt; setup, but &lt;code class=&quot;highlighter-rouge&quot;&gt;cmder&lt;/code&gt; has its own problems as well.&lt;/span&gt;, I
+started to use &lt;code class=&quot;highlighter-rouge&quot;&gt;cmder&lt;/code&gt; for some tasks again. One thing I noticed is that the
+&lt;code class=&quot;highlighter-rouge&quot;&gt;ln&lt;/code&gt; bundled together in the &lt;code class=&quot;highlighter-rouge&quot;&gt;Git4Win&lt;/code&gt; is merely a &lt;code class=&quot;highlighter-rouge&quot;&gt;cp&lt;/code&gt;, essentially making &lt;code class=&quot;highlighter-rouge&quot;&gt;ln&lt;/code&gt;
+not usable at all. &lt;span id=&quot;sn-ln-in-msys2&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;Why they (Msys2) would ship such a version in the first place is still a mystery to me.&lt;/span&gt; Since &lt;code class=&quot;highlighter-rouge&quot;&gt;MobaXterm&lt;/code&gt; by
+default would create a special file, recognized also by &lt;code class=&quot;highlighter-rouge&quot;&gt;Bash&lt;/code&gt; in &lt;code class=&quot;highlighter-rouge&quot;&gt;MSys2&lt;/code&gt;, I
+took this chance looking into the whole &lt;em&gt;symbolic link thing&lt;/em&gt; on Windows.&lt;span id=&quot;sn-not-so-well-researched&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;As a departure from my previous practice, i.e. conduct thorough research first and only write after I &lt;em&gt;feel&lt;/em&gt; I know enough in a systematic way. I’ll write what I’ve researched so far, what I decided to use and leave the rest with a note for potential future research. In a nut shell, I’ll do it in an note-taking fashion.&lt;/span&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;the-four-types&quot;&gt;The Four Types&lt;/h1&gt;
+
+&lt;p&gt;According to &lt;a href=&quot;https://cygwin.com/cygwin-ug-net/using.html#pathnames-symlinks&quot;&gt;Symbolic links&lt;/a&gt; in the &lt;code class=&quot;highlighter-rouge&quot;&gt;Cygwin&lt;/code&gt; website, there are
+four types of &lt;em&gt;symlinks&lt;/em&gt; on Windows:&lt;/p&gt;
+
+&lt;h2 id=&quot;cygwin-default-symlink&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Cygwin&lt;/code&gt; default symlink&lt;/h2&gt;
+
+&lt;p&gt;As I decided later to only use this one, I’ll quote the whole passage:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The default symlinks are plain files containing a magic cookie followed by the
+path to which the link points. They are marked with the DOS SYSTEM attribute
+so that only files with that attribute have to be read to determine whether or
+not the file is a symbolic link.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Very Linux-ish: plain text file for everything. Just open the file with an
+&lt;strong&gt;external&lt;/strong&gt; editor and you can to see everything written inside. &lt;span id=&quot;sn-external-editor&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;External to the &lt;code class=&quot;highlighter-rouge&quot;&gt;Bash&lt;/code&gt; in use. After all, all commands bundled with the &lt;code class=&quot;highlighter-rouge&quot;&gt;Bash&lt;/code&gt; are built to treat these &lt;em&gt;plain files&lt;/em&gt; as real symlinks ;P&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;the-windows-lnk-shortcut&quot;&gt;The Windows &lt;code class=&quot;highlighter-rouge&quot;&gt;.lnk&lt;/code&gt; shortcut&lt;/h2&gt;
+
+&lt;p&gt;Plus some special header and DOS READONLY attribute.&lt;/p&gt;
+
+&lt;p&gt;This one sounds quite appealing from the beginning. However, first there is no
+native way to create &lt;code class=&quot;highlighter-rouge&quot;&gt;.lnk&lt;/code&gt; from command line (other then the &lt;code class=&quot;highlighter-rouge&quot;&gt;cygwin&lt;/code&gt;’s &lt;code class=&quot;highlighter-rouge&quot;&gt;ln&lt;/code&gt;),
+second you need to set &lt;code class=&quot;highlighter-rouge&quot;&gt;CYGWIN&lt;/code&gt; to &lt;code class=&quot;highlighter-rouge&quot;&gt;winsymlinks&lt;/code&gt;, an extra trouble that gains
+nothing anyway.&lt;/p&gt;
+
+&lt;h2 id=&quot;native-windows-symlinks&quot;&gt;Native Windows symlinks&lt;/h2&gt;
+
+&lt;p&gt;This has been around for quite a while now and requires file system support,
+like &lt;code class=&quot;highlighter-rouge&quot;&gt;NTFS&lt;/code&gt;.&lt;span id=&quot;sn-fat32&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;Are there much use for FAT32 still? Linux’s support for NTFS is quite stable now.&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;This type of symlink is more a equivalence of &lt;code class=&quot;highlighter-rouge&quot;&gt;Linux&lt;/code&gt; symlink than any other
+option, however it has some weird restrictions and behaviors.&lt;/p&gt;
+
+&lt;h2 id=&quot;nfs-links&quot;&gt;NFS links.&lt;/h2&gt;
+
+&lt;p&gt;Never used these, and thus I will not explore them here.&lt;span id=&quot;sn-nfs&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;NFS&lt;/code&gt; is really convenient in a Linux-centric environment. However since I’ve migrated to work on Windows, the combination of &lt;code class=&quot;highlighter-rouge&quot;&gt;vboxsf&lt;/code&gt; share folder and &lt;code class=&quot;highlighter-rouge&quot;&gt;Samba&lt;/code&gt; is good enough. &lt;code class=&quot;highlighter-rouge&quot;&gt;vboxsf&lt;/code&gt; is way easier to setup and &lt;code class=&quot;highlighter-rouge&quot;&gt;Samba&lt;/code&gt; has sufficient performance for now.&lt;/span&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;create-fake-symlink-from-script&quot;&gt;Create fake symlink from script&lt;/h1&gt;
+
+&lt;p&gt;As stated above, this one is the easiest to understand, the below is the core
+part of a script I’m using to create such a link in &lt;code class=&quot;highlighter-rouge&quot;&gt;MSys2&lt;/code&gt; environment:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; -n -e &lt;span class=&quot;s2&quot;&gt;&quot;!&amp;lt;symlink&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$target&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\\&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;x0&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\\&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;xd&quot;&lt;/span&gt; &amp;gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$link&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+
+attrib.exe +S &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$link&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-e&lt;/code&gt; toggle asks &lt;code class=&quot;highlighter-rouge&quot;&gt;echo&lt;/code&gt; to interpret &lt;code class=&quot;highlighter-rouge&quot;&gt;\xHH&lt;/code&gt; form as a byte with hexical value
+of &lt;code class=&quot;highlighter-rouge&quot;&gt;HH&lt;/code&gt;. You need double slashes in the double quotes. &lt;span id=&quot;sn-special-chars&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+   &lt;span class=&quot;sidenote&quot;&gt;In this case, the two special chars at the end is &lt;code class=&quot;highlighter-rouge&quot;&gt;NULL&lt;/code&gt; and carriage return (aka. &lt;code class=&quot;highlighter-rouge&quot;&gt;\n&lt;/code&gt;, CR, Return).&lt;/span&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;attrib&lt;/code&gt; is an Windows utility since the DOS era. Here we need to set
+&lt;code class=&quot;highlighter-rouge&quot;&gt;System&lt;/code&gt; attribute as &lt;code class=&quot;highlighter-rouge&quot;&gt;Cygwin&lt;/code&gt; mandates. &lt;span id=&quot;sn-attrib-extra&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+   &lt;span class=&quot;sidenote&quot;&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;attrib&lt;/code&gt; allows the user to change the attribute of a file, like &lt;code class=&quot;highlighter-rouge&quot;&gt;Read-only&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;Hidden&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;System&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;Archived&lt;/code&gt;. Atrributes you would see in the file/directory &lt;code class=&quot;highlighter-rouge&quot;&gt;Properties Dialog&lt;/code&gt;.&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Eventually I choose this one mainly for two reasons:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;I use symlinks mostly from within the &lt;code class=&quot;highlighter-rouge&quot;&gt;Bash&lt;/code&gt;, and thus interoperability with
+Windows host is a lesser concern.&lt;/li&gt;
+  &lt;li&gt;This is so easy to understand and proved to work with &lt;code class=&quot;highlighter-rouge&quot;&gt;MSys2&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;create-shortcut-from-cli&quot;&gt;Create shortcut from CLI&lt;/h1&gt;
+
+&lt;p&gt;Windows shortcuts are useful for &lt;code class=&quot;highlighter-rouge&quot;&gt;Windows Explorer&lt;/code&gt; &lt;em&gt;only&lt;/em&gt;. The &lt;code class=&quot;highlighter-rouge&quot;&gt;.lnk&lt;/code&gt; file is a
+binary blob that evades manual editing. What’s worse there is no native CLI
+tool to create such shortcuts.&lt;/p&gt;
+
+&lt;p&gt;During my search, I encountered a &lt;strong&gt;very&lt;/strong&gt; interesting collection:
+&lt;a href=&quot;http://www.nirsoft.net/utils/nircmd.html&quot;&gt;NirCmd&lt;/a&gt;. It seems to be a treasure trove of CLI utilities for various
+Windows tasks, including &lt;code class=&quot;highlighter-rouge&quot;&gt;.lnk&lt;/code&gt; creation from command prompt. I am sure to
+explore it later, for now it’s sufficient to point out it’s not good enough to
+persuade me to use &lt;code class=&quot;highlighter-rouge&quot;&gt;.lnk&lt;/code&gt;: though well documented, &lt;code class=&quot;highlighter-rouge&quot;&gt;nircmd&lt;/code&gt; doesn’t have proper
+error message if a command fails. Also it’s not open source.&lt;span id=&quot;sn-id&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;sidenote&quot;&gt;For the record, I usually do not hold grudges against non-open software. It’s just that for daily tools, I prefer to know the inner workings to be able to tweak them to my satisfaction. Though granted, the tweaking is not done that often ;P&lt;/span&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;native-symlink-on-ntfs&quot;&gt;Native symlink on NTFS&lt;/h1&gt;
+
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;Cygwin&lt;/code&gt; documentation stated:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Due to to their weird restrictions and behaviour, they are only created if the
+user explicitly requests creating them.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Yes, this, I couldn’t agree more.&lt;/p&gt;
+
+&lt;p&gt;First, it needs &lt;code class=&quot;highlighter-rouge&quot;&gt;SeCreateSymbolicLinkPrivilege&lt;/code&gt; that is only granted to
+administrator by default (sure, you can grant a user with this right simply by
+… well, I can’t remember those multi-step GUI-driven instructions as in this
+&lt;a href=&quot;https://superuser.com/a/125981&quot;&gt;SO answer&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;Second, it has extra confusing options, as stated &lt;a href=&quot;https://superuser.com/a/377929&quot;&gt;here&lt;/a&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;You can create a hardlink (mklink /H) without admin privileges, and that will
+be executable. Hardlinks are for files, junctions are for directories,
+symlinks are for both (and /D is used to indicate that a symlink is for a
+directory)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;With above said, this type of symlink is still the only &lt;em&gt;true&lt;/em&gt; symlink on
+Windows.&lt;/p&gt;
+
+&lt;h1 id=&quot;ending&quot;&gt;Ending&lt;/h1&gt;
+
+&lt;p&gt;&lt;span class=&quot;marginnote&quot;&gt;Recently I find that I like to add these mumbling at the end of a post. It’s
+usually some supposedly deeper thoughts about the topic just covered. Anyway,
+it’s my idiosyncratic reflections that matter more to &lt;em&gt;future me&lt;/em&gt; rather than
+anyone else reading the post ;P&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Symbolic link is conceptually simple: a location/file pointer implemented as a
+file that is understood by applications. However, as demonstrated by my own
+decision to use only the &lt;em&gt;cygwin fake symlink&lt;/em&gt;, this understanding of
+applications lies at the very root of its complexity. Understood by what
+applications? By all or only some of them? What if the developers behind some
+applications simply disagree with others, either due to a philosophical
+difference or mere convenience? Adding all these up through &lt;em&gt;a long&lt;/em&gt; history,
+together with kept, broken or semi-kept compatibility is a snapshot of any
+non-trivial engineering.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 16 Jul 2017 00:00:00 +0000</pubDate>
+        <link>http://carltonf.github.io/post/symbolic-links-on-windows</link>
+        <guid isPermaLink="true">http://carltonf.github.io/post/symbolic-links-on-windows</guid>
+        
+        <category>tech</category>
+        
+        <category>cygwin</category>
+        
+        <category>symlink</category>
+        
+        
+      </item>
     
       <item>
         <title>Still Emacs, still Tufte</title>
@@ -22,7 +182,8 @@ sidenote/marginnote &lt;em&gt;mess&lt;/em&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;/images/still-emacs-still-tufte/markdown-tufte-screenshot.png&quot; alt=&quot;screenshot&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;The above is the screenshot for the extension. You can find the code at
-&lt;a href=&quot;#&quot;&gt;markdown-tufte&lt;/a&gt;.&lt;/p&gt;
+&lt;a href=&quot;https://github.com/carltonf/markdown-tufte&quot;&gt;markdown-tufte&lt;/a&gt;, it’s still just a hack and packaged as a
+&lt;code class=&quot;highlighter-rouge&quot;&gt;spacemacs&lt;/code&gt; layer.&lt;/p&gt;
 
 &lt;p&gt;And the rest of this post are some thoughts (murmuring).&lt;/p&gt;
 
@@ -82,6 +243,13 @@ supports &lt;code class=&quot;highlighter-rouge&quot;&gt;Tufte&lt;/code&gt; styl
 &lt;p&gt;It’s just that &lt;code class=&quot;highlighter-rouge&quot;&gt;RStudio&lt;/code&gt; is a beast and I am not doing any data science, yet.
 Also I only used &lt;code class=&quot;highlighter-rouge&quot;&gt;RStudio&lt;/code&gt; once before to learn some basics about &lt;code class=&quot;highlighter-rouge&quot;&gt;R&lt;/code&gt; and it was
 quite a while ago. The learning cost would be too high just for the posts.&lt;/p&gt;
+
+&lt;h3 id=&quot;writage&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Writage&lt;/code&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.writage.com/&quot;&gt;Writage&lt;/a&gt; is a tool … converting &lt;code class=&quot;highlighter-rouge&quot;&gt;MS Word&lt;/code&gt; to &lt;code class=&quot;highlighter-rouge&quot;&gt;Markdown&lt;/code&gt;! It’s still
+early stage, and it’s not open source, though it is &lt;em&gt;“available for free trial”&lt;/em&gt;
+for now. Despite all above, it’s an interesting project: after all, like it or
+hate it, &lt;code class=&quot;highlighter-rouge&quot;&gt;MS Word&lt;/code&gt; is the &lt;em&gt;king&lt;/em&gt; of the &lt;code class=&quot;highlighter-rouge&quot;&gt;WISIWIG&lt;/code&gt; world.&lt;/p&gt;
 
 &lt;h2 id=&quot;about-habit-and-discipline&quot;&gt;About Habit and Discipline&lt;/h2&gt;
 
@@ -1655,41 +1823,6 @@ update-help
         <category>reading</category>
         
         <category>notes</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>A Reflection on Content Management</title>
-        <description>&lt;p&gt;Just some thoughts on “How do I manage files/content on computers?”.&lt;/p&gt;
-
-&lt;p&gt;&lt;span class=&quot;marginnote&quot;&gt;I’ve been planing this post for quite some time, ever being a procrastinative type, sigh….&lt;/span&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;file&quot;&gt;File&lt;/h1&gt;
-
-&lt;p&gt;Ironically, this is the most &lt;em&gt;intuitive&lt;/em&gt; way. &lt;code class=&quot;highlighter-rouge&quot;&gt;File&lt;/code&gt; is a concept well-known, but very inflexible. Reasonably, it’s in fact the most &lt;em&gt;unintuitive&lt;/em&gt; way as it forces us to think in very low level that conceptually has nothing to do with what we really want: the &lt;strong&gt;content&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;In a world more and more mobile-oriented, the role of files has receded. And yet it remains the most efficient method for managing simple content (like a post ;P).&lt;/p&gt;
-
-&lt;h1 id=&quot;application&quot;&gt;Application&lt;/h1&gt;
-
-&lt;p&gt;To center around an application is not new in mobile computation, but it only gets popular as a mindset with the rise of mobile devices. In the era of desktop, users use applications to accomplish tasks but yet they think in files instead of applications: a word document, a powerpoint file and etc. With mobile devices’ small screen estate, inconvenient inputs and on-the-go usage, navigating a file system becomes so cumbersome that most users would avoid.&lt;/p&gt;
-
-&lt;p&gt;Applications strive to present content directly and intuitively. However, how to represent content has no universal consent. This creates a fragmented world with big players creating large closed circles by offering more integration within its own ecosystem but inconvenient, if even possible, interpolation with other applications. In retrospect, the very weakness of &lt;code class=&quot;highlighter-rouge&quot;&gt;File&lt;/code&gt; concept is also its very strength: low-level but universal. Nevertheless, I still consider application-based content management is a breeze compared with files.&lt;/p&gt;
-
-&lt;h1 id=&quot;content&quot;&gt;Content&lt;/h1&gt;
-
-&lt;p&gt;I’d like to say this is the future, but I lack any confidence to say so as content representation is so diversified that any universal and yet high-level enough representation seems impossible.&lt;/p&gt;
-
-&lt;p&gt;Computers are indeed becoming smarter though, so if we can have an intelligent personal assistance, then we might be able to think in a content-oriented way and be free of “opening this or that app for my work” lock-in. However, then we might be locked-in with a specific type of assistance system, right ;P&lt;/p&gt;
-</description>
-        <pubDate>Mon, 29 Feb 2016 00:00:00 +0000</pubDate>
-        <link>http://carltonf.github.io/post/reflections-on-content-management</link>
-        <guid isPermaLink="true">http://carltonf.github.io/post/reflections-on-content-management</guid>
-        
-        <category>tech</category>
-        
-        <category>reflection</category>
         
         
       </item>

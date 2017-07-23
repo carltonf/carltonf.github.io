@@ -38,6 +38,14 @@
 
     
     {
+        "value": "Symbolic links on Windows",
+        "data": "http://carltonf.github.io/post/symbolic-links-on-windows"
+    }
+    
+    
+
+    
+    ,{
         "value": "Still Emacs, still Tufte",
         "data": "http://carltonf.github.io/post/still-emacs-still-tufte"
     }
@@ -664,6 +672,22 @@
     ,{
         "value": "Tag: tufte",
         "data": "http://carltonf.github.io/tags/tufte/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: cygwin",
+        "data": "http://carltonf.github.io/tags/cygwin/"
+    }
+    
+    
+
+    
+    ,{
+        "value": "Tag: symlink",
+        "data": "http://carltonf.github.io/tags/symlink/"
     }
     
     

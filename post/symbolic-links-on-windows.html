@@ -6,11 +6,10 @@
   <!-- NOTE `content` setting is required to ensure GPU rasterization is enabled. -->
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 
-  <title>Tag: reading</title>
-  <meta name="description" content="See further, but how far is far?
-">
+  <title>Symbolic links on Windows</title>
+  <meta name="description" content="Symbolic link is a very convenient facility to organize your files. When usingBash on Windows, there are multiple options that simulate the native symlinkas ...">
 
-  <link rel="canonical" href="http://carltonf.github.io/tags/reading/">
+  <link rel="canonical" href="http://carltonf.github.io/post/symbolic-links-on-windows">
   <link rel="alternate" type="application/rss+xml" title="Crystal Sight" href="http://carltonf.github.io/feed.xml">
 
   <script type="application/ld+json">
@@ -18,12 +17,11 @@
 {
   "@context": "http://schema.org",
   "@type": "NewsArticle",
-  "mainEntityOfPage": "http://carltonf.github.io/tags/reading/",
-  "headline": "Tag: reading",
-  "datePublished": "2017-07-23T10:31:38+00:00",
-  "dateModified": "2017-07-23T10:31:38+00:00",
-  "description": "See further, but how far is far?
-",
+  "mainEntityOfPage": "http://carltonf.github.io/post/symbolic-links-on-windows",
+  "headline": "Symbolic links on Windows",
+  "datePublished": "2017-07-16T00:00:00+00:00",
+  "dateModified": "2017-07-16T00:00:00+00:00",
+  "description": "Symbolic link is a very convenient facility to organize your files. When usingBash on Windows, there are multiple options that simulate the native symlinkas ...",
   "author": {
     "@type": "Person",
     "name": ""
@@ -659,46 +657,184 @@ pre.highlight {
 </header>
 
 
-<article class="post">
+<article class="post-article">
+
+  <h2 itemprop="name">
+    <a href="/post/symbolic-links-on-windows" itemprop="url">Symbolic links on Windows</a>
+  </h2>
 
   <div class="post-meta">
-    <h1 class="post-title">Tag: reading</h1>
+    <time datetime="16 July 2017">
+      16 July 2017
+    </time>
+    
   </div>
 
   <section>
-    <div class="post-list">
-  
-  <!-- Generating tag page -->
-    
-      <!-- NOTE snippet requiring variable `post` defined -->
-<div class="post-list-entry">
+    <p>Symbolic link is a very convenient facility to organize your files. When using
+<code class="highlighter-rouge">Bash</code> on Windows, there are multiple options that simulate the native symlink
+as on Linux. This post records my experience with them and also some other
+useful tips.</p>
 
-  <h2>
-    <a class="post-link" href="/post/reading-code-breakers">Reading: Code Breakers</a>
-  </h2>
+<p>Due to some limitations of <code class="highlighter-rouge">MobaXterm</code> <span id="sn-id" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote"><code class="highlighter-rouge">MobaXterm</code> notably lacks proper <code class="highlighter-rouge">tty</code> setup, but <code class="highlighter-rouge">cmder</code> has its own problems as well.</span>, I
+started to use <code class="highlighter-rouge">cmder</code> for some tasks again. One thing I noticed is that the
+<code class="highlighter-rouge">ln</code> bundled together in the <code class="highlighter-rouge">Git4Win</code> is merely a <code class="highlighter-rouge">cp</code>, essentially making <code class="highlighter-rouge">ln</code>
+not usable at all. <span id="sn-ln-in-msys2" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">Why they (Msys2) would ship such a version in the first place is still a mystery to me.</span> Since <code class="highlighter-rouge">MobaXterm</code> by
+default would create a special file, recognized also by <code class="highlighter-rouge">Bash</code> in <code class="highlighter-rouge">MSys2</code>, I
+took this chance looking into the whole <em>symbolic link thing</em> on Windows.<span id="sn-not-so-well-researched" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">As a departure from my previous practice, i.e. conduct thorough research first and only write after I <em>feel</em> I know enough in a systematic way. I’ll write what I’ve researched so far, what I decided to use and leave the rest with a note for potential future research. In a nut shell, I’ll do it in an note-taking fashion.</span></p>
 
-  <p> <p>Quotes and notes from book ~Colin F. Barnes~ <em>Code Breakers: Alpha</em>.</p>
+<h1 id="the-four-types">The Four Types</h1>
 
- </p>
+<p>According to <a href="https://cygwin.com/cygwin-ug-net/using.html#pathnames-symlinks">Symbolic links</a> in the <code class="highlighter-rouge">Cygwin</code> website, there are
+four types of <em>symlinks</em> on Windows:</p>
 
-  <div>
-    <span> Posted at <strong>Mar 2, 2016</strong> </span>
-    
-    • <a href="/tags/crystal"><span>crystal</span></a>
-    
-    • <a href="/tags/reading"><span>reading</span></a>
-    
-    • <a href="/tags/notes"><span>notes</span></a>
-    
-  </div>
+<h2 id="cygwin-default-symlink"><code class="highlighter-rouge">Cygwin</code> default symlink</h2>
 
+<p>As I decided later to only use this one, I’ll quote the whole passage:</p>
+
+<blockquote>
+  <p>The default symlinks are plain files containing a magic cookie followed by the
+path to which the link points. They are marked with the DOS SYSTEM attribute
+so that only files with that attribute have to be read to determine whether or
+not the file is a symbolic link.</p>
+</blockquote>
+
+<p>Very Linux-ish: plain text file for everything. Just open the file with an
+<strong>external</strong> editor and you can to see everything written inside. <span id="sn-external-editor" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">External to the <code class="highlighter-rouge">Bash</code> in use. After all, all commands bundled with the <code class="highlighter-rouge">Bash</code> are built to treat these <em>plain files</em> as real symlinks ;P</span></p>
+
+<h2 id="the-windows-lnk-shortcut">The Windows <code class="highlighter-rouge">.lnk</code> shortcut</h2>
+
+<p>Plus some special header and DOS READONLY attribute.</p>
+
+<p>This one sounds quite appealing from the beginning. However, first there is no
+native way to create <code class="highlighter-rouge">.lnk</code> from command line (other then the <code class="highlighter-rouge">cygwin</code>’s <code class="highlighter-rouge">ln</code>),
+second you need to set <code class="highlighter-rouge">CYGWIN</code> to <code class="highlighter-rouge">winsymlinks</code>, an extra trouble that gains
+nothing anyway.</p>
+
+<h2 id="native-windows-symlinks">Native Windows symlinks</h2>
+
+<p>This has been around for quite a while now and requires file system support,
+like <code class="highlighter-rouge">NTFS</code>.<span id="sn-fat32" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">Are there much use for FAT32 still? Linux’s support for NTFS is quite stable now.</span></p>
+
+<p>This type of symlink is more a equivalence of <code class="highlighter-rouge">Linux</code> symlink than any other
+option, however it has some weird restrictions and behaviors.</p>
+
+<h2 id="nfs-links">NFS links.</h2>
+
+<p>Never used these, and thus I will not explore them here.<span id="sn-nfs" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote"><code class="highlighter-rouge">NFS</code> is really convenient in a Linux-centric environment. However since I’ve migrated to work on Windows, the combination of <code class="highlighter-rouge">vboxsf</code> share folder and <code class="highlighter-rouge">Samba</code> is good enough. <code class="highlighter-rouge">vboxsf</code> is way easier to setup and <code class="highlighter-rouge">Samba</code> has sufficient performance for now.</span></p>
+
+<h1 id="create-fake-symlink-from-script">Create fake symlink from script</h1>
+
+<p>As stated above, this one is the easiest to understand, the below is the core
+part of a script I’m using to create such a link in <code class="highlighter-rouge">MSys2</code> environment:</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="nb">echo</span> -n -e <span class="s2">"!&lt;symlink&gt;</span><span class="nv">$target</span><span class="se">\\</span><span class="s2">x0</span><span class="se">\\</span><span class="s2">xd"</span> &gt; <span class="s2">"</span><span class="nv">$link</span><span class="s2">"</span>
+
+attrib.exe +S <span class="s2">"</span><span class="nv">$link</span><span class="s2">"</span>
+</code></pre>
 </div>
 
-    
-  
-</div>
+<ol>
+  <li><code class="highlighter-rouge">-e</code> toggle asks <code class="highlighter-rouge">echo</code> to interpret <code class="highlighter-rouge">\xHH</code> form as a byte with hexical value
+of <code class="highlighter-rouge">HH</code>. You need double slashes in the double quotes. <span id="sn-special-chars" class="margin-toggle sidenote-number"></span>
+   <span class="sidenote">In this case, the two special chars at the end is <code class="highlighter-rouge">NULL</code> and carriage return (aka. <code class="highlighter-rouge">\n</code>, CR, Return).</span></li>
+  <li><code class="highlighter-rouge">attrib</code> is an Windows utility since the DOS era. Here we need to set
+<code class="highlighter-rouge">System</code> attribute as <code class="highlighter-rouge">Cygwin</code> mandates. <span id="sn-attrib-extra" class="margin-toggle sidenote-number"></span>
+   <span class="sidenote">The <code class="highlighter-rouge">attrib</code> allows the user to change the attribute of a file, like <code class="highlighter-rouge">Read-only</code>, <code class="highlighter-rouge">Hidden</code>, <code class="highlighter-rouge">System</code>, <code class="highlighter-rouge">Archived</code>. Atrributes you would see in the file/directory <code class="highlighter-rouge">Properties Dialog</code>.</span></li>
+</ol>
 
+<p>Eventually I choose this one mainly for two reasons:</p>
+
+<ol>
+  <li>I use symlinks mostly from within the <code class="highlighter-rouge">Bash</code>, and thus interoperability with
+Windows host is a lesser concern.</li>
+  <li>This is so easy to understand and proved to work with <code class="highlighter-rouge">MSys2</code>.</li>
+</ol>
+
+<h1 id="create-shortcut-from-cli">Create shortcut from CLI</h1>
+
+<p>Windows shortcuts are useful for <code class="highlighter-rouge">Windows Explorer</code> <em>only</em>. The <code class="highlighter-rouge">.lnk</code> file is a
+binary blob that evades manual editing. What’s worse there is no native CLI
+tool to create such shortcuts.</p>
+
+<p>During my search, I encountered a <strong>very</strong> interesting collection:
+<a href="http://www.nirsoft.net/utils/nircmd.html">NirCmd</a>. It seems to be a treasure trove of CLI utilities for various
+Windows tasks, including <code class="highlighter-rouge">.lnk</code> creation from command prompt. I am sure to
+explore it later, for now it’s sufficient to point out it’s not good enough to
+persuade me to use <code class="highlighter-rouge">.lnk</code>: though well documented, <code class="highlighter-rouge">nircmd</code> doesn’t have proper
+error message if a command fails. Also it’s not open source.<span id="sn-id" class="margin-toggle sidenote-number"></span>
+      <span class="sidenote">For the record, I usually do not hold grudges against non-open software. It’s just that for daily tools, I prefer to know the inner workings to be able to tweak them to my satisfaction. Though granted, the tweaking is not done that often ;P</span></p>
+
+<h1 id="native-symlink-on-ntfs">Native symlink on NTFS</h1>
+
+<p>The <code class="highlighter-rouge">Cygwin</code> documentation stated:</p>
+
+<blockquote>
+  <p>Due to to their weird restrictions and behaviour, they are only created if the
+user explicitly requests creating them.</p>
+</blockquote>
+
+<p>Yes, this, I couldn’t agree more.</p>
+
+<p>First, it needs <code class="highlighter-rouge">SeCreateSymbolicLinkPrivilege</code> that is only granted to
+administrator by default (sure, you can grant a user with this right simply by
+… well, I can’t remember those multi-step GUI-driven instructions as in this
+<a href="https://superuser.com/a/125981">SO answer</a>).</p>
+
+<p>Second, it has extra confusing options, as stated <a href="https://superuser.com/a/377929">here</a>:</p>
+
+<blockquote>
+  <p>You can create a hardlink (mklink /H) without admin privileges, and that will
+be executable. Hardlinks are for files, junctions are for directories,
+symlinks are for both (and /D is used to indicate that a symlink is for a
+directory)</p>
+</blockquote>
+
+<p>With above said, this type of symlink is still the only <em>true</em> symlink on
+Windows.</p>
+
+<h1 id="ending">Ending</h1>
+
+<p><span class="marginnote">Recently I find that I like to add these mumbling at the end of a post. It’s
+usually some supposedly deeper thoughts about the topic just covered. Anyway,
+it’s my idiosyncratic reflections that matter more to <em>future me</em> rather than
+anyone else reading the post ;P</span></p>
+
+<p>Symbolic link is conceptually simple: a location/file pointer implemented as a
+file that is understood by applications. However, as demonstrated by my own
+decision to use only the <em>cygwin fake symlink</em>, this understanding of
+applications lies at the very root of its complexity. Understood by what
+applications? By all or only some of them? What if the developers behind some
+applications simply disagree with others, either due to a philosophical
+difference or mere convenience? Adding all these up through <em>a long</em> history,
+together with kept, broken or semi-kept compatibility is a snapshot of any
+non-trivial engineering.</p>
+
+    <p class="article-tombstone"><br>∎</p>
   </section>
+
+  <div class="article-footer">
+    <div class="post-tags">
+      <b> Tags </b>
+      
+      • <a href="/tags/tech"><span>tech</span></a>
+      
+      • <a href="/tags/cygwin"><span>cygwin</span></a>
+      
+      • <a href="/tags/symlink"><span>symlink</span></a>
+      
+    </div>
+    <div class="post-comment-link">
+      <b>Comment</b>:
+      <a href="https://github.com/carltonf/carltonf.github.io/issues/new" target="_blank">Github Issue</a>
+    </div>
+  </div>
 
 </article>
 

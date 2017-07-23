@@ -614,7 +614,14 @@ li p {
   .post-article .article-footer .post-comment-link {
     float: right; }
 
-/** Tweak code block style */
+/** Tweak quotes **/
+blockquote p {
+  font-size: 1.2em;
+  box-shadow: -10px 0 10px -10px #9c9c9c;
+  padding-left: 1em;
+  margin-left: -1em; }
+
+/** Tweak code block style **/
 pre.highlight {
   /* NOTE: 'auto' to adjust to the existence of sidenote block */
   width: auto;
@@ -661,6 +668,11 @@ pre.highlight {
       10 July 2017
     </time>
     
+    • <i>Updated at </i>
+    <time datetime="16 July 2017">
+      16 July 2017
+    </time>
+    
   </div>
 
   <section>
@@ -674,7 +686,8 @@ sidenote/marginnote <em>mess</em>.</p>
 <p><img src="/images/still-emacs-still-tufte/markdown-tufte-screenshot.png" alt="screenshot" /></p>
 
 <p>The above is the screenshot for the extension. You can find the code at
-<a href="#">markdown-tufte</a>.</p>
+<a href="https://github.com/carltonf/markdown-tufte">markdown-tufte</a>, it’s still just a hack and packaged as a
+<code class="highlighter-rouge">spacemacs</code> layer.</p>
 
 <p>And the rest of this post are some thoughts (murmuring).</p>
 
@@ -734,6 +747,13 @@ supports <code class="highlighter-rouge">Tufte</code> style.</p>
 <p>It’s just that <code class="highlighter-rouge">RStudio</code> is a beast and I am not doing any data science, yet.
 Also I only used <code class="highlighter-rouge">RStudio</code> once before to learn some basics about <code class="highlighter-rouge">R</code> and it was
 quite a while ago. The learning cost would be too high just for the posts.</p>
+
+<h3 id="writage"><code class="highlighter-rouge">Writage</code></h3>
+
+<p><a href="http://www.writage.com/">Writage</a> is a tool … converting <code class="highlighter-rouge">MS Word</code> to <code class="highlighter-rouge">Markdown</code>! It’s still
+early stage, and it’s not open source, though it is <em>“available for free trial”</em>
+for now. Despite all above, it’s an interesting project: after all, like it or
+hate it, <code class="highlighter-rouge">MS Word</code> is the <em>king</em> of the <code class="highlighter-rouge">WISIWIG</code> world.</p>
 
 <h2 id="about-habit-and-discipline">About Habit and Discipline</h2>
 
