@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Crude Port Knocking</title>
+  <style>
+    div#main-box {
+      max-width: 400px;
+      margin: 0 auto;
+      background: #f2f2f2;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    button {
+      margin: 20px auto;
+      background: #3498db;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+    }
+
+    button:hover {
+      background: #2980b9;
+    }
+  </style>
+</head>
+<body>
+  <div id="main-box">
+    <label>Host:</label>
+    <input type="text" id="host" name="target">
+
+    <label>Port Sequences:</label>
+    <input type="password" id="ports_seq" name="ports_seq">
+
+    <button onclick="knock()">Knock</button>
+  </div>
+
+  <script>
+    function knock() {
+
+        let target_host = document.getElementById('host').value;
+        let ports_seq = document.getElementById('ports_seq').value;
+        let numbers = ports_seq.split(' ');
+
+        numbers.forEach(number => {
+            let url = `http://${target_host}:${number}`;
+
+            fetch(url, {mode: 'no-cors',credentials: 'omit'})
+        });
+    }
+  </script>
+
+      <!-- let input = document.getElementById('linksInput').value;
+      let numbers = input.split(' ');
+      numbers.forEach(number => {
+        let url = `http://10.177.177.177:${number}`;
+        let a = document.createElement('a');
+        a.href = url;
+        a.download = '';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }); -->
+</body>
+</html>
